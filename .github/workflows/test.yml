@@ -27,9 +27,5 @@ jobs:
         run: ls
         working-directory: ${{ steps.install-boost.outputs.BOOST_ROOT }}
         shell: bash
-        if: matrix.os == 'windows-latest'
-      - run: ls
-        working-directory: /home/runner/boost
-        if: matrix.os == 'ubuntu-latest'
       - run: echo "${{ steps.install-boost.outputs.BOOST_VER }}"
         shell: bash
