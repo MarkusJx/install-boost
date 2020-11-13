@@ -105,6 +105,10 @@ async function main(): Promise<void> {
     const toolset = core.getInput("toolset");
     const platform_version = core.getInput("platform_version");
 
+    if (boost_version.length <= 0) {
+        throw new Error("boost_version variable must be set");
+    }
+
     console.log("Downloading versions-manifest.json...");
     const versions = await getVersions();
 
@@ -127,11 +131,16 @@ async function main(): Promise<void> {
 }
 
 try {
+    let done = false;
     main().then(() => {
         console.log("Boost download finished");
+        done = true;
     }, (reject) => {
         core.setFailed(reject);
+        done = true;
     });
+
+    while (!done) {}
 } catch (error) {
     core.setFailed(error.message);
 }
