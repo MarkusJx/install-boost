@@ -303,6 +303,7 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
             for (var j = 0; j < files.length; j++) {
                 var file = files[i];
                 if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
+                    console.debug(file);
                     continue;
                 }
                 if (toolset.length > 0 && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
@@ -315,7 +316,7 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
             }
         }
     }
-    throw new Error("Could not find boost version: " + boost_version);
+    throw new Error("Could not find boost version " + boost_version);
 }
 function main() {
     return __awaiter(this, void 0, void 0, function () {
@@ -323,7 +324,7 @@ function main() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    boost_version = core.getInput("boost_version");
+                    boost_version = "1.73.0";
                     toolset = core.getInput("toolset");
                     platform_version = core.getInput("platform_version");
                     if (boost_version.length <= 0) {

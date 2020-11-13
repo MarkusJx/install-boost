@@ -88,6 +88,7 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
             for (let j = 0; j < files.length; j++) {
                 const file: Object = files[i];
                 if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
+                    console.debug(file["platform"]);
                     continue;
                 }
 
@@ -104,11 +105,11 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
         }
     }
 
-    throw new Error(`Could not find boost version: ${boost_version}`);
+    throw new Error(`Could not find boost version ${boost_version}`);
 }
 
 async function main(): Promise<void> {
-    const boost_version = core.getInput("boost_version");
+    const boost_version = "1.73.0"; //core.getInput("boost_version");
     const toolset = core.getInput("toolset");
     const platform_version = core.getInput("platform_version");
 
