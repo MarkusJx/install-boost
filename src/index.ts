@@ -78,7 +78,7 @@ function run7z(command: Array<String>, working_directory: String): Promise<void>
 }
 
 async function untarBoost(base: String, working_directory: String): Promise<void> {
-    if (IS_WIN32 && false) {
+    if (IS_WIN32) {
         core.debug("Unpacking boost using 7zip");
         await run7z(['x', `${base}.tar.gz`], working_directory);
         await run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);

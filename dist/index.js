@@ -299,7 +299,7 @@ function untarBoost(base, working_directory) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!(IS_WIN32 && false)) return [3 /*break*/, 3];
+                    if (!IS_WIN32) return [3 /*break*/, 3];
                     core.debug("Unpacking boost using 7zip");
                     return [4 /*yield*/, run7z(['x', base + ".tar.gz"], working_directory)];
                 case 1:
