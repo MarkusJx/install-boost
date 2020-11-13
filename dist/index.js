@@ -303,6 +303,7 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
             core.debug("Files: " + JSON.stringify(files));
             for (var j = 0; j < files.length; j++) {
                 var file = files[i];
+                core.debug("files[" + i + "]: " + file);
                 core.debug("file platform: " + file["platform"]);
                 if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
                     core.debug("File does not match param 'platform'");

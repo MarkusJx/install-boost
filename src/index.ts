@@ -82,12 +82,13 @@ function getVersions(): Promise<Array<Object>> {
 
 function parseArguments(versions: Array<Object>, boost_version: String, toolset: String, platform_version: String): { url: String, filename: String } {
     for (let i = 0; i < versions.length; i++) {
-        const cur = versions[i];
+        let cur = versions[i];
         if (cur.hasOwnProperty("version") && cur["version"] == boost_version) {
-            const files: Array<Object> = cur["files"];
+            let files: Array<Object> = cur["files"];
             core.debug(`Files: ${JSON.stringify(files)}`);
             for (let j = 0; j < files.length; j++) {
-                const file: Object = files[i];
+                let file: Object = files[i];
+                core.debug(`files[${i}]: ${file}`);
 
                 core.debug(`file platform: ${file["platform"]}`);
                 if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
