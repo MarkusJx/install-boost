@@ -1,1 +1,9 @@
 name: 'Download and install Boost'
+description: 'Download, install and cache Boost'
+inputs:
+  BOOST_VERSION:
+    description: 'The boost version to install, e.g. "1.73.0"'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
