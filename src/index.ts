@@ -155,6 +155,27 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
     throw new Error(`Could not find boost version ${boost_version}`);
 }
 
+function deleteFiles(files: String[]): void {
+    console.log(`Attempting to delete ${files.length} file(s)...`);
+    for (let i = 0; i < files.length; i++) {
+        let cur_file = files[i];
+        if (fs.existsSync(cur_file)) {
+            console.log(`${cur_file} exists, deleting it`);
+            fs.unlinkSync(cur_file);
+        } else {
+            console.log(`${cur_file} does not exist`);
+        }
+    }
+}
+
+function cleanup(base_dir: String, base: String) {
+    if (IS_WIN32) {
+        deleteFiles([path.join(base_dir, `${base}.tar.gz`), path.join(base_dir, `${base}.tar`)]);
+    } else {
+        deleteFiles([path.join(base_dir, `${base}.tar.gz`)]);
+    }
+}
+
 async function main(): Promise<void> {
     const boost_version: String = core.getInput("boost_version");
     const toolset: String = core.getInput("toolset");
@@ -188,6 +209,10 @@ async function main(): Promise<void> {
 
     core.startGroup(`Extract ${filename}`);
     await untarBoost(base_dir, BOOST_ROOT_DIR);
+    core.endGroup();
+
+    core.startGroup("Clean up");
+    cleanup(BOOST_ROOT_DIR, base_dir);
     core.endGroup();
 
     core.startGroup("Set output variables")

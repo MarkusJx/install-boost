@@ -375,6 +375,27 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
     }
     throw new Error("Could not find boost version " + boost_version);
 }
+function deleteFiles(files) {
+    console.log("Attempting to delete " + files.length + " file(s)...");
+    for (var i = 0; i < files.length; i++) {
+        var cur_file = files[i];
+        if (fs.existsSync(cur_file)) {
+            console.log(cur_file + " exists, deleting it");
+            fs.unlinkSync(cur_file);
+        }
+        else {
+            console.log(cur_file + " does not exist");
+        }
+    }
+}
+function cleanup(base_dir, base) {
+    if (IS_WIN32) {
+        deleteFiles([path.join(base_dir, base + ".tar.gz"), path.join(base_dir, base + ".tar")]);
+    }
+    else {
+        deleteFiles([path.join(base_dir, base + ".tar.gz")]);
+    }
+}
 function main() {
     return __awaiter(this, void 0, void 0, function () {
         var boost_version, toolset, platform_version, versions, ver_data, download_url, filename, base_dir, BOOST_ROOT;
@@ -411,6 +432,9 @@ function main() {
                     return [4 /*yield*/, untarBoost(base_dir, BOOST_ROOT_DIR)];
                 case 3:
                     _a.sent();
+                    core.endGroup();
+                    core.startGroup("Clean up");
+                    cleanup(BOOST_ROOT_DIR, base_dir);
                     core.endGroup();
                     core.startGroup("Set output variables");
                     console.log("Setting BOOST_ROOT to '" + BOOST_ROOT + "'");
