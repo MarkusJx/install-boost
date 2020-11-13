@@ -235,7 +235,7 @@ var spawn = __webpack_require__(3129).spawn;
 var IS_WIN32 = process.platform == "win32";
 var VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
 var BOOST_ROOT_DIR = IS_WIN32 ? "D:\\boost" : "/home/runner/boost";
-var VERSION = "0.0.1";
+var VERSION = "1.0.0";
 function downloadBoost(url, outFile) {
     return new Promise(function (resolve, reject) {
         var req = progress(request(url));
