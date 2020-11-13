@@ -10,7 +10,6 @@ const VERSION_MANIFEST_ADDR: string = "https://raw.githubusercontent.com/actions
 const BOOST_ROOT_DIR = process.platform == "win32" ? "D:\\boost" : "/usr/boost";
 
 function downloadBoost(url: String, outFile: String): Promise<void> {
-    core.startGroup("Download Boost");
     return new Promise((resolve, reject) => {
         const req = progress(request(url));
         req.on('progress', state => {
@@ -21,7 +20,6 @@ function downloadBoost(url: String, outFile: String): Promise<void> {
         req.pipe(fs.createWriteStream(outFile));
 
         req.on('end', () => {
-            core.endGroup();
             resolve();
         });
 
@@ -89,6 +87,10 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
             const files: Array<Object> = cur["files"];
             for (let j = 0; j < files.length; j++) {
                 const file: Object = files[i];
+                if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
+                    continue;
+                }
+
                 if (toolset.length > 0 && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
                     continue;
                 }
@@ -126,8 +128,9 @@ async function main(): Promise<void> {
     createDirectory(BOOST_ROOT_DIR);
     core.endGroup();
 
-    //console.log(`Downloading ${filename}...`);
+    core.startGroup("Download Boost");
     await downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename));
+    core.endGroup();
 
     const out_dir = filename.split(".")[0];
     const BOOST_ROOT = path.join(BOOST_ROOT_DIR, out_dir);

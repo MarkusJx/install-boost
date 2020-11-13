@@ -235,7 +235,6 @@ var spawn = __webpack_require__(3129).spawn;
 var VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
 var BOOST_ROOT_DIR = process.platform == "win32" ? "D:\\boost" : "/usr/boost";
 function downloadBoost(url, outFile) {
-    core.startGroup("Download Boost");
     return new Promise(function (resolve, reject) {
         var req = progress(request(url));
         req.on('progress', function (state) {
@@ -244,7 +243,6 @@ function downloadBoost(url, outFile) {
         });
         req.pipe(fs.createWriteStream(outFile));
         req.on('end', function () {
-            core.endGroup();
             resolve();
         });
         req.on('error', function (err) {
@@ -304,6 +302,9 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
             var files = cur["files"];
             for (var j = 0; j < files.length; j++) {
                 var file = files[i];
+                if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
+                    continue;
+                }
                 if (toolset.length > 0 && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
                     continue;
                 }
@@ -339,11 +340,11 @@ function main() {
                     core.startGroup("Create " + BOOST_ROOT_DIR);
                     createDirectory(BOOST_ROOT_DIR);
                     core.endGroup();
-                    //console.log(`Downloading ${filename}...`);
+                    core.startGroup("Download Boost");
                     return [4 /*yield*/, downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename))];
                 case 2:
-                    //console.log(`Downloading ${filename}...`);
                     _a.sent();
+                    core.endGroup();
                     out_dir = filename.split(".")[0];
                     BOOST_ROOT = path.join(BOOST_ROOT_DIR, out_dir);
                     console.log("Extracting " + filename + "...");
