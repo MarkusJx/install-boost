@@ -300,10 +300,10 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
         var cur = versions[i];
         if (cur.hasOwnProperty("version") && cur["version"] == boost_version) {
             var files = cur["files"];
-            core.debug("Files: " + JSON.stringify(files));
+            core.debug("Files: " + JSON.stringify(files) + ", length: " + files.length);
             for (var j = 0; j < files.length; j++) {
                 var file = files[i];
-                core.debug("files[" + i + "]: " + file);
+                core.debug("files[" + i + "]: " + JSON.stringify(file));
                 core.debug("file platform: " + file["platform"]);
                 if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
                     core.debug("File does not match param 'platform'");
@@ -321,6 +321,7 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
                 }
                 return { url: file["download_url"], filename: file["filename"] };
             }
+            break;
         }
     }
     throw new Error("Could not find boost version " + boost_version);

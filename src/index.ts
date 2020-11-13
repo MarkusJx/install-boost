@@ -85,10 +85,10 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
         let cur = versions[i];
         if (cur.hasOwnProperty("version") && cur["version"] == boost_version) {
             let files: Array<Object> = cur["files"];
-            core.debug(`Files: ${JSON.stringify(files)}`);
+            core.debug(`Files: ${JSON.stringify(files)}, length: ${files.length}`);
             for (let j = 0; j < files.length; j++) {
                 let file: Object = files[i];
-                core.debug(`files[${i}]: ${file}`);
+                core.debug(`files[${i}]: ${JSON.stringify(file)}`);
 
                 core.debug(`file platform: ${file["platform"]}`);
                 if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
@@ -110,6 +110,8 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
 
                 return { url: file["download_url"], filename: file["filename"] };
             }
+
+            break;
         }
     }
 
