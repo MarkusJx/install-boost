@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretest": "npm run-script build",
+    "test": "node dist/index.js",
     "build": "tsc && ncc build dist/index.js --license licenses.txt"
   },
   "repository": {

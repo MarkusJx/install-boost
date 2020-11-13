@@ -67,7 +67,8 @@ function getVersions(): Promise<Array<Object>> {
             dt += data;
         });
 
-        req.on('finish', () => {
+        req.on('end', () => {
+            core.debug("Downloaded data: " + dt);
             resolve(JSON.parse(dt));
         });
 
@@ -140,7 +141,7 @@ try {
         done = true;
     });
 
-    while (!done) {}
+    //while (!done) {}
 } catch (error) {
     core.setFailed(error.message);
 }

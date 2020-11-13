@@ -283,7 +283,8 @@ function getVersions() {
         req.on('data', function (data) {
             dt += data;
         });
-        req.on('finish', function () {
+        req.on('end', function () {
+            core.debug("Downloaded data: " + dt);
             resolve(JSON.parse(dt));
         });
         req.on('error', function (err) {
@@ -319,6 +320,9 @@ function main() {
                     boost_version = core.getInput("boost_version");
                     toolset = core.getInput("toolset");
                     platform_version = core.getInput("platform_version");
+                    if (boost_version.length <= 0) {
+                        throw new Error("boost_version variable must be set");
+                    }
                     console.log("Downloading versions-manifest.json...");
                     return [4 /*yield*/, getVersions()];
                 case 1:
@@ -346,16 +350,20 @@ function main() {
     });
 }
 try {
+    var done_1 = false;
     main().then(function () {
         console.log("Boost download finished");
+        done_1 = true;
     }, function (reject) {
         core.setFailed(reject);
+        done_1 = true;
     });
+    //while (!done) {}
 }
 catch (error) {
     core.setFailed(error.message);
 }
-
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 
