@@ -118,7 +118,7 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
 }
 
 async function main(): Promise<void> {
-    const boost_version = "1.73.0"; //core.getInput("boost_version");
+    const boost_version = core.getInput("boost_version");
     const toolset = core.getInput("toolset");
     const platform_version = core.getInput("platform_version");
 
@@ -142,11 +142,12 @@ async function main(): Promise<void> {
     await downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename));
     core.endGroup();
 
-    const out_dir = filename.split(".")[0];
+    let out_dir = filename.substring(0, filename.lastIndexOf("."));
+    out_dir = filename.substring(0, filename.lastIndexOf("."));
     const BOOST_ROOT = path.join(BOOST_ROOT_DIR, out_dir);
 
     console.log(`Extracting ${filename}...`);
-    await untarBoost(BOOST_ROOT);
+    await untarBoost(path.join(BOOST_ROOT_DIR, filename));
 
     core.setOutput("BOOST_ROOT", BOOST_ROOT);
     core.setOutput("BOOST_VER", out_dir);

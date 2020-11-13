@@ -331,7 +331,7 @@ function main() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    boost_version = "1.73.0";
+                    boost_version = core.getInput("boost_version");
                     toolset = core.getInput("toolset");
                     platform_version = core.getInput("platform_version");
                     if (boost_version.length <= 0) {
@@ -353,10 +353,11 @@ function main() {
                 case 2:
                     _a.sent();
                     core.endGroup();
-                    out_dir = filename.split(".")[0];
+                    out_dir = filename.substring(0, filename.lastIndexOf("."));
+                    out_dir = filename.substring(0, filename.lastIndexOf("."));
                     BOOST_ROOT = path.join(BOOST_ROOT_DIR, out_dir);
                     console.log("Extracting " + filename + "...");
-                    return [4 /*yield*/, untarBoost(BOOST_ROOT)];
+                    return [4 /*yield*/, untarBoost(path.join(BOOST_ROOT_DIR, filename))];
                 case 3:
                     _a.sent();
                     core.setOutput("BOOST_ROOT", BOOST_ROOT);
