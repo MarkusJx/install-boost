@@ -30,10 +30,11 @@ function downloadBoost(url: String, outFile: String): Promise<void> {
     });
 }
 
-function untarBoost(filename: String): Promise<void> {
+function untarBoost(filename: String, working_directory: String): Promise<void> {
     return new Promise((resolve, reject) => {
         const tar = spawn("tar", ["xzf", filename], {
-            stdio: [process.stdin, process.stdout, process.stderr]
+            stdio: [process.stdin, process.stdout, process.stderr],
+            cwd: working_directory
         });
 
         tar.on('close', (code) => {
@@ -147,7 +148,7 @@ async function main(): Promise<void> {
     const BOOST_ROOT: String = path.join(BOOST_ROOT_DIR, out_dir);
 
     console.log(`Extracting ${filename}...`);
-    await untarBoost(path.join(BOOST_ROOT_DIR, filename));
+    await untarBoost(filename, BOOST_ROOT_DIR);
 
     core.setOutput("BOOST_ROOT", BOOST_ROOT);
     core.setOutput("BOOST_VER", out_dir);

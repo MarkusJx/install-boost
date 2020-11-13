@@ -251,10 +251,11 @@ function downloadBoost(url, outFile) {
         });
     });
 }
-function untarBoost(filename) {
+function untarBoost(filename, working_directory) {
     return new Promise(function (resolve, reject) {
         var tar = spawn("tar", ["xzf", filename], {
-            stdio: [process.stdin, process.stdout, process.stderr]
+            stdio: [process.stdin, process.stdout, process.stderr],
+            cwd: working_directory
         });
         tar.on('close', function (code) {
             if (code != 0) {
@@ -357,7 +358,7 @@ function main() {
                     out_dir = filename.substring(0, filename.lastIndexOf("."));
                     BOOST_ROOT = path.join(BOOST_ROOT_DIR, out_dir);
                     console.log("Extracting " + filename + "...");
-                    return [4 /*yield*/, untarBoost(path.join(BOOST_ROOT_DIR, filename))];
+                    return [4 /*yield*/, untarBoost(filename, BOOST_ROOT_DIR)];
                 case 3:
                     _a.sent();
                     core.setOutput("BOOST_ROOT", BOOST_ROOT);
