@@ -238,6 +238,7 @@ function downloadBoost(url, outFile) {
     return new Promise(function (resolve, reject) {
         var req = progress(request(url));
         req.on('progress', function (state) {
+            core.debug("Progress state: " + JSON.stringify(state));
             var percent = state.percentage * 100;
             console.log("Download progress: " + percent + "%");
         });
@@ -300,10 +301,8 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
         var cur = versions[i];
         if (cur.hasOwnProperty("version") && cur["version"] == boost_version) {
             var files = cur["files"];
-            core.debug("Files: " + JSON.stringify(files) + ", length: " + files.length);
             for (var j = 0; j < files.length; j++) {
                 var file = files[j];
-                core.debug("files[" + j + "]: " + JSON.stringify(file));
                 core.debug("file platform: " + file["platform"]);
                 if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
                     core.debug("File does not match param 'platform'");

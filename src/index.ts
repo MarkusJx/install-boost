@@ -13,6 +13,7 @@ function downloadBoost(url: String, outFile: String): Promise<void> {
     return new Promise((resolve, reject) => {
         const req = progress(request(url));
         req.on('progress', state => {
+            core.debug(`Progress state: ${JSON.stringify(state)}`)
             const percent = state.percentage * 100;
             console.log(`Download progress: ${percent}%`);
         });
@@ -85,10 +86,8 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
         let cur = versions[i];
         if (cur.hasOwnProperty("version") && cur["version"] == boost_version) {
             let files: Array<Object> = cur["files"];
-            core.debug(`Files: ${JSON.stringify(files)}, length: ${files.length}`);
             for (let j = 0; j < files.length; j++) {
                 let file: Object = files[j];
-                core.debug(`files[${j}]: ${JSON.stringify(file)}`);
 
                 core.debug(`file platform: ${file["platform"]}`);
                 if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
