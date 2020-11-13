@@ -14,8 +14,7 @@ function downloadBoost(url: String, outFile: String): Promise<void> {
         const req = progress(request(url));
         req.on('progress', state => {
             core.debug(`Progress state: ${JSON.stringify(state)}`)
-            const percent = state.percentage * 100;
-            console.log(`Download progress: ${percent}%`);
+            console.log(`Download progress: ${state.percent * 100}%`);
         });
 
         req.pipe(fs.createWriteStream(outFile));
@@ -45,8 +44,8 @@ function untarBoost(filename: String): Promise<void> {
             }
         });
 
-        tar.on('error', () => {
-            reject("Tar failed");
+        tar.on('error', (err) => {
+            reject(`Tar failed: ${err}`);
         })
     });
 }

@@ -239,8 +239,7 @@ function downloadBoost(url, outFile) {
         var req = progress(request(url));
         req.on('progress', function (state) {
             core.debug("Progress state: " + JSON.stringify(state));
-            var percent = state.percentage * 100;
-            console.log("Download progress: " + percent + "%");
+            console.log("Download progress: " + state.percent * 100 + "%");
         });
         req.pipe(fs.createWriteStream(outFile));
         req.on('end', function () {
@@ -265,8 +264,8 @@ function untarBoost(filename) {
                 resolve();
             }
         });
-        tar.on('error', function () {
-            reject("Tar failed");
+        tar.on('error', function (err) {
+            reject("Tar failed: " + err);
         });
     });
 }
