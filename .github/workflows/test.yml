@@ -9,17 +9,20 @@ jobs:
     
     strategy:
       matrix:
-        #os: [ubuntu-latest, windows-latest]
-        os: [windows-latest]
+        os: [ubuntu-latest, windows-latest]
+        #os: [windows-latest]
     
     steps:
       - uses: actions/checkout@v2
       - name: Install boost
         uses: ./
         id: install-boost
+        if: matrix.os == 'windows-latest'
         with:
           boost_version: 1.73.0
-      - run: echo ${{ steps.install-boost.outputs.BOOST_ROOT }}
+      - name: List contents of boost directory
+        run: ls
+        working-directory: ${{ steps.install-boost.outputs.BOOST_ROOT }}
         shell: bash
-      - run: echo ${{ steps.install-boost.outputs.BOOST_VER }}
+      - run: echo "${{ steps.install-boost.outputs.BOOST_VER }}"
         shell: bash
