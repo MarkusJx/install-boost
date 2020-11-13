@@ -87,8 +87,8 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
             let files: Array<Object> = cur["files"];
             core.debug(`Files: ${JSON.stringify(files)}, length: ${files.length}`);
             for (let j = 0; j < files.length; j++) {
-                let file: Object = files[i];
-                core.debug(`files[${i}]: ${JSON.stringify(file)}`);
+                let file: Object = files[j];
+                core.debug(`files[${j}]: ${JSON.stringify(file)}`);
 
                 core.debug(`file platform: ${file["platform"]}`);
                 if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
