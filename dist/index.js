@@ -302,14 +302,19 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
             var files = cur["files"];
             for (var j = 0; j < files.length; j++) {
                 var file = files[i];
+                core.debug("file platform: " + file["platform"]);
                 if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
-                    console.debug(file);
+                    core.debug("File does not match param 'platform'");
                     continue;
                 }
+                core.debug("file toolset: " + file["toolset"]);
                 if (toolset.length > 0 && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
+                    core.debug("File does not match param 'toolset'");
                     continue;
                 }
+                core.debug("file platform version: " + file["platform_version"]);
                 if (platform_version.length > 0 && (!file.hasOwnProperty("platform_version") || file["platform_version"] != platform_version)) {
+                    core.debug("File does not match param 'platform_version");
                     continue;
                 }
                 return { url: file["download_url"], filename: file["filename"] };

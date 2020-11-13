@@ -87,16 +87,22 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
             const files: Array<Object> = cur["files"];
             for (let j = 0; j < files.length; j++) {
                 const file: Object = files[i];
+
+                core.debug(`file platform: ${file["platform"]}`);
                 if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
-                    console.debug(file["platform"]);
+                    core.debug("File does not match param 'platform'");
                     continue;
                 }
 
+                core.debug(`file toolset: ${file["toolset"]}`);
                 if (toolset.length > 0 && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
+                    core.debug("File does not match param 'toolset'");
                     continue;
                 }
 
+                core.debug(`file platform version: ${file["platform_version"]}`);
                 if (platform_version.length > 0 && (!file.hasOwnProperty("platform_version") || file["platform_version"] != platform_version)) {
+                    core.debug("File does not match param 'platform_version");
                     continue;
                 }
 
