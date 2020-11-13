@@ -33,9 +33,9 @@ function downloadBoost(url: String, outFile: String): Promise<void> {
     });
 }
 
-function untarLinux(filename: String, working_directory: String): Promise<void> {
+function untarLinux(filename: String, out_dir: String, working_directory: String): Promise<void> {
     return new Promise((resolve, reject) => {
-        const tar = spawn("tar", ["xzf", filename], {
+        const tar = spawn("tar", ["xzf", filename, "-C", out_dir], {
             stdio: [process.stdin, process.stdout, process.stderr],
             cwd: working_directory
         });
@@ -84,7 +84,8 @@ async function untarBoost(base: String, working_directory: String): Promise<void
         await run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);
     } else {
         core.debug("Unpacking boost using tar");
-        await untarLinux(`${base}.tar.gz`, working_directory);
+        createDirectory(base);
+        await untarLinux(`${base}.tar.gz`, base, working_directory);
     }
 }
 
