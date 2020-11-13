@@ -1,7 +1,11 @@
 name: test
 
 on:
-  push
+  push:
+    paths: 
+      - ".github/workflows/test.yml"
+      - "dist/**"
+      - "action.yml"
 
 jobs:
   build:
@@ -17,7 +21,6 @@ jobs:
       - name: Install boost
         uses: ./
         id: install-boost
-        if: matrix.os == 'windows-latest'
         with:
           boost_version: 1.73.0
       - name: List contents of boost directory
