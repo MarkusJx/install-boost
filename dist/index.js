@@ -300,7 +300,7 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
         var cur = versions[i];
         if (cur.hasOwnProperty("version") && cur["version"] == boost_version) {
             var files = cur["files"];
-            core.debug("Files: " + files);
+            core.debug("Files: " + JSON.stringify(files));
             for (var j = 0; j < files.length; j++) {
                 var file = files[i];
                 core.debug("file platform: " + file["platform"]);
