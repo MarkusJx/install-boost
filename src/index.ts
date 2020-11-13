@@ -85,6 +85,7 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
         const cur = versions[i];
         if (cur.hasOwnProperty("version") && cur["version"] == boost_version) {
             const files: Array<Object> = cur["files"];
+            core.debug(`Files: ${files}`);
             for (let j = 0; j < files.length; j++) {
                 const file: Object = files[i];
 
