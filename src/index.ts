@@ -30,7 +30,7 @@ function downloadBoost(url: String, outFile: String): Promise<void> {
     });
 }
 
-function untarBoost(filename: String, working_directory: String): Promise<void> {
+function untarLinux(filename: String, working_directory: String): Promise<void> {
     return new Promise((resolve, reject) => {
         const tar = spawn("tar", ["xzf", filename], {
             stdio: [process.stdin, process.stdout, process.stderr],
@@ -48,8 +48,41 @@ function untarBoost(filename: String, working_directory: String): Promise<void> 
 
         tar.on('error', (err) => {
             reject(`Tar failed: ${err}`);
-        })
+        });
     });
+}
+
+function run7z(command: String, working_directory: String): Promise<void> {
+    return new Promise((resolve, reject) => {
+        const tar = spawn("7z", [command], {
+            stdio: [process.stdin, process.stdout, process.stderr],
+            cwd: working_directory
+        });
+
+        tar.on('close', (code) => {
+            if (code != 0) {
+                reject(`7z exited with code ${code}`);
+            } else {
+                console.log("7z exited with code 0")
+                resolve();
+            }
+        });
+
+        tar.on('error', (err) => {
+            reject(`7z failed: ${err}`);
+        });
+    });
+}
+
+async function untarBoost(base: String, working_directory: String): Promise<void> {
+    if (progress.platform == "win32") {
+        core.debug("Unpacking boost using 7zip");
+        await run7z(`x ${base}.tar.gz`, working_directory);
+        await run7z(`x ${base}.tar -aoa -o${base}`, working_directory);
+    } else {
+        core.debug("Unpacking boost using tar");
+        await untarLinux(`${base}.tar.gz`, working_directory);
+    }
 }
 
 function createDirectory(dir: String) {
@@ -143,15 +176,16 @@ async function main(): Promise<void> {
     await downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename));
     core.endGroup();
 
-    let out_dir: String = filename.substring(0, filename.lastIndexOf("."));
-    out_dir = filename.substring(0, filename.lastIndexOf("."));
-    const BOOST_ROOT: String = path.join(BOOST_ROOT_DIR, out_dir);
+    let base_dir: String = filename.substring(0, filename.lastIndexOf("."));
+    base_dir = filename.substring(0, filename.lastIndexOf("."));
+    const BOOST_ROOT: String = path.join(BOOST_ROOT_DIR, base_dir);
 
+    core.debug(`Boost base directory: ${base_dir}`);
     console.log(`Extracting ${filename}...`);
-    await untarBoost(filename, BOOST_ROOT_DIR);
+    await untarBoost(base_dir, BOOST_ROOT_DIR);
 
     core.setOutput("BOOST_ROOT", BOOST_ROOT);
-    core.setOutput("BOOST_VER", out_dir);
+    core.setOutput("BOOST_VER", base_dir);
 }
 
 try {

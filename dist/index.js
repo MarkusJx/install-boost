@@ -251,7 +251,7 @@ function downloadBoost(url, outFile) {
         });
     });
 }
-function untarBoost(filename, working_directory) {
+function untarLinux(filename, working_directory) {
     return new Promise(function (resolve, reject) {
         var tar = spawn("tar", ["xzf", filename], {
             stdio: [process.stdin, process.stdout, process.stderr],
@@ -268,6 +268,51 @@ function untarBoost(filename, working_directory) {
         });
         tar.on('error', function (err) {
             reject("Tar failed: " + err);
+        });
+    });
+}
+function run7z(command, working_directory) {
+    return new Promise(function (resolve, reject) {
+        var tar = spawn("7z", [command], {
+            stdio: [process.stdin, process.stdout, process.stderr],
+            cwd: working_directory
+        });
+        tar.on('close', function (code) {
+            if (code != 0) {
+                reject("7z exited with code " + code);
+            }
+            else {
+                console.log("7z exited with code 0");
+                resolve();
+            }
+        });
+        tar.on('error', function (err) {
+            reject("7z failed: " + err);
+        });
+    });
+}
+function untarBoost(base, working_directory) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!(progress.platform == "win32")) return [3 /*break*/, 3];
+                    core.debug("Unpacking boost using 7zip");
+                    return [4 /*yield*/, run7z("x " + base + ".tar.gz", working_directory)];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, run7z("x " + base + ".tar -aoa -o" + base, working_directory)];
+                case 2:
+                    _a.sent();
+                    return [3 /*break*/, 5];
+                case 3:
+                    core.debug("Unpacking boost using tar");
+                    return [4 /*yield*/, untarLinux(base + ".tar.gz", working_directory)];
+                case 4:
+                    _a.sent();
+                    _a.label = 5;
+                case 5: return [2 /*return*/];
+            }
         });
     });
 }
@@ -328,7 +373,7 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
 }
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var boost_version, toolset, platform_version, versions, ver_data, download_url, filename, out_dir, BOOST_ROOT;
+        var boost_version, toolset, platform_version, versions, ver_data, download_url, filename, base_dir, BOOST_ROOT;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -354,15 +399,16 @@ function main() {
                 case 2:
                     _a.sent();
                     core.endGroup();
-                    out_dir = filename.substring(0, filename.lastIndexOf("."));
-                    out_dir = filename.substring(0, filename.lastIndexOf("."));
-                    BOOST_ROOT = path.join(BOOST_ROOT_DIR, out_dir);
+                    base_dir = filename.substring(0, filename.lastIndexOf("."));
+                    base_dir = filename.substring(0, filename.lastIndexOf("."));
+                    BOOST_ROOT = path.join(BOOST_ROOT_DIR, base_dir);
+                    core.debug("Boost base directory: " + base_dir);
                     console.log("Extracting " + filename + "...");
-                    return [4 /*yield*/, untarBoost(filename, BOOST_ROOT_DIR)];
+                    return [4 /*yield*/, untarBoost(base_dir, BOOST_ROOT_DIR)];
                 case 3:
                     _a.sent();
                     core.setOutput("BOOST_ROOT", BOOST_ROOT);
-                    core.setOutput("BOOST_VER", out_dir);
+                    core.setOutput("BOOST_VER", base_dir);
                     return [2 /*return*/];
             }
         });
