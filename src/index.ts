@@ -8,8 +8,8 @@ const { spawn } = require("child_process");
 
 const IS_WIN32: Boolean = process.platform == "win32";
 const VERSION_MANIFEST_ADDR: String = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
-const BOOST_ROOT_DIR: String = IS_WIN32 ? "D:\\boost" : "/usr/boost";
-const VERSION: String = process.env.npm_package_version;
+const BOOST_ROOT_DIR: String = IS_WIN32 ? "D:\\boost" : "/home/runner/boost";
+const VERSION: String = "0.0.1";
 
 function downloadBoost(url: String, outFile: String): Promise<void> {
     return new Promise((resolve, reject) => {
