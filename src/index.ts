@@ -52,9 +52,13 @@ function untarBoost(filename: String): Promise<void> {
     });
 }
 
-function createBoostDir() {
-    if (!fs.existsSync(BOOST_ROOT_DIR)) {
-        fs.mkdirSync(BOOST_ROOT_DIR);
+function createDirectory(dir: String) {
+    if (!fs.existsSync(dir)) {
+        console.log(`${dir} does not exist, creating it`);
+        fs.mkdirSync(dir);
+        console.log("Done.");
+    } else {
+        console.log(`${dir} already exists, doing nothing`);
     }
 }
 
@@ -118,6 +122,10 @@ async function main(): Promise<void> {
     const download_url = ver_data.url;
     const filename = ver_data.filename;
 
+    core.startGroup(`Create ${BOOST_ROOT_DIR}`);
+    createDirectory(BOOST_ROOT_DIR);
+    core.endGroup();
+
     //console.log(`Downloading ${filename}...`);
     await downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename));
 
@@ -132,16 +140,11 @@ async function main(): Promise<void> {
 }
 
 try {
-    let done = false;
     main().then(() => {
         console.log("Boost download finished");
-        done = true;
     }, (reject) => {
         core.setFailed(reject);
-        done = true;
     });
-
-    //while (!done) {}
 } catch (error) {
     core.setFailed(error.message);
 }

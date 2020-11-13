@@ -271,9 +271,14 @@ function untarBoost(filename) {
         });
     });
 }
-function createBoostDir() {
-    if (!fs.existsSync(BOOST_ROOT_DIR)) {
-        fs.mkdirSync(BOOST_ROOT_DIR);
+function createDirectory(dir) {
+    if (!fs.existsSync(dir)) {
+        console.log(dir + " does not exist, creating it");
+        fs.mkdirSync(dir);
+        console.log("Done.");
+    }
+    else {
+        console.log(dir + " already exists, doing nothing");
     }
 }
 function getVersions() {
@@ -331,6 +336,9 @@ function main() {
                     ver_data = parseArguments(versions, boost_version, toolset, platform_version);
                     download_url = ver_data.url;
                     filename = ver_data.filename;
+                    core.startGroup("Create " + BOOST_ROOT_DIR);
+                    createDirectory(BOOST_ROOT_DIR);
+                    core.endGroup();
                     //console.log(`Downloading ${filename}...`);
                     return [4 /*yield*/, downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename))];
                 case 2:
@@ -350,15 +358,11 @@ function main() {
     });
 }
 try {
-    var done_1 = false;
     main().then(function () {
         console.log("Boost download finished");
-        done_1 = true;
     }, function (reject) {
         core.setFailed(reject);
-        done_1 = true;
     });
-    //while (!done) {}
 }
 catch (error) {
     core.setFailed(error.message);
