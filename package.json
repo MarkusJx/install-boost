@@ -1,0 +1,27 @@
+{
+  "name": "install-boost",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && ncc build dist/index.js --license licenses.txt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkusJx/install-boost.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MarkusJx/install-boost/issues"
+  },
+  "homepage": "https://github.com/MarkusJx/install-boost#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "request": "^2.88.2",
+    "request-progress": "^3.0.0"
+  }
+}
