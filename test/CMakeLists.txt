@@ -11,8 +11,8 @@ message(STATUS "Boost include directory: ${Boost_INCLUDE_DIRS}")
 
 include_directories(${Boost_INCLUDE_DIRS})
 
-add_executable(${target} test.cpp)
+add_executable(${PROJECT_NAME} test.cpp)
 
 if (NOT WIN32)
-    target_include_directories(${target} PRIVATE dl)
+    target_include_directories(${PROJECT_NAME} PUBLIC dl)
 endif ()
