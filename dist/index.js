@@ -232,8 +232,9 @@ var progress = __webpack_require__(8657);
 var fs = __webpack_require__(5747);
 var path = __webpack_require__(5622);
 var spawn = __webpack_require__(3129).spawn;
+var IS_WIN32 = process.platform == "win32";
 var VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
-var BOOST_ROOT_DIR = process.platform == "win32" ? "D:\\boost" : "/usr/boost";
+var BOOST_ROOT_DIR = IS_WIN32 ? "D:\\boost" : "/usr/boost";
 function downloadBoost(url, outFile) {
     return new Promise(function (resolve, reject) {
         var req = progress(request(url));
@@ -296,7 +297,7 @@ function untarBoost(base, working_directory) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!(progress.platform == "win32")) return [3 /*break*/, 3];
+                    if (!IS_WIN32) return [3 /*break*/, 3];
                     core.debug("Unpacking boost using 7zip");
                     return [4 /*yield*/, run7z("x " + base + ".tar.gz", working_directory)];
                 case 1:
@@ -400,7 +401,7 @@ function main() {
                     _a.sent();
                     core.endGroup();
                     base_dir = filename.substring(0, filename.lastIndexOf("."));
-                    base_dir = filename.substring(0, filename.lastIndexOf("."));
+                    base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
                     BOOST_ROOT = path.join(BOOST_ROOT_DIR, base_dir);
                     core.debug("Boost base directory: " + base_dir);
                     console.log("Extracting " + filename + "...");

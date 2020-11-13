@@ -6,8 +6,9 @@ const fs = require('fs');
 const path = require('path');
 const { spawn } = require("child_process");
 
-const VERSION_MANIFEST_ADDR: string = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
-const BOOST_ROOT_DIR = process.platform == "win32" ? "D:\\boost" : "/usr/boost";
+const IS_WIN32: Boolean = process.platform == "win32";
+const VERSION_MANIFEST_ADDR: String = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
+const BOOST_ROOT_DIR: String = IS_WIN32 ? "D:\\boost" : "/usr/boost";
 
 function downloadBoost(url: String, outFile: String): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -75,7 +76,7 @@ function run7z(command: String, working_directory: String): Promise<void> {
 }
 
 async function untarBoost(base: String, working_directory: String): Promise<void> {
-    if (progress.platform == "win32") {
+    if (IS_WIN32) {
         core.debug("Unpacking boost using 7zip");
         await run7z(`x ${base}.tar.gz`, working_directory);
         await run7z(`x ${base}.tar -aoa -o${base}`, working_directory);
@@ -177,7 +178,7 @@ async function main(): Promise<void> {
     core.endGroup();
 
     let base_dir: String = filename.substring(0, filename.lastIndexOf("."));
-    base_dir = filename.substring(0, filename.lastIndexOf("."));
+    base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
     const BOOST_ROOT: String = path.join(BOOST_ROOT_DIR, base_dir);
 
     core.debug(`Boost base directory: ${base_dir}`);
