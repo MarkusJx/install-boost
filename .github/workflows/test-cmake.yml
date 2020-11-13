@@ -21,7 +21,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install boost
+    - name: Install boost windows
       uses: ./
       id: install-boost
       with:
@@ -29,11 +29,11 @@ jobs:
 
     - name: Configure CMake
       shell: bash
-      working-directory: ${{runner.workspace}}/test
+      working-directory: test
       run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -B build
       env:
         BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
     - name: Build
-      working-directory: ${{runner.workspace}}/test/build
+      working-directory: test/build
       shell: bash
       run: cmake --build . --config $BUILD_TYPE
