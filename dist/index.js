@@ -274,7 +274,7 @@ function untarLinux(filename, working_directory) {
 }
 function run7z(command, working_directory) {
     return new Promise(function (resolve, reject) {
-        var tar = spawn("7z", [command], {
+        var tar = spawn("7z", command, {
             stdio: [process.stdin, process.stdout, process.stderr],
             cwd: working_directory
         });
@@ -299,10 +299,10 @@ function untarBoost(base, working_directory) {
                 case 0:
                     if (!IS_WIN32) return [3 /*break*/, 3];
                     core.debug("Unpacking boost using 7zip");
-                    return [4 /*yield*/, run7z("x " + base + ".tar.gz", working_directory)];
+                    return [4 /*yield*/, run7z(['x', base + ".tar.gz"], working_directory)];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, run7z("x " + base + ".tar -aoa -o" + base, working_directory)];
+                    return [4 /*yield*/, run7z(['x', base + ".tar", '-aoa', "-o" + base], working_directory)];
                 case 2:
                     _a.sent();
                     return [3 /*break*/, 5];

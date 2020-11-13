@@ -53,9 +53,9 @@ function untarLinux(filename: String, working_directory: String): Promise<void> 
     });
 }
 
-function run7z(command: String, working_directory: String): Promise<void> {
+function run7z(command: Array<String>, working_directory: String): Promise<void> {
     return new Promise((resolve, reject) => {
-        const tar = spawn("7z", [command], {
+        const tar = spawn("7z", command, {
             stdio: [process.stdin, process.stdout, process.stderr],
             cwd: working_directory
         });
@@ -78,8 +78,8 @@ function run7z(command: String, working_directory: String): Promise<void> {
 async function untarBoost(base: String, working_directory: String): Promise<void> {
     if (IS_WIN32) {
         core.debug("Unpacking boost using 7zip");
-        await run7z(`x ${base}.tar.gz`, working_directory);
-        await run7z(`x ${base}.tar -aoa -o${base}`, working_directory);
+        await run7z(['x', `${base}.tar.gz`], working_directory);
+        await run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);
     } else {
         core.debug("Unpacking boost using tar");
         await untarLinux(`${base}.tar.gz`, working_directory);
