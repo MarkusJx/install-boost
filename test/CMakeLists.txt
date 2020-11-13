@@ -14,5 +14,5 @@ include_directories(${Boost_INCLUDE_DIRS})
 add_executable(${PROJECT_NAME} test.cpp)
 
 if (NOT WIN32)
-    target_include_directories(${PROJECT_NAME} PUBLIC dl)
+    target_link_libraries(${PROJECT_NAME} PRIVATE dl)
 endif ()
