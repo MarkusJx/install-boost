@@ -310,7 +310,7 @@ function untarBoost(base, working_directory) {
                     return [3 /*break*/, 5];
                 case 3:
                     core.debug("Unpacking boost using tar");
-                    createDirectory(base);
+                    createDirectory(path.join(working_directory, base));
                     return [4 /*yield*/, untarLinux(base + ".tar.gz", base, working_directory)];
                 case 4:
                     _a.sent();

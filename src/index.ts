@@ -84,7 +84,7 @@ async function untarBoost(base: String, working_directory: String): Promise<void
         await run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);
     } else {
         core.debug("Unpacking boost using tar");
-        createDirectory(base);
+        createDirectory(path.join(working_directory, base));
         await untarLinux(`${base}.tar.gz`, base, working_directory);
     }
 }
