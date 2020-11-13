@@ -32,7 +32,7 @@ function downloadBoost(url: String, outFile: String): Promise<void> {
 
 function untarBoost(filename: String): Promise<void> {
     return new Promise((resolve, reject) => {
-        const tar = spawn("tar", ["xzvf", filename], {
+        const tar = spawn("tar", ["xzf", filename], {
             stdio: [process.stdin, process.stdout, process.stderr]
         });
 
@@ -142,9 +142,9 @@ async function main(): Promise<void> {
     await downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename));
     core.endGroup();
 
-    let out_dir = filename.substring(0, filename.lastIndexOf("."));
+    let out_dir: String = filename.substring(0, filename.lastIndexOf("."));
     out_dir = filename.substring(0, filename.lastIndexOf("."));
-    const BOOST_ROOT = path.join(BOOST_ROOT_DIR, out_dir);
+    const BOOST_ROOT: String = path.join(BOOST_ROOT_DIR, out_dir);
 
     console.log(`Extracting ${filename}...`);
     await untarBoost(path.join(BOOST_ROOT_DIR, filename));

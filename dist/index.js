@@ -253,7 +253,7 @@ function downloadBoost(url, outFile) {
 }
 function untarBoost(filename) {
     return new Promise(function (resolve, reject) {
-        var tar = spawn("tar", ["xzvf", filename], {
+        var tar = spawn("tar", ["xzf", filename], {
             stdio: [process.stdin, process.stdout, process.stderr]
         });
         tar.on('close', function (code) {
