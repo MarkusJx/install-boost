@@ -239,7 +239,8 @@ function downloadBoost(url, outFile) {
         var req = progress(request(url));
         req.on('progress', function (state) {
             core.debug("Progress state: " + JSON.stringify(state));
-            console.log("Download progress: " + state.percent * 100 + "%");
+            var percent = state.percent * 100;
+            console.log("Download progress: " + percent.toFixed(2) + "%");
         });
         req.pipe(fs.createWriteStream(outFile));
         req.on('end', function () {
@@ -253,7 +254,7 @@ function downloadBoost(url, outFile) {
 function untarBoost(filename) {
     return new Promise(function (resolve, reject) {
         var tar = spawn("tar", ["xzvf", filename], {
-            stdio: [0, 'pipe', 'pipe']
+            stdio: [process.stdin, process.stdout, process.stderr]
         });
         tar.on('close', function (code) {
             if (code != 0) {

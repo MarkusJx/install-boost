@@ -14,7 +14,8 @@ function downloadBoost(url: String, outFile: String): Promise<void> {
         const req = progress(request(url));
         req.on('progress', state => {
             core.debug(`Progress state: ${JSON.stringify(state)}`)
-            console.log(`Download progress: ${state.percent * 100}%`);
+            const percent: Number = state.percent * 100;
+            console.log(`Download progress: ${percent.toFixed(2)}%`);
         });
 
         req.pipe(fs.createWriteStream(outFile));
@@ -32,7 +33,7 @@ function downloadBoost(url: String, outFile: String): Promise<void> {
 function untarBoost(filename: String): Promise<void> {
     return new Promise((resolve, reject) => {
         const tar = spawn("tar", ["xzvf", filename], {
-            stdio: [0, 'pipe', 'pipe']
+            stdio: [process.stdin, process.stdout, process.stderr]
         });
 
         tar.on('close', (code) => {
