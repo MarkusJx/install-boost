@@ -9,6 +9,7 @@ const { spawn } = require("child_process");
 const IS_WIN32: Boolean = process.platform == "win32";
 const VERSION_MANIFEST_ADDR: String = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
 const BOOST_ROOT_DIR: String = IS_WIN32 ? "D:\\boost" : "/usr/boost";
+const VERSION: String = process.env.npm_package_version;
 
 function downloadBoost(url: String, outFile: String): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -22,6 +23,7 @@ function downloadBoost(url: String, outFile: String): Promise<void> {
         req.pipe(fs.createWriteStream(outFile));
 
         req.on('end', () => {
+            console.log("Download finished");
             resolve();
         });
 
@@ -153,16 +155,16 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
 }
 
 async function main(): Promise<void> {
-    const boost_version = core.getInput("boost_version");
-    const toolset = core.getInput("toolset");
-    const platform_version = core.getInput("platform_version");
+    const boost_version: String = core.getInput("boost_version");
+    const toolset: String = core.getInput("toolset");
+    const platform_version: String = core.getInput("platform_version");
 
     if (boost_version.length <= 0) {
-        throw new Error("boost_version variable must be set");
+        throw new Error("the boost_version variable must be defined");
     }
 
     console.log("Downloading versions-manifest.json...");
-    const versions = await getVersions();
+    const versions: Object[] = await getVersions();
 
     console.log("Parsing versions-manifest.json...");
     const ver_data = parseArguments(versions, boost_version, toolset, platform_version);
@@ -182,16 +184,24 @@ async function main(): Promise<void> {
     const BOOST_ROOT: String = path.join(BOOST_ROOT_DIR, base_dir);
 
     core.debug(`Boost base directory: ${base_dir}`);
-    console.log(`Extracting ${filename}...`);
+
+    core.startGroup(`Extract ${filename}`);
     await untarBoost(base_dir, BOOST_ROOT_DIR);
+    core.endGroup();
+
+    core.startGroup("Set output variables")
+    console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
+    console.log(`Setting BOOST_VER to '${base_dir}'`);
+    core.endGroup();
 
     core.setOutput("BOOST_ROOT", BOOST_ROOT);
     core.setOutput("BOOST_VER", base_dir);
 }
 
 try {
+    console.log(`Starting install-boost@${VERSION}`);
     main().then(() => {
-        console.log("Boost download finished");
+        console.log(`install-boost@${VERSION} finished successfully`);
     }, (reject) => {
         core.setFailed(reject);
     });

@@ -235,6 +235,7 @@ var spawn = __webpack_require__(3129).spawn;
 var IS_WIN32 = process.platform == "win32";
 var VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
 var BOOST_ROOT_DIR = IS_WIN32 ? "D:\\boost" : "/usr/boost";
+var VERSION = process.env.npm_package_version;
 function downloadBoost(url, outFile) {
     return new Promise(function (resolve, reject) {
         var req = progress(request(url));
@@ -245,6 +246,7 @@ function downloadBoost(url, outFile) {
         });
         req.pipe(fs.createWriteStream(outFile));
         req.on('end', function () {
+            console.log("Download finished");
             resolve();
         });
         req.on('error', function (err) {
@@ -382,7 +384,7 @@ function main() {
                     toolset = core.getInput("toolset");
                     platform_version = core.getInput("platform_version");
                     if (boost_version.length <= 0) {
-                        throw new Error("boost_version variable must be set");
+                        throw new Error("the boost_version variable must be defined");
                     }
                     console.log("Downloading versions-manifest.json...");
                     return [4 /*yield*/, getVersions()];
@@ -404,10 +406,15 @@ function main() {
                     base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
                     BOOST_ROOT = path.join(BOOST_ROOT_DIR, base_dir);
                     core.debug("Boost base directory: " + base_dir);
-                    console.log("Extracting " + filename + "...");
+                    core.startGroup("Extract " + filename);
                     return [4 /*yield*/, untarBoost(base_dir, BOOST_ROOT_DIR)];
                 case 3:
                     _a.sent();
+                    core.endGroup();
+                    core.startGroup("Set output variables");
+                    console.log("Setting BOOST_ROOT to '" + BOOST_ROOT + "'");
+                    console.log("Setting BOOST_VER to '" + base_dir + "'");
+                    core.endGroup();
                     core.setOutput("BOOST_ROOT", BOOST_ROOT);
                     core.setOutput("BOOST_VER", base_dir);
                     return [2 /*return*/];
@@ -416,8 +423,9 @@ function main() {
     });
 }
 try {
+    console.log("Starting install-boost@" + VERSION);
     main().then(function () {
-        console.log("Boost download finished");
+        console.log("install-boost@" + VERSION + " finished successfully");
     }, function (reject) {
         core.setFailed(reject);
     });
