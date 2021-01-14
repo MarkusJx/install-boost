@@ -8,38 +8,58 @@ const { spawn } = require("child_process");
 
 const IS_WIN32: Boolean = process.platform == "win32";
 const VERSION_MANIFEST_ADDR: String = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
-const BOOST_ROOT_DIR: String = IS_WIN32 ? "D:\\boost" : "/home/runner/boost";
+var BOOST_ROOT_DIR: String = path.join(process.env.GITHUB_WORKSPACE, 'boost');
 const VERSION: String = "1.0.0";
 
+/**
+ * Download boost
+ * 
+ * @param url the url to download from
+ * @param outFile the file to download to
+ */
 function downloadBoost(url: String, outFile: String): Promise<void> {
     return new Promise((resolve, reject) => {
+        // Get the request with progress
         const req = progress(request(url));
         req.on('progress', state => {
+            // Log the progress
             core.debug(`Progress state: ${JSON.stringify(state)}`)
             const percent: Number = state.percent * 100;
             console.log(`Download progress: ${percent.toFixed(2)}%`);
         });
 
+        // Pipe to outFile
         req.pipe(fs.createWriteStream(outFile));
 
+        // Resolve on download finished
         req.on('end', () => {
             console.log("Download finished");
             resolve();
         });
 
+        // Fail on error
         req.on('error', err => {
             reject(err);
         });
     });
 }
 
+/**
+ * Untar boost on linux/macOs
+ * 
+ * @param filename the file to extract
+ * @param out_dir the output directory
+ * @param working_directory the working directory
+ */
 function untarLinux(filename: String, out_dir: String, working_directory: String): Promise<void> {
     return new Promise((resolve, reject) => {
+        // Use tar to unpack boost
         const tar = spawn("tar", ["xzf", filename, "-C", out_dir], {
             stdio: [process.stdin, process.stdout, process.stderr],
             cwd: working_directory
         });
 
+        // Reject/Resolve on close
         tar.on('close', (code) => {
             if (code != 0) {
                 reject(`Tar exited with code ${code}`);
@@ -49,19 +69,28 @@ function untarLinux(filename: String, out_dir: String, working_directory: String
             }
         });
 
+        // Reject on error
         tar.on('error', (err) => {
             reject(`Tar failed: ${err}`);
         });
     });
 }
 
+/**
+ * Unpack boost on windows using 7zip
+ * 
+ * @param command the command array to run
+ * @param working_directory the working directory to work in
+ */
 function run7z(command: Array<String>, working_directory: String): Promise<void> {
     return new Promise((resolve, reject) => {
+        // Spawn a 7z process
         const tar = spawn("7z", command, {
             stdio: [process.stdin, process.stdout, process.stderr],
             cwd: working_directory
         });
 
+        // Reject/Resolve on close
         tar.on('close', (code) => {
             if (code != 0) {
                 reject(`7z exited with code ${code}`);
@@ -71,12 +100,19 @@ function run7z(command: Array<String>, working_directory: String): Promise<void>
             }
         });
 
+        // Reject on error
         tar.on('error', (err) => {
             reject(`7z failed: ${err}`);
         });
     });
 }
 
+/**
+ * Unpack boost using tar on unix or 7zip on windows
+ * 
+ * @param base the output base
+ * @param working_directory the working directory
+ */
 async function untarBoost(base: String, working_directory: String): Promise<void> {
     if (IS_WIN32) {
         core.debug("Unpacking boost using 7zip");
@@ -89,7 +125,12 @@ async function untarBoost(base: String, working_directory: String): Promise<void
     }
 }
 
-function createDirectory(dir: String) {
+/**
+ * Create a directory
+ * 
+ * @param dir the directory to create
+ */
+function createDirectory(dir: String): void {
     if (!fs.existsSync(dir)) {
         console.log(`${dir} does not exist, creating it`);
         fs.mkdirSync(dir);
@@ -99,26 +140,43 @@ function createDirectory(dir: String) {
     }
 }
 
+/**
+ * Get a list of the available boost versions
+ * 
+ * @returns an array with the version data
+ */
 function getVersions(): Promise<Array<Object>> {
     return new Promise((resolve, reject) => {
         const req = request.get(VERSION_MANIFEST_ADDR);
 
+        // Append data to the data object
         let dt = "";
         req.on('data', data => {
             dt += data;
         });
 
+        // Resolve on end with the data
         req.on('end', () => {
             core.debug("Downloaded data: " + dt);
             resolve(JSON.parse(dt));
         });
 
+        // Reject on error
         req.on('error', err => {
             reject(err.message);
         });
     });
 }
 
+/**
+ * Try to find the specified boost version
+ * 
+ * @param versions the version object array from getVersions()
+ * @param boost_version the requested boost version
+ * @param toolset the requested toolset
+ * @param platform_version the requested platform version
+ * @returns the url and file name or throws an error if the requested version could not be found
+ */
 function parseArguments(versions: Array<Object>, boost_version: String, toolset: String, platform_version: String): { url: String, filename: String } {
     for (let i = 0; i < versions.length; i++) {
         let cur = versions[i];
@@ -155,6 +213,11 @@ function parseArguments(versions: Array<Object>, boost_version: String, toolset:
     throw new Error(`Could not find boost version ${boost_version}`);
 }
 
+/**
+ * Delete files
+ * 
+ * @param files the files to delete
+ */
 function deleteFiles(files: String[]): void {
     console.log(`Attempting to delete ${files.length} file(s)...`);
     for (let i = 0; i < files.length; i++) {
@@ -168,6 +231,12 @@ function deleteFiles(files: String[]): void {
     }
 }
 
+/**
+ * Clean up
+ * 
+ * @param base_dir the base directory
+ * @param base the boost base name (without .tar.gz)
+ */
 function cleanup(base_dir: String, base: String) {
     if (IS_WIN32) {
         deleteFiles([path.join(base_dir, `${base}.tar.gz`), path.join(base_dir, `${base}.tar`)]);
@@ -180,9 +249,15 @@ async function main(): Promise<void> {
     const boost_version: String = core.getInput("boost_version");
     const toolset: String = core.getInput("toolset");
     const platform_version: String = core.getInput("platform_version");
+    const boost_install_dir: String = core.getInput("boost_install_dir");
 
     if (boost_version.length <= 0) {
         throw new Error("the boost_version variable must be defined");
+    }
+
+    if (boost_install_dir.length > 0) {
+        BOOST_ROOT_DIR = path.join(boost_install_dir, 'boost');
+        console.log(`The install directory was manually changed to ${BOOST_ROOT_DIR}`);
     }
 
     console.log("Downloading versions-manifest.json...");

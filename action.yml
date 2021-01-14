@@ -13,6 +13,10 @@ inputs:
     description: 'The platform version boost was compiled on, e.g. "18.04". May only be used on linux'
     required: false
     default: ''
+  boost_install_dir:
+    description: 'The dirctory to install boost into'
+    required: false
+    default: ''
 outputs:
   BOOST_ROOT:
     description: 'The path to the boost installation, e.g. to be used in CMake'
