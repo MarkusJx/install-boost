@@ -33,7 +33,7 @@ jobs:
       - run: echo "${{ steps.install-boost.outputs.BOOST_VER }}"
         shell: bash
 
-  build:
+  build-custom-install-dir:
     runs-on: ${{ matrix.os }}
     
     strategy:
