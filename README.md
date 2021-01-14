@@ -35,7 +35,7 @@ The version of boost installed, e.g. ``boost-1.73.0-linux-16.04-gcc-x64``.
 ### Windows
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v1.0
+  uses: MarkusJx/install-boost@v1.0.1
   id: install-boost
   with:
     # REQUIRED: Specify the required boost version
@@ -54,7 +54,7 @@ The version of boost installed, e.g. ``boost-1.73.0-linux-16.04-gcc-x64``.
 ### Ubuntu
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v1.0
+  uses: MarkusJx/install-boost@v1.0.1
   id: install-boost
   with:
     # REQUIRED: Specify the required boost version
