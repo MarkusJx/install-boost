@@ -14,6 +14,10 @@ A list of supported versions can be found [here](https://github.com/actions/boos
 **Optional** The platform version of the system boost was compiled on, e.g. ``18.04``. May be only used on ubuntu, as the value is undefined on windows,
 thus, when specifying a value, this build step will fail.
 
+### `boost_install_dir`
+**Optional** The directory to install boost into. If specified, boost will be installed into 
+``$boost_install_dir/boost/$BOOST_VERSION_STRING/``. The default value is ``${{env.GITHUB_WORKSPACE}}``.
+
 ## Outputs
 ### `BOOST_ROOT`
 The boost root directory path, to be passed to another tool, e.g. CMake to find Boost:
@@ -40,6 +44,8 @@ The version of boost installed, e.g. ``boost-1.73.0-linux-16.04-gcc-x64``.
     boost_version: 1.73.0
     # OPTIONAL: Specify a toolset on windows
     toolset: msvc14.2
+    # OPTIONAL: Specify a custon install location
+    boost_install_dir: C:\some_directory
     
     # NOTE: If a boost version matching all requirements cannot be found,
     # this build step will fail
@@ -57,6 +63,8 @@ The version of boost installed, e.g. ``boost-1.73.0-linux-16.04-gcc-x64``.
     boost_version: 1.73.0
     # OPTIONAL: Specify a platform version on ubuntu
     platform_version: 18.04
+    # OPTIONAL: Specify a custom install location
+    boost_install_dir: /home/runner/some_directory
     
     # NOTE: If a boost version matching all requirements cannot be found,
     # this build step will fail
