@@ -154,10 +154,14 @@ exports.deleteFiles = deleteFiles;
  * @param out_dir the output directory
  * @param working_directory the working directory
  */
-function untarLinux(filename, out_dir, working_directory) {
+function untarLinux(filename, out_dir, working_directory, rename) {
     return new Promise((resolve, reject) => {
+        const args = ["xzf", filename];
+        if (rename) {
+            args.push("-C", out_dir);
+        }
         // Use tar to unpack boost
-        const tar = child_process_1.spawn("tar", ["xzf", filename, "-C", out_dir], {
+        const tar = child_process_1.spawn("tar", args, {
             stdio: [process.stdin, process.stdout, process.stderr],
             cwd: working_directory
         });
@@ -227,7 +231,7 @@ function untarBoost(base, working_directory, rename = true) {
         else {
             core.debug("Unpacking boost using tar");
             createDirectory(path.join(working_directory, base));
-            yield untarLinux(`${base}.tar.gz`, base, working_directory);
+            yield untarLinux(`${base}.tar.gz`, base, working_directory, rename);
         }
     });
 }
