@@ -3,7 +3,9 @@ module.exports =
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 9283:
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) {
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -14,73 +16,82 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var core = __nccwpck_require__(2186);
-var github = __nccwpck_require__(5438);
-var request = __nccwpck_require__(8699);
-var progress = __nccwpck_require__(6139);
-var fs = __nccwpck_require__(5747);
-var path = __nccwpck_require__(5622);
-var spawn = __nccwpck_require__(3129).spawn;
-var IS_WIN32 = process.platform == "win32";
-var VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const installV1_1 = __nccwpck_require__(5389);
+const installV2_1 = __nccwpck_require__(7225);
+const core = __nccwpck_require__(2186);
+const github = __nccwpck_require__(5438);
+const request = __nccwpck_require__(8699);
+const progress = __nccwpck_require__(6139);
+const fs = __nccwpck_require__(5747);
+const path = __nccwpck_require__(5622);
+const { spawn } = __nccwpck_require__(3129);
 var BOOST_ROOT_DIR = path.join(process.env.GITHUB_WORKSPACE, 'boost');
-var VERSION = "1.0.0";
-/**
- * Download boost
- *
- * @param url the url to download from
- * @param outFile the file to download to
- */
-function downloadBoost(url, outFile) {
-    return new Promise(function (resolve, reject) {
-        // Get the request with progress
-        var req = progress(request(url));
-        req.on('progress', function (state) {
-            // Log the progress
-            core.debug("Progress state: " + JSON.stringify(state));
-            var percent = state.percent * 100;
-            console.log("Download progress: " + percent.toFixed(2) + "%");
-        });
-        // Pipe to outFile
-        req.pipe(fs.createWriteStream(outFile));
-        // Resolve on download finished
-        req.on('end', function () {
-            console.log("Download finished");
-            resolve();
-        });
-        // Fail on error
-        req.on('error', function (err) {
-            reject(err);
-        });
+const VERSION = "2.beta.1";
+function main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const boost_version = core.getInput("boost_version");
+        const toolset = core.getInput("toolset");
+        const platform_version = core.getInput("platform_version");
+        const boost_install_dir = core.getInput("boost_install_dir");
+        let script_version = core.getInput("version");
+        if (boost_version.length <= 0) {
+            throw new Error("the boost_version variable must be defined");
+        }
+        if (boost_install_dir.length > 0) {
+            BOOST_ROOT_DIR = path.join(boost_install_dir, 'boost');
+            console.log(`The install directory was manually changed to ${BOOST_ROOT_DIR}`);
+        }
+        if (script_version.length <= 0) {
+            script_version = "default";
+        }
+        if (script_version === "legacy") {
+            yield installV1_1.default(boost_version, toolset, platform_version, BOOST_ROOT_DIR);
+        }
+        else if (script_version === "default") {
+            yield installV2_1.default(boost_version, platform_version, BOOST_ROOT_DIR);
+        }
+        else {
+            throw new Error("Invalid value entered for option 'version'");
+        }
     });
 }
+try {
+    console.log(`Starting install-boost@${VERSION}`);
+    main().then(() => {
+        console.log(`install-boost@${VERSION} finished successfully`);
+    }, (reject) => {
+        core.setFailed(reject);
+    });
+}
+catch (error) {
+    core.setFailed(error.message);
+}
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ 5389:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const shared_1 = __nccwpck_require__(6058);
+const core = __nccwpck_require__(2186);
+const path = __nccwpck_require__(5622);
+const child_process_1 = __nccwpck_require__(3129);
+const IS_WIN32 = process.platform == "win32";
+const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
 /**
  * Untar boost on linux/macOs
  *
@@ -89,16 +100,16 @@ function downloadBoost(url, outFile) {
  * @param working_directory the working directory
  */
 function untarLinux(filename, out_dir, working_directory) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         // Use tar to unpack boost
-        var tar = spawn("tar", ["xzf", filename, "-C", out_dir], {
+        const tar = child_process_1.spawn("tar", ["xzf", filename, "-C", out_dir], {
             stdio: [process.stdin, process.stdout, process.stderr],
             cwd: working_directory
         });
         // Reject/Resolve on close
-        tar.on('close', function (code) {
+        tar.on('close', (code) => {
             if (code != 0) {
-                reject("Tar exited with code " + code);
+                reject(`Tar exited with code ${code}`);
             }
             else {
                 console.log("Tar exited with code 0");
@@ -106,8 +117,8 @@ function untarLinux(filename, out_dir, working_directory) {
             }
         });
         // Reject on error
-        tar.on('error', function (err) {
-            reject("Tar failed: " + err);
+        tar.on('error', (err) => {
+            reject(`Tar failed: ${err}`);
         });
     });
 }
@@ -118,16 +129,16 @@ function untarLinux(filename, out_dir, working_directory) {
  * @param working_directory the working directory to work in
  */
 function run7z(command, working_directory) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         // Spawn a 7z process
-        var tar = spawn("7z", command, {
+        const tar = child_process_1.spawn("7z", command, {
             stdio: [process.stdin, process.stdout, process.stderr],
             cwd: working_directory
         });
         // Reject/Resolve on close
-        tar.on('close', function (code) {
+        tar.on('close', (code) => {
             if (code != 0) {
-                reject("7z exited with code " + code);
+                reject(`7z exited with code ${code}`);
             }
             else {
                 console.log("7z exited with code 0");
@@ -135,8 +146,8 @@ function run7z(command, working_directory) {
             }
         });
         // Reject on error
-        tar.on('error', function (err) {
-            reject("7z failed: " + err);
+        tar.on('error', (err) => {
+            reject(`7z failed: ${err}`);
         });
     });
 }
@@ -147,31 +158,185 @@ function run7z(command, working_directory) {
  * @param working_directory the working directory
  */
 function untarBoost(base, working_directory) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!IS_WIN32) return [3 /*break*/, 3];
-                    core.debug("Unpacking boost using 7zip");
-                    return [4 /*yield*/, run7z(['x', base + ".tar.gz"], working_directory)];
-                case 1:
-                    _a.sent();
-                    return [4 /*yield*/, run7z(['x', base + ".tar", '-aoa', "-o" + base], working_directory)];
-                case 2:
-                    _a.sent();
-                    return [3 /*break*/, 5];
-                case 3:
-                    core.debug("Unpacking boost using tar");
-                    createDirectory(path.join(working_directory, base));
-                    return [4 /*yield*/, untarLinux(base + ".tar.gz", base, working_directory)];
-                case 4:
-                    _a.sent();
-                    _a.label = 5;
-                case 5: return [2 /*return*/];
-            }
+    return __awaiter(this, void 0, void 0, function* () {
+        if (IS_WIN32) {
+            core.debug("Unpacking boost using 7zip");
+            yield run7z(['x', `${base}.tar.gz`], working_directory);
+            yield run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);
+        }
+        else {
+            core.debug("Unpacking boost using tar");
+            shared_1.createDirectory(path.join(working_directory, base));
+            yield untarLinux(`${base}.tar.gz`, base, working_directory);
+        }
+    });
+}
+/**
+ * Clean up
+ *
+ * @param base_dir the base directory
+ * @param base the boost base name (without .tar.gz)
+ */
+function cleanup(base_dir, base) {
+    if (IS_WIN32) {
+        shared_1.deleteFiles([path.join(base_dir, `${base}.tar.gz`), path.join(base_dir, `${base}.tar`)]);
+    }
+    else {
+        shared_1.deleteFiles([path.join(base_dir, `${base}.tar.gz`)]);
+    }
+}
+function installV1(boost_version, toolset, platform_version, BOOST_ROOT_DIR) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("Using legacy install method");
+        console.log("Downloading versions-manifest.json...");
+        const versions = yield shared_1.getVersions(VERSION_MANIFEST_ADDR);
+        console.log("Parsing versions-manifest.json...");
+        const ver_data = shared_1.parseArguments(versions, boost_version, toolset, platform_version);
+        const download_url = ver_data.url;
+        const filename = ver_data.filename;
+        core.startGroup(`Create ${BOOST_ROOT_DIR}`);
+        shared_1.createDirectory(BOOST_ROOT_DIR);
+        core.endGroup();
+        core.startGroup("Download Boost");
+        yield shared_1.downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename));
+        core.endGroup();
+        let base_dir = filename.substring(0, filename.lastIndexOf("."));
+        base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
+        const BOOST_ROOT = path.join(BOOST_ROOT_DIR, base_dir);
+        core.debug(`Boost base directory: ${base_dir}`);
+        core.startGroup(`Extract ${filename}`);
+        yield untarBoost(base_dir, BOOST_ROOT_DIR);
+        core.endGroup();
+        core.startGroup("Clean up");
+        cleanup(BOOST_ROOT_DIR, base_dir);
+        core.endGroup();
+        core.startGroup("Set output variables");
+        console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
+        console.log(`Setting BOOST_VER to '${base_dir}'`);
+        core.endGroup();
+        core.setOutput("BOOST_ROOT", BOOST_ROOT);
+        core.setOutput("BOOST_VER", base_dir);
+    });
+}
+exports.default = installV1;
+//# sourceMappingURL=installV1.js.map
+
+/***/ }),
+
+/***/ 7225:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __nccwpck_require__(2186);
+const path = __nccwpck_require__(5622);
+const child_process_1 = __nccwpck_require__(3129);
+const shared_1 = __nccwpck_require__(6058);
+const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
+const PLATFORM = process.platform;
+function untarBoost(filename, working_directory) {
+    return __awaiter(this, void 0, void 0, function* () {
+        core.debug("Unpacking boost using tar");
+        return new Promise((resolve, reject) => {
+            // Use tar to unpack boost
+            const tar = child_process_1.spawn("tar", ["xzf", filename], {
+                stdio: [process.stdin, process.stdout, process.stderr],
+                cwd: working_directory
+            });
+            // Reject/Resolve on close
+            tar.on('close', (code) => {
+                if (code != 0) {
+                    reject(`Tar exited with code ${code}`);
+                }
+                else {
+                    console.log("Tar exited with code 0");
+                    resolve();
+                }
+            });
+            // Reject on error
+            tar.on('error', (err) => {
+                reject(`Tar failed: ${err}`);
+            });
         });
     });
 }
+function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("Downloading versions-manifest.json...");
+        const versions = yield shared_1.getVersions(VERSION_MANIFEST_ADDR);
+        console.log("Parsing versions-manifest.json...");
+        const ver_data = shared_1.parseArguments(versions, boost_version, null, platform_version);
+        const download_url = ver_data.url;
+        const filename = ver_data.filename;
+        core.startGroup(`Create ${BOOST_ROOT_DIR}`);
+        shared_1.createDirectory(BOOST_ROOT_DIR);
+        core.endGroup();
+        core.startGroup("Download Boost");
+        yield shared_1.downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename));
+        core.endGroup();
+        core.startGroup(`Extract ${filename}`);
+        yield untarBoost(filename, BOOST_ROOT_DIR);
+        core.endGroup();
+        core.startGroup("Clean up");
+        shared_1.deleteFiles([path.join(BOOST_ROOT_DIR, filename)]);
+        core.endGroup();
+        let base_dir = filename.substring(0, filename.lastIndexOf("."));
+        base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
+        const BOOST_ROOT = path.join(BOOST_ROOT_DIR, "boost");
+        core.startGroup("Set output variables");
+        console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
+        console.log(`Setting BOOST_VER to '${base_dir}'`);
+        core.endGroup();
+        core.setOutput("BOOST_ROOT", BOOST_ROOT);
+        core.setOutput("BOOST_VER", base_dir);
+    });
+}
+exports.default = installV2;
+//# sourceMappingURL=installV2.js.map
+
+/***/ }),
+
+/***/ 6058:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.deleteFiles = exports.downloadBoost = exports.parseArguments = exports.createDirectory = exports.getVersions = void 0;
+const core = __nccwpck_require__(2186);
+const request = __nccwpck_require__(8699);
+const fs = __nccwpck_require__(5747);
+const progress = __nccwpck_require__(6139);
+function getVersions(manifestAddress) {
+    return new Promise((resolve, reject) => {
+        const req = request.get(manifestAddress);
+        // Append data to the data object
+        let dt = "";
+        req.on('data', data => {
+            dt += data;
+        });
+        // Resolve on end with the data
+        req.on('end', () => {
+            core.debug("Downloaded data: " + dt);
+            resolve(JSON.parse(dt));
+        });
+        // Reject on error
+        req.on('error', err => {
+            reject(err.message);
+        });
+    });
+}
+exports.getVersions = getVersions;
 /**
  * Create a directory
  *
@@ -179,38 +344,15 @@ function untarBoost(base, working_directory) {
  */
 function createDirectory(dir) {
     if (!fs.existsSync(dir)) {
-        console.log(dir + " does not exist, creating it");
+        console.log(`${dir} does not exist, creating it`);
         fs.mkdirSync(dir);
         console.log("Done.");
     }
     else {
-        console.log(dir + " already exists, doing nothing");
+        console.log(`${dir} already exists, doing nothing`);
     }
 }
-/**
- * Get a list of the available boost versions
- *
- * @returns an array with the version data
- */
-function getVersions() {
-    return new Promise(function (resolve, reject) {
-        var req = request.get(VERSION_MANIFEST_ADDR);
-        // Append data to the data object
-        var dt = "";
-        req.on('data', function (data) {
-            dt += data;
-        });
-        // Resolve on end with the data
-        req.on('end', function () {
-            core.debug("Downloaded data: " + dt);
-            resolve(JSON.parse(dt));
-        });
-        // Reject on error
-        req.on('error', function (err) {
-            reject(err.message);
-        });
-    });
-}
+exports.createDirectory = createDirectory;
 /**
  * Try to find the specified boost version
  *
@@ -221,23 +363,23 @@ function getVersions() {
  * @returns the url and file name or throws an error if the requested version could not be found
  */
 function parseArguments(versions, boost_version, toolset, platform_version) {
-    for (var i = 0; i < versions.length; i++) {
-        var cur = versions[i];
+    for (let i = 0; i < versions.length; i++) {
+        let cur = versions[i];
         if (cur.hasOwnProperty("version") && cur["version"] == boost_version) {
-            var files = cur["files"];
-            for (var j = 0; j < files.length; j++) {
-                var file = files[j];
-                core.debug("file platform: " + file["platform"]);
+            let files = cur["files"];
+            for (let j = 0; j < files.length; j++) {
+                let file = files[j];
+                core.debug(`file platform: ${file["platform"]}`);
                 if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
                     core.debug("File does not match param 'platform'");
                     continue;
                 }
-                core.debug("file toolset: " + file["toolset"]);
-                if (toolset.length > 0 && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
+                core.debug(`file toolset: ${file["toolset"]}`);
+                if (toolset != null && toolset.length > 0 && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
                     core.debug("File does not match param 'toolset'");
                     continue;
                 }
-                core.debug("file platform version: " + file["platform_version"]);
+                core.debug(`file platform version: ${file["platform_version"]}`);
                 if (platform_version.length > 0 && (!file.hasOwnProperty("platform_version") || file["platform_version"] != platform_version)) {
                     core.debug("File does not match param 'platform_version");
                     continue;
@@ -247,108 +389,59 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
             break;
         }
     }
-    throw new Error("Could not find boost version " + boost_version);
+    throw new Error(`Could not find boost version ${boost_version}`);
 }
+exports.parseArguments = parseArguments;
+/**
+ * Download boost
+ *
+ * @param url the url to download from
+ * @param outFile the file to download to
+ */
+function downloadBoost(url, outFile) {
+    return new Promise((resolve, reject) => {
+        // Get the request with progress
+        const req = progress(request(url));
+        req.on('progress', state => {
+            // Log the progress
+            core.debug(`Progress state: ${JSON.stringify(state)}`);
+            const percent = state.percent * 100;
+            console.log(`Download progress: ${percent.toFixed(2)}%`);
+        });
+        // Pipe to outFile
+        req.pipe(fs.createWriteStream(outFile));
+        // Resolve on download finished
+        req.on('end', () => {
+            console.log("Download finished");
+            resolve();
+        });
+        // Fail on error
+        req.on('error', err => {
+            reject(err);
+        });
+    });
+}
+exports.downloadBoost = downloadBoost;
 /**
  * Delete files
  *
  * @param files the files to delete
  */
 function deleteFiles(files) {
-    console.log("Attempting to delete " + files.length + " file(s)...");
-    for (var i = 0; i < files.length; i++) {
-        var cur_file = files[i];
+    console.log(`Attempting to delete ${files.length} file(s)...`);
+    for (let i = 0; i < files.length; i++) {
+        let cur_file = files[i];
         if (fs.existsSync(cur_file)) {
-            console.log(cur_file + " exists, deleting it");
+            console.log(`${cur_file} exists, deleting it`);
             fs.unlinkSync(cur_file);
         }
         else {
-            console.log(cur_file + " does not exist");
+            console.log(`${cur_file} does not exist`);
         }
     }
 }
-/**
- * Clean up
- *
- * @param base_dir the base directory
- * @param base the boost base name (without .tar.gz)
- */
-function cleanup(base_dir, base) {
-    if (IS_WIN32) {
-        deleteFiles([path.join(base_dir, base + ".tar.gz"), path.join(base_dir, base + ".tar")]);
-    }
-    else {
-        deleteFiles([path.join(base_dir, base + ".tar.gz")]);
-    }
-}
-function main() {
-    return __awaiter(this, void 0, void 0, function () {
-        var boost_version, toolset, platform_version, boost_install_dir, versions, ver_data, download_url, filename, base_dir, BOOST_ROOT;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    boost_version = core.getInput("boost_version");
-                    toolset = core.getInput("toolset");
-                    platform_version = core.getInput("platform_version");
-                    boost_install_dir = core.getInput("boost_install_dir");
-                    if (boost_version.length <= 0) {
-                        throw new Error("the boost_version variable must be defined");
-                    }
-                    if (boost_install_dir.length > 0) {
-                        BOOST_ROOT_DIR = path.join(boost_install_dir, 'boost');
-                        console.log("The install directory was manually changed to " + BOOST_ROOT_DIR);
-                    }
-                    console.log("Downloading versions-manifest.json...");
-                    return [4 /*yield*/, getVersions()];
-                case 1:
-                    versions = _a.sent();
-                    console.log("Parsing versions-manifest.json...");
-                    ver_data = parseArguments(versions, boost_version, toolset, platform_version);
-                    download_url = ver_data.url;
-                    filename = ver_data.filename;
-                    core.startGroup("Create " + BOOST_ROOT_DIR);
-                    createDirectory(BOOST_ROOT_DIR);
-                    core.endGroup();
-                    core.startGroup("Download Boost");
-                    return [4 /*yield*/, downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename))];
-                case 2:
-                    _a.sent();
-                    core.endGroup();
-                    base_dir = filename.substring(0, filename.lastIndexOf("."));
-                    base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
-                    BOOST_ROOT = path.join(BOOST_ROOT_DIR, base_dir);
-                    core.debug("Boost base directory: " + base_dir);
-                    core.startGroup("Extract " + filename);
-                    return [4 /*yield*/, untarBoost(base_dir, BOOST_ROOT_DIR)];
-                case 3:
-                    _a.sent();
-                    core.endGroup();
-                    core.startGroup("Clean up");
-                    cleanup(BOOST_ROOT_DIR, base_dir);
-                    core.endGroup();
-                    core.startGroup("Set output variables");
-                    console.log("Setting BOOST_ROOT to '" + BOOST_ROOT + "'");
-                    console.log("Setting BOOST_VER to '" + base_dir + "'");
-                    core.endGroup();
-                    core.setOutput("BOOST_ROOT", BOOST_ROOT);
-                    core.setOutput("BOOST_VER", base_dir);
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
-try {
-    console.log("Starting install-boost@" + VERSION);
-    main().then(function () {
-        console.log("install-boost@" + VERSION + " finished successfully");
-    }, function (reject) {
-        core.setFailed(reject);
-    });
-}
-catch (error) {
-    core.setFailed(error.message);
-}
-//# sourceMappingURL=index.js.map
+exports.deleteFiles = deleteFiles;
+//# sourceMappingURL=shared.js.map
 
 /***/ }),
 

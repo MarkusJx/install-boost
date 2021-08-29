@@ -1,0 +1,76 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core = require("@actions/core");
+const path = require("path");
+const child_process_1 = require("child_process");
+const shared_1 = require("./shared");
+const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
+const PLATFORM = process.platform;
+function untarBoost(filename, working_directory) {
+    return __awaiter(this, void 0, void 0, function* () {
+        core.debug("Unpacking boost using tar");
+        return new Promise((resolve, reject) => {
+            // Use tar to unpack boost
+            const tar = child_process_1.spawn("tar", ["xzf", filename], {
+                stdio: [process.stdin, process.stdout, process.stderr],
+                cwd: working_directory
+            });
+            // Reject/Resolve on close
+            tar.on('close', (code) => {
+                if (code != 0) {
+                    reject(`Tar exited with code ${code}`);
+                }
+                else {
+                    console.log("Tar exited with code 0");
+                    resolve();
+                }
+            });
+            // Reject on error
+            tar.on('error', (err) => {
+                reject(`Tar failed: ${err}`);
+            });
+        });
+    });
+}
+function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("Downloading versions-manifest.json...");
+        const versions = yield shared_1.getVersions(VERSION_MANIFEST_ADDR);
+        console.log("Parsing versions-manifest.json...");
+        const ver_data = shared_1.parseArguments(versions, boost_version, null, platform_version);
+        const download_url = ver_data.url;
+        const filename = ver_data.filename;
+        core.startGroup(`Create ${BOOST_ROOT_DIR}`);
+        shared_1.createDirectory(BOOST_ROOT_DIR);
+        core.endGroup();
+        core.startGroup("Download Boost");
+        yield shared_1.downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename));
+        core.endGroup();
+        core.startGroup(`Extract ${filename}`);
+        yield untarBoost(filename, BOOST_ROOT_DIR);
+        core.endGroup();
+        core.startGroup("Clean up");
+        shared_1.deleteFiles([path.join(BOOST_ROOT_DIR, filename)]);
+        core.endGroup();
+        let base_dir = filename.substring(0, filename.lastIndexOf("."));
+        base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
+        const BOOST_ROOT = path.join(BOOST_ROOT_DIR, "boost");
+        core.startGroup("Set output variables");
+        console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
+        console.log(`Setting BOOST_VER to '${base_dir}'`);
+        core.endGroup();
+        core.setOutput("BOOST_ROOT", BOOST_ROOT);
+        core.setOutput("BOOST_VER", base_dir);
+    });
+}
+exports.default = installV2;
+//# sourceMappingURL=installV2.js.map
