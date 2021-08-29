@@ -21,16 +21,16 @@ export default async function installV2(boost_version: string, platform_version:
     await downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename));
     core.endGroup();
 
+    let base_dir: string = filename.substring(0, filename.lastIndexOf("."));
+    base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
+
     core.startGroup(`Extract ${filename}`);
-    await untarBoost(filename, BOOST_ROOT_DIR, false);
+    await untarBoost(base_dir, BOOST_ROOT_DIR, false);
     core.endGroup();
 
     core.startGroup("Clean up");
     deleteFiles([path.join(BOOST_ROOT_DIR, filename)]);
     core.endGroup();
-
-    let base_dir: string = filename.substring(0, filename.lastIndexOf("."));
-    base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
 
     core.startGroup("Set output variables");
     console.log(`Setting BOOST_ROOT to '${BOOST_ROOT_DIR}'`);

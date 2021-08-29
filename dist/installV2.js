@@ -27,14 +27,14 @@ function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
         core.startGroup("Download Boost");
         yield shared_1.downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename));
         core.endGroup();
+        let base_dir = filename.substring(0, filename.lastIndexOf("."));
+        base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
         core.startGroup(`Extract ${filename}`);
-        yield shared_1.untarBoost(filename, BOOST_ROOT_DIR, false);
+        yield shared_1.untarBoost(base_dir, BOOST_ROOT_DIR, false);
         core.endGroup();
         core.startGroup("Clean up");
         shared_1.deleteFiles([path.join(BOOST_ROOT_DIR, filename)]);
         core.endGroup();
-        let base_dir = filename.substring(0, filename.lastIndexOf("."));
-        base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
         core.startGroup("Set output variables");
         console.log(`Setting BOOST_ROOT to '${BOOST_ROOT_DIR}'`);
         console.log(`Setting BOOST_VER to '${base_dir}'`);
