@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 import * as path from "path";
-import { createDirectory, deleteFiles, downloadBoost, getVersions, parseArguments, untarBoost } from "./shared";
+import { cleanup, createDirectory, deleteFiles, downloadBoost, getVersions, parseArguments, untarBoost } from "./shared";
 
 const VERSION_MANIFEST_ADDR: string = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
 
@@ -29,7 +29,7 @@ export default async function installV2(boost_version: string, platform_version:
     core.endGroup();
 
     core.startGroup("Clean up");
-    deleteFiles([path.join(BOOST_ROOT_DIR, filename)]);
+    cleanup(BOOST_ROOT_DIR, base_dir);
     core.endGroup();
 
     core.startGroup("Set output variables");

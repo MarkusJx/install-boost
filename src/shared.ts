@@ -241,3 +241,17 @@ export async function untarBoost(base: string, working_directory: string, rename
         await untarLinux(`${base}.tar.gz`, base, working_directory, rename);
     }
 }
+
+/**
+ * Clean up
+ * 
+ * @param base_dir the base directory
+ * @param base the boost base name (without .tar.gz)
+ */
+export function cleanup(base_dir: string, base: string) {
+    if (process.platform == "win32") {
+        deleteFiles([path.join(base_dir, `${base}.tar.gz`), path.join(base_dir, `${base}.tar`)]);
+    } else {
+        deleteFiles([path.join(base_dir, `${base}.tar.gz`)]);
+    }
+}

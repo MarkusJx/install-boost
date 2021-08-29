@@ -33,7 +33,7 @@ function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
         yield shared_1.untarBoost(base_dir, BOOST_ROOT_DIR, false);
         core.endGroup();
         core.startGroup("Clean up");
-        shared_1.deleteFiles([path.join(BOOST_ROOT_DIR, filename)]);
+        shared_1.cleanup(BOOST_ROOT_DIR, base_dir);
         core.endGroup();
         core.startGroup("Set output variables");
         console.log(`Setting BOOST_ROOT to '${BOOST_ROOT_DIR}/boost'`);

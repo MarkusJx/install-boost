@@ -12,22 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const shared_1 = require("./shared");
 const core = require("@actions/core");
 const path = require("path");
-const IS_WIN32 = process.platform == "win32";
 const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
-/**
- * Clean up
- *
- * @param base_dir the base directory
- * @param base the boost base name (without .tar.gz)
- */
-function cleanup(base_dir, base) {
-    if (IS_WIN32) {
-        shared_1.deleteFiles([path.join(base_dir, `${base}.tar.gz`), path.join(base_dir, `${base}.tar`)]);
-    }
-    else {
-        shared_1.deleteFiles([path.join(base_dir, `${base}.tar.gz`)]);
-    }
-}
 function installV1(boost_version, toolset, platform_version, BOOST_ROOT_DIR) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Using legacy install method");
@@ -51,7 +36,7 @@ function installV1(boost_version, toolset, platform_version, BOOST_ROOT_DIR) {
         yield shared_1.untarBoost(base_dir, BOOST_ROOT_DIR);
         core.endGroup();
         core.startGroup("Clean up");
-        cleanup(BOOST_ROOT_DIR, base_dir);
+        shared_1.cleanup(BOOST_ROOT_DIR, base_dir);
         core.endGroup();
         core.startGroup("Set output variables");
         console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);

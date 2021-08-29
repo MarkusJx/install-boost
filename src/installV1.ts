@@ -1,24 +1,9 @@
-import { createDirectory, deleteFiles, downloadBoost, getVersions, parseArguments, untarBoost } from "./shared";
+import { cleanup, createDirectory, downloadBoost, getVersions, parseArguments, untarBoost } from "./shared";
 
 import core = require('@actions/core');
 import path = require('path');
 
-const IS_WIN32: boolean = process.platform == "win32";
 const VERSION_MANIFEST_ADDR: string = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
-
-/**
- * Clean up
- * 
- * @param base_dir the base directory
- * @param base the boost base name (without .tar.gz)
- */
-function cleanup(base_dir: string, base: string) {
-    if (IS_WIN32) {
-        deleteFiles([path.join(base_dir, `${base}.tar.gz`), path.join(base_dir, `${base}.tar`)]);
-    } else {
-        deleteFiles([path.join(base_dir, `${base}.tar.gz`)]);
-    }
-}
 
 export default async function installV1(boost_version: string, toolset: string, platform_version: string, BOOST_ROOT_DIR: string): Promise<void> {
     console.log("Using legacy install method");

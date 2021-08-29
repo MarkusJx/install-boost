@@ -84,22 +84,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const shared_1 = __nccwpck_require__(6058);
 const core = __nccwpck_require__(2186);
 const path = __nccwpck_require__(5622);
-const IS_WIN32 = process.platform == "win32";
 const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
-/**
- * Clean up
- *
- * @param base_dir the base directory
- * @param base the boost base name (without .tar.gz)
- */
-function cleanup(base_dir, base) {
-    if (IS_WIN32) {
-        shared_1.deleteFiles([path.join(base_dir, `${base}.tar.gz`), path.join(base_dir, `${base}.tar`)]);
-    }
-    else {
-        shared_1.deleteFiles([path.join(base_dir, `${base}.tar.gz`)]);
-    }
-}
 function installV1(boost_version, toolset, platform_version, BOOST_ROOT_DIR) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Using legacy install method");
@@ -123,7 +108,7 @@ function installV1(boost_version, toolset, platform_version, BOOST_ROOT_DIR) {
         yield shared_1.untarBoost(base_dir, BOOST_ROOT_DIR);
         core.endGroup();
         core.startGroup("Clean up");
-        cleanup(BOOST_ROOT_DIR, base_dir);
+        shared_1.cleanup(BOOST_ROOT_DIR, base_dir);
         core.endGroup();
         core.startGroup("Set output variables");
         console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
@@ -177,7 +162,7 @@ function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
         yield shared_1.untarBoost(base_dir, BOOST_ROOT_DIR, false);
         core.endGroup();
         core.startGroup("Clean up");
-        shared_1.deleteFiles([path.join(BOOST_ROOT_DIR, filename)]);
+        shared_1.cleanup(BOOST_ROOT_DIR, base_dir);
         core.endGroup();
         core.startGroup("Set output variables");
         console.log(`Setting BOOST_ROOT to '${BOOST_ROOT_DIR}/boost'`);
@@ -207,7 +192,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.untarBoost = exports.deleteFiles = exports.downloadBoost = exports.parseArguments = exports.createDirectory = exports.getVersions = void 0;
+exports.cleanup = exports.untarBoost = exports.deleteFiles = exports.downloadBoost = exports.parseArguments = exports.createDirectory = exports.getVersions = void 0;
 const core = __nccwpck_require__(2186);
 const request = __nccwpck_require__(8699);
 const fs = __nccwpck_require__(5747);
@@ -434,6 +419,21 @@ function untarBoost(base, working_directory, rename = true) {
     });
 }
 exports.untarBoost = untarBoost;
+/**
+ * Clean up
+ *
+ * @param base_dir the base directory
+ * @param base the boost base name (without .tar.gz)
+ */
+function cleanup(base_dir, base) {
+    if (process.platform == "win32") {
+        deleteFiles([path.join(base_dir, `${base}.tar.gz`), path.join(base_dir, `${base}.tar`)]);
+    }
+    else {
+        deleteFiles([path.join(base_dir, `${base}.tar.gz`)]);
+    }
+}
+exports.cleanup = cleanup;
 //# sourceMappingURL=shared.js.map
 
 /***/ }),

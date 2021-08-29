@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.untarBoost = exports.deleteFiles = exports.downloadBoost = exports.parseArguments = exports.createDirectory = exports.getVersions = void 0;
+exports.cleanup = exports.untarBoost = exports.deleteFiles = exports.downloadBoost = exports.parseArguments = exports.createDirectory = exports.getVersions = void 0;
 const core = require("@actions/core");
 const request = require("request");
 const fs = require("fs");
@@ -236,4 +236,19 @@ function untarBoost(base, working_directory, rename = true) {
     });
 }
 exports.untarBoost = untarBoost;
+/**
+ * Clean up
+ *
+ * @param base_dir the base directory
+ * @param base the boost base name (without .tar.gz)
+ */
+function cleanup(base_dir, base) {
+    if (process.platform == "win32") {
+        deleteFiles([path.join(base_dir, `${base}.tar.gz`), path.join(base_dir, `${base}.tar`)]);
+    }
+    else {
+        deleteFiles([path.join(base_dir, `${base}.tar.gz`)]);
+    }
+}
+exports.cleanup = cleanup;
 //# sourceMappingURL=shared.js.map
