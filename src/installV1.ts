@@ -1,7 +1,6 @@
+import * as core from "@actions/core";
+import * as path from "path";
 import { cleanup, createDirectory, downloadBoost, getVersions, parseArguments, untarBoost } from "./shared";
-
-import core = require('@actions/core');
-import path = require('path');
 
 const VERSION_MANIFEST_ADDR: string = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
 

@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const shared_1 = require("./shared");
 const core = require("@actions/core");
 const path = require("path");
+const shared_1 = require("./shared");
 const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
 function installV1(boost_version, toolset, platform_version, BOOST_ROOT_DIR) {
     return __awaiter(this, void 0, void 0, function* () {

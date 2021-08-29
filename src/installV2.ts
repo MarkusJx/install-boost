@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 import * as path from "path";
-import { cleanup, createDirectory, deleteFiles, downloadBoost, getVersions, parseArguments, untarBoost } from "./shared";
+import { cleanup, createDirectory, downloadBoost, getVersions, parseArguments, untarBoost } from "./shared";
 
 const VERSION_MANIFEST_ADDR: string = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
 

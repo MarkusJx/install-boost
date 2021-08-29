@@ -2,7 +2,7 @@ import * as core from "@actions/core";
 import * as request from "request";
 import * as fs from "fs";
 import * as progress from "request-progress";
-import path = require('path');
+import * as path from "path";
 import { spawn } from "child_process";
 
 export function getVersions(manifestAddress: string): Promise<object[]> {

@@ -44,6 +44,9 @@ function main() {
             yield installV1_1.default(boost_version, toolset, platform_version, BOOST_ROOT_DIR);
         }
         else if (script_version === "default") {
+            if (toolset.length > 0) {
+                throw new Error("The 'toolset' option can only be used when the script version is set to 'legacy'");
+            }
             yield installV2_1.default(boost_version, platform_version, BOOST_ROOT_DIR);
         }
         else {
@@ -81,9 +84,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const shared_1 = __nccwpck_require__(6058);
 const core = __nccwpck_require__(2186);
 const path = __nccwpck_require__(5622);
+const shared_1 = __nccwpck_require__(6058);
 const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
 function installV1(boost_version, toolset, platform_version, BOOST_ROOT_DIR) {
     return __awaiter(this, void 0, void 0, function* () {
