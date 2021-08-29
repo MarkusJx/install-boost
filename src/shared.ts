@@ -2,6 +2,8 @@ import * as core from "@actions/core";
 import * as request from "request";
 import * as fs from "fs";
 import * as progress from "request-progress";
+import path = require('path');
+import { spawn } from "child_process";
 
 export function getVersions(manifestAddress: string): Promise<object[]> {
     return new Promise((resolve, reject) => {
@@ -146,5 +148,91 @@ export function deleteFiles(files: string[]): void {
         } else {
             console.log(`${cur_file} does not exist`);
         }
+    }
+}
+
+/**
+ * Untar boost on linux/macOs
+ * 
+ * @param filename the file to extract
+ * @param out_dir the output directory
+ * @param working_directory the working directory
+ */
+ function untarLinux(filename: string, out_dir: string, working_directory: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        // Use tar to unpack boost
+        const tar = spawn("tar", ["xzf", filename, "-C", out_dir], {
+            stdio: [process.stdin, process.stdout, process.stderr],
+            cwd: working_directory
+        });
+
+        // Reject/Resolve on close
+        tar.on('close', (code) => {
+            if (code != 0) {
+                reject(`Tar exited with code ${code}`);
+            } else {
+                console.log("Tar exited with code 0")
+                resolve();
+            }
+        });
+
+        // Reject on error
+        tar.on('error', (err) => {
+            reject(`Tar failed: ${err}`);
+        });
+    });
+}
+
+/**
+ * Unpack boost on windows using 7zip
+ * 
+ * @param command the command array to run
+ * @param working_directory the working directory to work in
+ */
+function run7z(command: Array<string>, working_directory: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        // Spawn a 7z process
+        const tar = spawn("7z", command, {
+            stdio: [process.stdin, process.stdout, process.stderr],
+            cwd: working_directory
+        });
+
+        // Reject/Resolve on close
+        tar.on('close', (code) => {
+            if (code != 0) {
+                reject(`7z exited with code ${code}`);
+            } else {
+                console.log("7z exited with code 0")
+                resolve();
+            }
+        });
+
+        // Reject on error
+        tar.on('error', (err) => {
+            reject(`7z failed: ${err}`);
+        });
+    });
+}
+
+/**
+ * Unpack boost using tar on unix or 7zip on windows
+ * 
+ * @param base the output base
+ * @param working_directory the working directory
+ */
+export async function untarBoost(base: string, working_directory: string, rename: boolean = true): Promise<void> {
+    if (process.platform == "win32") {
+        core.debug("Unpacking boost using 7zip");
+        await run7z(['x', `${base}.tar.gz`], working_directory);
+
+        if (rename) {
+            await run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);
+        } else {
+            await run7z(['x', `${base}.tar`, '-aoa'], working_directory);
+        }
+    } else {
+        core.debug("Unpacking boost using tar");
+        createDirectory(path.join(working_directory, base));
+        await untarLinux(`${base}.tar.gz`, base, working_directory);
     }
 }

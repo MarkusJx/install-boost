@@ -1,10 +1,21 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteFiles = exports.downloadBoost = exports.parseArguments = exports.createDirectory = exports.getVersions = void 0;
+exports.untarBoost = exports.deleteFiles = exports.downloadBoost = exports.parseArguments = exports.createDirectory = exports.getVersions = void 0;
 const core = require("@actions/core");
 const request = require("request");
 const fs = require("fs");
 const progress = require("request-progress");
+const path = require("path");
+const child_process_1 = require("child_process");
 function getVersions(manifestAddress) {
     return new Promise((resolve, reject) => {
         const req = request.get(manifestAddress);
@@ -136,4 +147,89 @@ function deleteFiles(files) {
     }
 }
 exports.deleteFiles = deleteFiles;
+/**
+ * Untar boost on linux/macOs
+ *
+ * @param filename the file to extract
+ * @param out_dir the output directory
+ * @param working_directory the working directory
+ */
+function untarLinux(filename, out_dir, working_directory) {
+    return new Promise((resolve, reject) => {
+        // Use tar to unpack boost
+        const tar = child_process_1.spawn("tar", ["xzf", filename, "-C", out_dir], {
+            stdio: [process.stdin, process.stdout, process.stderr],
+            cwd: working_directory
+        });
+        // Reject/Resolve on close
+        tar.on('close', (code) => {
+            if (code != 0) {
+                reject(`Tar exited with code ${code}`);
+            }
+            else {
+                console.log("Tar exited with code 0");
+                resolve();
+            }
+        });
+        // Reject on error
+        tar.on('error', (err) => {
+            reject(`Tar failed: ${err}`);
+        });
+    });
+}
+/**
+ * Unpack boost on windows using 7zip
+ *
+ * @param command the command array to run
+ * @param working_directory the working directory to work in
+ */
+function run7z(command, working_directory) {
+    return new Promise((resolve, reject) => {
+        // Spawn a 7z process
+        const tar = child_process_1.spawn("7z", command, {
+            stdio: [process.stdin, process.stdout, process.stderr],
+            cwd: working_directory
+        });
+        // Reject/Resolve on close
+        tar.on('close', (code) => {
+            if (code != 0) {
+                reject(`7z exited with code ${code}`);
+            }
+            else {
+                console.log("7z exited with code 0");
+                resolve();
+            }
+        });
+        // Reject on error
+        tar.on('error', (err) => {
+            reject(`7z failed: ${err}`);
+        });
+    });
+}
+/**
+ * Unpack boost using tar on unix or 7zip on windows
+ *
+ * @param base the output base
+ * @param working_directory the working directory
+ */
+function untarBoost(base, working_directory, rename = true) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (process.platform == "win32") {
+            core.debug("Unpacking boost using 7zip");
+            yield run7z(['x', `${base}.tar.gz`], working_directory);
+            if (rename) {
+                yield run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);
+            }
+            else {
+                yield run7z(['x', `${base}.tar`, '-aoa'], working_directory);
+            }
+        }
+        else {
+            core.debug("Unpacking boost using tar");
+            createDirectory(path.join(working_directory, base));
+            yield untarLinux(`${base}.tar.gz`, base, working_directory);
+        }
+    });
+}
+exports.untarBoost = untarBoost;
 //# sourceMappingURL=shared.js.map

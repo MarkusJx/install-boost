@@ -11,35 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = require("@actions/core");
 const path = require("path");
-const child_process_1 = require("child_process");
 const shared_1 = require("./shared");
 const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
-function untarBoost(filename, working_directory) {
-    return __awaiter(this, void 0, void 0, function* () {
-        core.debug("Unpacking boost using tar");
-        return new Promise((resolve, reject) => {
-            // Use tar to unpack boost
-            const tar = child_process_1.spawn("tar", ["xzf", filename], {
-                stdio: [process.stdin, process.stdout, process.stderr],
-                cwd: working_directory
-            });
-            // Reject/Resolve on close
-            tar.on('close', (code) => {
-                if (code != 0) {
-                    reject(`Tar exited with code ${code}`);
-                }
-                else {
-                    console.log("Tar exited with code 0");
-                    resolve();
-                }
-            });
-            // Reject on error
-            tar.on('error', (err) => {
-                reject(`Tar failed: ${err}`);
-            });
-        });
-    });
-}
 function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Downloading versions-manifest.json...");
@@ -55,7 +28,7 @@ function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
         yield shared_1.downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename));
         core.endGroup();
         core.startGroup(`Extract ${filename}`);
-        yield untarBoost(filename, BOOST_ROOT_DIR);
+        yield shared_1.untarBoost(filename, BOOST_ROOT_DIR, false);
         core.endGroup();
         core.startGroup("Clean up");
         shared_1.deleteFiles([path.join(BOOST_ROOT_DIR, filename)]);

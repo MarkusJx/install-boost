@@ -84,88 +84,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const shared_1 = __nccwpck_require__(6058);
 const core = __nccwpck_require__(2186);
 const path = __nccwpck_require__(5622);
-const child_process_1 = __nccwpck_require__(3129);
 const IS_WIN32 = process.platform == "win32";
 const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json";
-/**
- * Untar boost on linux/macOs
- *
- * @param filename the file to extract
- * @param out_dir the output directory
- * @param working_directory the working directory
- */
-function untarLinux(filename, out_dir, working_directory) {
-    return new Promise((resolve, reject) => {
-        // Use tar to unpack boost
-        const tar = child_process_1.spawn("tar", ["xzf", filename, "-C", out_dir], {
-            stdio: [process.stdin, process.stdout, process.stderr],
-            cwd: working_directory
-        });
-        // Reject/Resolve on close
-        tar.on('close', (code) => {
-            if (code != 0) {
-                reject(`Tar exited with code ${code}`);
-            }
-            else {
-                console.log("Tar exited with code 0");
-                resolve();
-            }
-        });
-        // Reject on error
-        tar.on('error', (err) => {
-            reject(`Tar failed: ${err}`);
-        });
-    });
-}
-/**
- * Unpack boost on windows using 7zip
- *
- * @param command the command array to run
- * @param working_directory the working directory to work in
- */
-function run7z(command, working_directory) {
-    return new Promise((resolve, reject) => {
-        // Spawn a 7z process
-        const tar = child_process_1.spawn("7z", command, {
-            stdio: [process.stdin, process.stdout, process.stderr],
-            cwd: working_directory
-        });
-        // Reject/Resolve on close
-        tar.on('close', (code) => {
-            if (code != 0) {
-                reject(`7z exited with code ${code}`);
-            }
-            else {
-                console.log("7z exited with code 0");
-                resolve();
-            }
-        });
-        // Reject on error
-        tar.on('error', (err) => {
-            reject(`7z failed: ${err}`);
-        });
-    });
-}
-/**
- * Unpack boost using tar on unix or 7zip on windows
- *
- * @param base the output base
- * @param working_directory the working directory
- */
-function untarBoost(base, working_directory) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (IS_WIN32) {
-            core.debug("Unpacking boost using 7zip");
-            yield run7z(['x', `${base}.tar.gz`], working_directory);
-            yield run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);
-        }
-        else {
-            core.debug("Unpacking boost using tar");
-            shared_1.createDirectory(path.join(working_directory, base));
-            yield untarLinux(`${base}.tar.gz`, base, working_directory);
-        }
-    });
-}
 /**
  * Clean up
  *
@@ -200,7 +120,7 @@ function installV1(boost_version, toolset, platform_version, BOOST_ROOT_DIR) {
         const BOOST_ROOT = path.join(BOOST_ROOT_DIR, base_dir);
         core.debug(`Boost base directory: ${base_dir}`);
         core.startGroup(`Extract ${filename}`);
-        yield untarBoost(base_dir, BOOST_ROOT_DIR);
+        yield shared_1.untarBoost(base_dir, BOOST_ROOT_DIR);
         core.endGroup();
         core.startGroup("Clean up");
         cleanup(BOOST_ROOT_DIR, base_dir);
@@ -235,35 +155,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __nccwpck_require__(2186);
 const path = __nccwpck_require__(5622);
-const child_process_1 = __nccwpck_require__(3129);
 const shared_1 = __nccwpck_require__(6058);
 const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
-function untarBoost(filename, working_directory) {
-    return __awaiter(this, void 0, void 0, function* () {
-        core.debug("Unpacking boost using tar");
-        return new Promise((resolve, reject) => {
-            // Use tar to unpack boost
-            const tar = child_process_1.spawn("tar", ["xzf", filename], {
-                stdio: [process.stdin, process.stdout, process.stderr],
-                cwd: working_directory
-            });
-            // Reject/Resolve on close
-            tar.on('close', (code) => {
-                if (code != 0) {
-                    reject(`Tar exited with code ${code}`);
-                }
-                else {
-                    console.log("Tar exited with code 0");
-                    resolve();
-                }
-            });
-            // Reject on error
-            tar.on('error', (err) => {
-                reject(`Tar failed: ${err}`);
-            });
-        });
-    });
-}
 function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Downloading versions-manifest.json...");
@@ -279,7 +172,7 @@ function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
         yield shared_1.downloadBoost(download_url, path.join(BOOST_ROOT_DIR, filename));
         core.endGroup();
         core.startGroup(`Extract ${filename}`);
-        yield untarBoost(filename, BOOST_ROOT_DIR);
+        yield shared_1.untarBoost(filename, BOOST_ROOT_DIR, false);
         core.endGroup();
         core.startGroup("Clean up");
         shared_1.deleteFiles([path.join(BOOST_ROOT_DIR, filename)]);
@@ -300,16 +193,27 @@ exports.default = installV2;
 /***/ }),
 
 /***/ 6058:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.deleteFiles = exports.downloadBoost = exports.parseArguments = exports.createDirectory = exports.getVersions = void 0;
+exports.untarBoost = exports.deleteFiles = exports.downloadBoost = exports.parseArguments = exports.createDirectory = exports.getVersions = void 0;
 const core = __nccwpck_require__(2186);
 const request = __nccwpck_require__(8699);
 const fs = __nccwpck_require__(5747);
 const progress = __nccwpck_require__(6139);
+const path = __nccwpck_require__(5622);
+const child_process_1 = __nccwpck_require__(3129);
 function getVersions(manifestAddress) {
     return new Promise((resolve, reject) => {
         const req = request.get(manifestAddress);
@@ -441,6 +345,91 @@ function deleteFiles(files) {
     }
 }
 exports.deleteFiles = deleteFiles;
+/**
+ * Untar boost on linux/macOs
+ *
+ * @param filename the file to extract
+ * @param out_dir the output directory
+ * @param working_directory the working directory
+ */
+function untarLinux(filename, out_dir, working_directory) {
+    return new Promise((resolve, reject) => {
+        // Use tar to unpack boost
+        const tar = child_process_1.spawn("tar", ["xzf", filename, "-C", out_dir], {
+            stdio: [process.stdin, process.stdout, process.stderr],
+            cwd: working_directory
+        });
+        // Reject/Resolve on close
+        tar.on('close', (code) => {
+            if (code != 0) {
+                reject(`Tar exited with code ${code}`);
+            }
+            else {
+                console.log("Tar exited with code 0");
+                resolve();
+            }
+        });
+        // Reject on error
+        tar.on('error', (err) => {
+            reject(`Tar failed: ${err}`);
+        });
+    });
+}
+/**
+ * Unpack boost on windows using 7zip
+ *
+ * @param command the command array to run
+ * @param working_directory the working directory to work in
+ */
+function run7z(command, working_directory) {
+    return new Promise((resolve, reject) => {
+        // Spawn a 7z process
+        const tar = child_process_1.spawn("7z", command, {
+            stdio: [process.stdin, process.stdout, process.stderr],
+            cwd: working_directory
+        });
+        // Reject/Resolve on close
+        tar.on('close', (code) => {
+            if (code != 0) {
+                reject(`7z exited with code ${code}`);
+            }
+            else {
+                console.log("7z exited with code 0");
+                resolve();
+            }
+        });
+        // Reject on error
+        tar.on('error', (err) => {
+            reject(`7z failed: ${err}`);
+        });
+    });
+}
+/**
+ * Unpack boost using tar on unix or 7zip on windows
+ *
+ * @param base the output base
+ * @param working_directory the working directory
+ */
+function untarBoost(base, working_directory, rename = true) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (process.platform == "win32") {
+            core.debug("Unpacking boost using 7zip");
+            yield run7z(['x', `${base}.tar.gz`], working_directory);
+            if (rename) {
+                yield run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);
+            }
+            else {
+                yield run7z(['x', `${base}.tar`, '-aoa'], working_directory);
+            }
+        }
+        else {
+            core.debug("Unpacking boost using tar");
+            createDirectory(path.join(working_directory, base));
+            yield untarLinux(`${base}.tar.gz`, base, working_directory);
+        }
+    });
+}
+exports.untarBoost = untarBoost;
 //# sourceMappingURL=shared.js.map
 
 /***/ }),

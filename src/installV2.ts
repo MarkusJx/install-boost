@@ -1,36 +1,8 @@
 import * as core from "@actions/core";
 import * as path from "path";
-import { spawn } from "child_process";
-import { createDirectory, deleteFiles, downloadBoost, getVersions, parseArguments } from "./shared";
+import { createDirectory, deleteFiles, downloadBoost, getVersions, parseArguments, untarBoost } from "./shared";
 
 const VERSION_MANIFEST_ADDR: string = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
-
-async function untarBoost(filename: string, working_directory: string): Promise<void> {
-    core.debug("Unpacking boost using tar");
-
-    return new Promise((resolve, reject) => {
-        // Use tar to unpack boost
-        const tar = spawn("tar", ["xzf", filename], {
-            stdio: [process.stdin, process.stdout, process.stderr],
-            cwd: working_directory
-        });
-
-        // Reject/Resolve on close
-        tar.on('close', (code) => {
-            if (code != 0) {
-                reject(`Tar exited with code ${code}`);
-            } else {
-                console.log("Tar exited with code 0")
-                resolve();
-            }
-        });
-
-        // Reject on error
-        tar.on('error', (err) => {
-            reject(`Tar failed: ${err}`);
-        });
-    });
-}
 
 export default async function installV2(boost_version: string, platform_version: string, BOOST_ROOT_DIR: string): Promise<void> {
     console.log("Downloading versions-manifest.json...");
@@ -50,7 +22,7 @@ export default async function installV2(boost_version: string, platform_version:
     core.endGroup();
 
     core.startGroup(`Extract ${filename}`);
-    await untarBoost(filename, BOOST_ROOT_DIR);
+    await untarBoost(filename, BOOST_ROOT_DIR, false);
     core.endGroup();
 
     core.startGroup("Clean up");
