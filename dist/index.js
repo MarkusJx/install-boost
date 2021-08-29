@@ -180,10 +180,10 @@ function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
         shared_1.deleteFiles([path.join(BOOST_ROOT_DIR, filename)]);
         core.endGroup();
         core.startGroup("Set output variables");
-        console.log(`Setting BOOST_ROOT to '${BOOST_ROOT_DIR}'`);
+        console.log(`Setting BOOST_ROOT to '${BOOST_ROOT_DIR}/boost'`);
         console.log(`Setting BOOST_VER to '${base_dir}'`);
         core.endGroup();
-        core.setOutput("BOOST_ROOT", BOOST_ROOT_DIR);
+        core.setOutput("BOOST_ROOT", path.join(BOOST_ROOT_DIR, 'boost'));
         core.setOutput("BOOST_VER", base_dir);
     });
 }
