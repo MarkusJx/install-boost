@@ -14,7 +14,6 @@ const path = require("path");
 const child_process_1 = require("child_process");
 const shared_1 = require("./shared");
 const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
-const PLATFORM = process.platform;
 function untarBoost(filename, working_directory) {
     return __awaiter(this, void 0, void 0, function* () {
         core.debug("Unpacking boost using tar");
@@ -63,12 +62,11 @@ function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
         core.endGroup();
         let base_dir = filename.substring(0, filename.lastIndexOf("."));
         base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
-        const BOOST_ROOT = path.join(BOOST_ROOT_DIR, "boost");
         core.startGroup("Set output variables");
-        console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
+        console.log(`Setting BOOST_ROOT to '${BOOST_ROOT_DIR}'`);
         console.log(`Setting BOOST_VER to '${base_dir}'`);
         core.endGroup();
-        core.setOutput("BOOST_ROOT", BOOST_ROOT);
+        core.setOutput("BOOST_ROOT", BOOST_ROOT_DIR);
         core.setOutput("BOOST_VER", base_dir);
     });
 }

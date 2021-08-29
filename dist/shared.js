@@ -51,6 +51,13 @@ exports.createDirectory = createDirectory;
  * @returns the url and file name or throws an error if the requested version could not be found
  */
 function parseArguments(versions, boost_version, toolset, platform_version) {
+    let platform = process.platform;
+    if (platform === "darwin") {
+        platform = "macos";
+    }
+    else if (platform === "win32") {
+        platform = "windows";
+    }
     for (let i = 0; i < versions.length; i++) {
         let cur = versions[i];
         if (cur.hasOwnProperty("version") && cur["version"] == boost_version) {
@@ -58,7 +65,7 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
             for (let j = 0; j < files.length; j++) {
                 let file = files[j];
                 core.debug(`file platform: ${file["platform"]}`);
-                if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
+                if (!file.hasOwnProperty("platform") || file["platform"] != platform) {
                     core.debug("File does not match param 'platform'");
                     continue;
                 }

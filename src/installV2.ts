@@ -4,7 +4,6 @@ import { spawn } from "child_process";
 import { createDirectory, deleteFiles, downloadBoost, getVersions, parseArguments } from "./shared";
 
 const VERSION_MANIFEST_ADDR: string = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
-const PLATFORM: string = process.platform;
 
 async function untarBoost(filename: string, working_directory: string): Promise<void> {
     core.debug("Unpacking boost using tar");
@@ -60,13 +59,12 @@ export default async function installV2(boost_version: string, platform_version:
 
     let base_dir: string = filename.substring(0, filename.lastIndexOf("."));
     base_dir = base_dir.substring(0, base_dir.lastIndexOf("."));
-    const BOOST_ROOT: String = path.join(BOOST_ROOT_DIR, "boost");
 
     core.startGroup("Set output variables");
-    console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
+    console.log(`Setting BOOST_ROOT to '${BOOST_ROOT_DIR}'`);
     console.log(`Setting BOOST_VER to '${base_dir}'`);
     core.endGroup();
 
-    core.setOutput("BOOST_ROOT", BOOST_ROOT);
+    core.setOutput("BOOST_ROOT", BOOST_ROOT_DIR);
     core.setOutput("BOOST_VER", base_dir);
 }

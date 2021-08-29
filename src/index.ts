@@ -1,13 +1,8 @@
 import installV1 from "./installV1";
 import installV2 from "./installV2";
 
-const core = require('@actions/core');
-const github = require('@actions/github');
-const request = require('request');
-const progress = require('request-progress');
-const fs = require('fs');
-const path = require('path');
-const { spawn } = require("child_process");
+import core = require('@actions/core');
+import path = require('path');
 
 var BOOST_ROOT_DIR: string = path.join(process.env.GITHUB_WORKSPACE, 'boost');
 const VERSION: string = "2.beta.1";

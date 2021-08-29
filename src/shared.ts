@@ -56,6 +56,13 @@ type parsedVersion = {
  * @returns the url and file name or throws an error if the requested version could not be found
  */
 export function parseArguments(versions: object[], boost_version: string, toolset: string | null, platform_version: string): parsedVersion {
+    let platform: string = process.platform;
+    if (platform === "darwin") {
+        platform = "macos";
+    } else if (platform === "win32") {
+        platform = "windows";
+    }
+
     for (let i = 0; i < versions.length; i++) {
         let cur: object = versions[i];
         if (cur.hasOwnProperty("version") && cur["version"] == boost_version) {
@@ -64,7 +71,7 @@ export function parseArguments(versions: object[], boost_version: string, toolse
                 let file: object = files[j];
 
                 core.debug(`file platform: ${file["platform"]}`);
-                if (!file.hasOwnProperty("platform") || file["platform"] != process.platform) {
+                if (!file.hasOwnProperty("platform") || file["platform"] != platform) {
                     core.debug("File does not match param 'platform'");
                     continue;
                 }
