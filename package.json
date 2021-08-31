@@ -26,6 +26,7 @@
     "request-progress": "^3.0.0"
   },
   "devDependencies": {
+    "@types/request": "^2.48.7",
     "@vercel/ncc": "^0.27.0",
     "typescript": "^4.1.3"
   }
