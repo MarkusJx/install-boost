@@ -15,7 +15,7 @@ A list of supported versions can be found [here](https://github.com/MarkusJx/pre
 ``$boost_install_dir/boost/boost/``. The default value is ``${{env.GITHUB_WORKSPACE}}``.
 
 ### `version`
-**Optional** The version of the ``install-boost`` script to use. Must be either ``default`` or ``legacy``. Defaults to ``default``.
+**Optional** The version of the ``install-boost`` action to use. Must be either ``default`` or ``legacy``. Defaults to ``default``.
 If the ``default`` version is used, the binaries are downloaded from [MarkusJx/prebuilt-boost](https://github.com/MarkusJx/prebuilt-boost).
 The list of supported toolsets and versions can be found [here](https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json).
 If the ``legacy`` version is used, the binaries are downloaded from [actions/boost-versions](https://github.com/actions/boost-versions).
@@ -89,6 +89,66 @@ The version of boost installed, e.g. ``boost-1.73.0-linux-16.04``.
     boost_version: 1.73.0
     # OPTIONAL: Specify a platform version
     platform_version: 10.15
+    # OPTIONAL: Specify a custom install location
+    boost_install_dir: /home/runner/some_directory
+    
+    # NOTE: If a boost version matching all requirements cannot be found,
+    # this build step will fail
+```
+
+### Legacy use
+#### Windows
+```yml
+- name: Install boost
+  uses: MarkusJx/install-boost@v1.0.1
+  id: install-boost
+  with:
+    # REQUIRED: Specify the required boost version
+    # A list of supported versions can be found here: 
+    # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
+    boost_version: 1.73.0
+    # OPTIONAL: Specify a toolset on windows
+    toolset: msvc14.2
+    # OPTIONAL: Specify a custon install location
+    boost_install_dir: C:\some_directory
+    
+    # NOTE: If a boost version matching all requirements cannot be found,
+    # this build step will fail
+```
+
+or
+```yml
+- name: Install boost
+  uses: MarkusJx/install-boost@v2.0.0
+  id: install-boost
+  with:
+    # REQUIRED: Specify the required boost version
+    # A list of supported versions can be found here: 
+    # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
+    boost_version: 1.73.0
+    # Use the legacy version of this action
+    version: legacy
+    # OPTIONAL: Specify a toolset on windows
+    toolset: msvc14.2
+    # OPTIONAL: Specify a custon install location
+    boost_install_dir: C:\some_directory
+    
+    # NOTE: If a boost version matching all requirements cannot be found,
+    # this build step will fail
+```
+
+#### Ubuntu
+```yml
+- name: Install boost
+  uses: MarkusJx/install-boost@v1.0.1
+  id: install-boost
+  with:
+    # REQUIRED: Specify the required boost version
+    # A list of supported versions can be found here: 
+    # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
+    boost_version: 1.73.0
+    # OPTIONAL: Specify a platform version on ubuntu
+    platform_version: 18.04
     # OPTIONAL: Specify a custom install location
     boost_install_dir: /home/runner/some_directory
     
