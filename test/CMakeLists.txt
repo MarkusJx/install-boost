@@ -15,6 +15,12 @@ add_executable(${PROJECT_NAME} test.cpp)
 
 target_link_directories(${PROJECT_NAME} PUBLIC ${Boost_LIBRARY_DIRS})
 
-if (NOT MSVC)
+if (NOT WIN32)
+    message(STATUS "Building on linux/macOs")
     target_link_libraries(${PROJECT_NAME} PRIVATE dl pthread ${Boost_LIBRARIES})
+elseif (MSYS OR MINGW)
+    message(STATUS "Building on msys/mingw")
+    target_link_libraries(${PROJECT_NAME} PRIVATE pthread ${Boost_LIBRARIES})
+else ()
+    message(STATUS "Building on windows")
 endif ()
