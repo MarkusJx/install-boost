@@ -15,6 +15,6 @@ add_executable(${PROJECT_NAME} test.cpp)
 
 target_link_directories(${PROJECT_NAME} PUBLIC ${Boost_LIBRARY_DIRS})
 
-if (NOT WIN32)
+if (NOT MSVC)
     target_link_libraries(${PROJECT_NAME} PRIVATE dl pthread ${Boost_LIBRARIES})
 endif ()
