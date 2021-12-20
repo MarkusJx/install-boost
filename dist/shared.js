@@ -81,7 +81,7 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
                     continue;
                 }
                 core.debug(`file toolset: ${file["toolset"]}`);
-                if (toolset != null && toolset.length > 0 && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
+                if (toolset && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
                     core.debug("File does not match param 'toolset'");
                     continue;
                 }

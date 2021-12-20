@@ -13,12 +13,12 @@ const core = require("@actions/core");
 const path = require("path");
 const shared_1 = require("./shared");
 const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
-function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
+function installV2(boost_version, toolset, platform_version, BOOST_ROOT_DIR) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Downloading versions-manifest.json...");
         const versions = yield shared_1.getVersions(VERSION_MANIFEST_ADDR);
         console.log("Parsing versions-manifest.json...");
-        const ver_data = shared_1.parseArguments(versions, boost_version, null, platform_version);
+        const ver_data = shared_1.parseArguments(versions, boost_version, toolset, platform_version);
         const download_url = ver_data.url;
         const filename = ver_data.filename;
         core.startGroup(`Create ${BOOST_ROOT_DIR}`);

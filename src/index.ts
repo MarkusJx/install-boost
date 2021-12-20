@@ -30,11 +30,7 @@ async function main(): Promise<void> {
     if (script_version === "legacy") {
         await installV1(boost_version, toolset, platform_version, BOOST_ROOT_DIR);
     } else if (script_version === "default") {
-        if (toolset.length > 0) {
-            throw new Error("The 'toolset' option can only be used when the script version is set to 'legacy'");
-        }
-
-        await installV2(boost_version, platform_version, BOOST_ROOT_DIR);
+        await installV2(boost_version, toolset, platform_version, BOOST_ROOT_DIR);
     } else {
         throw new Error("Invalid value entered for option 'version'");
     }
