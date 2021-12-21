@@ -22,7 +22,7 @@ const installV2_1 = __nccwpck_require__(7225);
 const core = __nccwpck_require__(2186);
 const path = __nccwpck_require__(5622);
 var BOOST_ROOT_DIR = path.join(process.env.GITHUB_WORKSPACE, 'boost');
-const VERSION = "2.beta.1";
+const VERSION = "2.1.0";
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const boost_version = core.getInput("boost_version");
@@ -37,8 +37,14 @@ function main() {
             BOOST_ROOT_DIR = path.join(boost_install_dir, 'boost');
             console.log(`The install directory was manually changed to ${BOOST_ROOT_DIR}`);
         }
-        if (script_version.length <= 0) {
+        if (!script_version) {
             script_version = "default";
+        }
+        if (!platform_version) {
+            core.warning("The 'platform_version' input is unset. This may lead to inconsistent build results.");
+        }
+        if (!toolset && process.platform === "win32") {
+            core.warning("The 'toolset' input is unset. This may lead to inconsistent build results.");
         }
         if (script_version === "legacy") {
             yield installV1_1.default(boost_version, toolset, platform_version, BOOST_ROOT_DIR);

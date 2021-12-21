@@ -5,7 +5,7 @@ import * as core from "@actions/core";
 import * as path from "path";
 
 var BOOST_ROOT_DIR: string = path.join(process.env.GITHUB_WORKSPACE, 'boost');
-const VERSION: string = "2.beta.1";
+const VERSION: string = "2.1.0";
 
 async function main(): Promise<void> {
     const boost_version: string = core.getInput("boost_version");
@@ -23,8 +23,16 @@ async function main(): Promise<void> {
         console.log(`The install directory was manually changed to ${BOOST_ROOT_DIR}`);
     }
 
-    if (script_version.length <= 0) {
+    if (!script_version) {
         script_version = "default";
+    }
+
+    if (!platform_version) {
+        core.warning("The 'platform_version' input is unset. This may lead to inconsistent build results.");
+    }
+
+    if (!toolset && process.platform === "win32") {
+        core.warning("The 'toolset' input is unset. This may lead to inconsistent build results.");
     }
 
     if (script_version === "legacy") {
