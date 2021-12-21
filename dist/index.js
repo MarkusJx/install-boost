@@ -22,7 +22,7 @@ const installV2_1 = __nccwpck_require__(7225);
 const core = __nccwpck_require__(2186);
 const path = __nccwpck_require__(5622);
 var BOOST_ROOT_DIR = path.join(process.env.GITHUB_WORKSPACE, 'boost');
-const VERSION = "2.beta.1";
+const VERSION = "2.1.0";
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const boost_version = core.getInput("boost_version");
@@ -37,17 +37,20 @@ function main() {
             BOOST_ROOT_DIR = path.join(boost_install_dir, 'boost');
             console.log(`The install directory was manually changed to ${BOOST_ROOT_DIR}`);
         }
-        if (script_version.length <= 0) {
+        if (!script_version) {
             script_version = "default";
+        }
+        if (!platform_version) {
+            core.warning("The 'platform_version' input is unset. This may lead to inconsistent build results.");
+        }
+        if (!toolset && process.platform === "win32") {
+            core.warning("The 'toolset' input is unset. This may lead to inconsistent build results.");
         }
         if (script_version === "legacy") {
             yield installV1_1.default(boost_version, toolset, platform_version, BOOST_ROOT_DIR);
         }
         else if (script_version === "default") {
-            if (toolset.length > 0) {
-                throw new Error("The 'toolset' option can only be used when the script version is set to 'legacy'");
-            }
-            yield installV2_1.default(boost_version, platform_version, BOOST_ROOT_DIR);
+            yield installV2_1.default(boost_version, toolset, platform_version, BOOST_ROOT_DIR);
         }
         else {
             throw new Error("Invalid value entered for option 'version'");
@@ -145,12 +148,12 @@ const core = __nccwpck_require__(2186);
 const path = __nccwpck_require__(5622);
 const shared_1 = __nccwpck_require__(6058);
 const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
-function installV2(boost_version, platform_version, BOOST_ROOT_DIR) {
+function installV2(boost_version, toolset, platform_version, BOOST_ROOT_DIR) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Downloading versions-manifest.json...");
         const versions = yield shared_1.getVersions(VERSION_MANIFEST_ADDR);
         console.log("Parsing versions-manifest.json...");
-        const ver_data = shared_1.parseArguments(versions, boost_version, null, platform_version);
+        const ver_data = shared_1.parseArguments(versions, boost_version, toolset, platform_version);
         const download_url = ver_data.url;
         const filename = ver_data.filename;
         core.startGroup(`Create ${BOOST_ROOT_DIR}`);
@@ -267,7 +270,7 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
                     continue;
                 }
                 core.debug(`file toolset: ${file["toolset"]}`);
-                if (toolset != null && toolset.length > 0 && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
+                if (toolset && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
                     core.debug("File does not match param 'toolset'");
                     continue;
                 }
@@ -14148,9 +14151,7 @@ function escapeJsonPtr(str) {
 /**
  * JSONSchema Validator - Validates JavaScript objects using JSON Schemas
  *	(http://www.json.com/json-schema-proposal/)
- *
- * Copyright (c) 2007 Kris Zyp SitePen (www.sitepen.com)
- * Licensed under the MIT (MIT-LICENSE.txt) license.
+ * Licensed under AFL-2.1 OR BSD-3-Clause
 To use the validator call the validate function with an instance object and an optional schema object.
 If a schema is provided, it will be used to validate. If the instance object refers to a schema (self-validating),
 that schema will be used to validate and the schema parameter is not necessary (if both exist,
@@ -14254,7 +14255,7 @@ var validate = exports._validate = function(/*Any*/instance,/*Object*/schema,/*O
 						!(value instanceof Array && type == 'array') &&
 						!(value instanceof Date && type == 'date') &&
 						!(type == 'integer' && value%1===0)){
-					return [{property:path,message:(typeof value) + " value found, but a " + type + " is required"}];
+					return [{property:path,message:value + " - " + (typeof value) + " value found, but a " + type + " is required"}];
 				}
 				if(type instanceof Array){
 					var unionErrors=[];
@@ -14317,11 +14318,11 @@ var validate = exports._validate = function(/*Any*/instance,/*Object*/schema,/*O
 				if(schema.minLength && typeof value == 'string' && value.length < schema.minLength){
 					addError("must be at least " + schema.minLength + " characters long");
 				}
-				if(typeof schema.minimum !== undefined && typeof value == typeof schema.minimum &&
+				if(typeof schema.minimum !== 'undefined' && typeof value == typeof schema.minimum &&
 						schema.minimum > value){
 					addError("must have a minimum value of " + schema.minimum);
 				}
-				if(typeof schema.maximum !== undefined && typeof value == typeof schema.maximum &&
+				if(typeof schema.maximum !== 'undefined' && typeof value == typeof schema.maximum &&
 						schema.maximum < value){
 					addError("must have a maximum value of " + schema.maximum);
 				}
@@ -14356,8 +14357,8 @@ var validate = exports._validate = function(/*Any*/instance,/*Object*/schema,/*O
 			}
 			
 			for(var i in objTypeDef){ 
-				if(objTypeDef.hasOwnProperty(i)){
-					var value = instance[i];
+				if(objTypeDef.hasOwnProperty(i) && i != '__proto__' && i != 'constructor'){
+					var value = instance.hasOwnProperty(i) ? instance[i] : undefined;
 					// skip _not_ specified properties
 					if (value === undefined && options.existingOnly) continue;
 					var propDef = objTypeDef[i];
@@ -14378,7 +14379,7 @@ var validate = exports._validate = function(/*Any*/instance,/*Object*/schema,/*O
 					delete instance[i];
 					continue;
 				} else {
-					errors.push({property:path,message:(typeof value) + "The property " + i +
+					errors.push({property:path,message:"The property " + i +
 						" is not defined in the schema and the schema does not allow additional properties"});
 				}
 			}

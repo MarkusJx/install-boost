@@ -4,12 +4,12 @@ import { cleanup, createDirectory, downloadBoost, getVersions, parseArguments, u
 
 const VERSION_MANIFEST_ADDR: string = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
 
-export default async function installV2(boost_version: string, platform_version: string, BOOST_ROOT_DIR: string): Promise<void> {
+export default async function installV2(boost_version: string, toolset: string, platform_version: string, BOOST_ROOT_DIR: string): Promise<void> {
     console.log("Downloading versions-manifest.json...");
     const versions: object[] = await getVersions(VERSION_MANIFEST_ADDR);
 
     console.log("Parsing versions-manifest.json...");
-    const ver_data = parseArguments(versions, boost_version, null, platform_version);
+    const ver_data = parseArguments(versions, boost_version, toolset, platform_version);
     const download_url: string = ver_data.url;
     const filename: string = ver_data.filename;
 

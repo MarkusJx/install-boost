@@ -79,7 +79,7 @@ export function parseArguments(versions: object[], boost_version: string, toolse
                 }
 
                 core.debug(`file toolset: ${file["toolset"]}`);
-                if (toolset != null && toolset.length > 0 && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
+                if (toolset && (!file.hasOwnProperty("toolset") || file["toolset"] != toolset)) {
                     core.debug("File does not match param 'toolset'");
                     continue;
                 }
