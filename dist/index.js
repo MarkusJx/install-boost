@@ -29,6 +29,7 @@ function main() {
         const toolset = core.getInput("toolset");
         const platform_version = core.getInput("platform_version");
         const boost_install_dir = core.getInput("boost_install_dir");
+        const link = core.getInput("link");
         let script_version = core.getInput("version");
         if (boost_version.length <= 0) {
             throw new Error("the boost_version variable must be defined");
@@ -46,11 +47,17 @@ function main() {
         if (!toolset && process.platform === "win32") {
             core.warning("The 'toolset' input is unset. This may lead to inconsistent build results.");
         }
+        if (link && link !== "static" && link !== "shared" && link !== "static+shared") {
+            throw new Error("'link' must be one of: 'static', 'shared' or 'static+shared'");
+        }
         if (script_version === "legacy") {
+            if (link) {
+                core.warning("The script version was set to 'legacy', but the 'link' option was supplied, ignoring this");
+            }
             yield installV1_1.default(boost_version, toolset, platform_version, BOOST_ROOT_DIR);
         }
         else if (script_version === "default") {
-            yield installV2_1.default(boost_version, toolset, platform_version, BOOST_ROOT_DIR);
+            yield installV2_1.default(boost_version, toolset, platform_version, link, BOOST_ROOT_DIR);
         }
         else {
             throw new Error("Invalid value entered for option 'version'");
@@ -148,12 +155,12 @@ const core = __nccwpck_require__(2186);
 const path = __nccwpck_require__(5622);
 const shared_1 = __nccwpck_require__(6058);
 const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
-function installV2(boost_version, toolset, platform_version, BOOST_ROOT_DIR) {
+function installV2(boost_version, toolset, platform_version, link, BOOST_ROOT_DIR) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Downloading versions-manifest.json...");
         const versions = yield shared_1.getVersions(VERSION_MANIFEST_ADDR);
         console.log("Parsing versions-manifest.json...");
-        const ver_data = shared_1.parseArguments(versions, boost_version, toolset, platform_version);
+        const ver_data = shared_1.parseArguments(versions, boost_version, toolset, platform_version, link);
         const download_url = ver_data.url;
         const filename = ver_data.filename;
         core.startGroup(`Create ${BOOST_ROOT_DIR}`);
@@ -250,7 +257,7 @@ exports.createDirectory = createDirectory;
  * @param platform_version the requested platform version
  * @returns the url and file name or throws an error if the requested version could not be found
  */
-function parseArguments(versions, boost_version, toolset, platform_version) {
+function parseArguments(versions, boost_version, toolset, platform_version, link = null) {
     let platform = process.platform;
     if (platform === "darwin") {
         platform = "macos";
@@ -277,6 +284,17 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
                 core.debug(`file platform version: ${file["platform_version"]}`);
                 if (platform_version.length > 0 && (!file.hasOwnProperty("platform_version") || file["platform_version"] != platform_version)) {
                     core.debug("File does not match param 'platform_version");
+                    continue;
+                }
+                if (link && !file["link"]) {
+                    core.warning("The parameter 'link' was specified, which doesn't have any effect on this boost version");
+                }
+                else if (link && file.hasOwnProperty("link") && link !== file["link"] && file["link"] !== "static+shared") {
+                    core.debug("File does not match param 'link'");
+                    continue;
+                }
+                else if (!link && file.hasOwnProperty("link") && file["link"] === "shared") {
+                    core.debug("The file's 'link' was set to 'shared', but 'link' was specified, ignoring this file");
                     continue;
                 }
                 return { url: file["download_url"], filename: file["filename"] };

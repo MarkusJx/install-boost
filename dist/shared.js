@@ -61,7 +61,7 @@ exports.createDirectory = createDirectory;
  * @param platform_version the requested platform version
  * @returns the url and file name or throws an error if the requested version could not be found
  */
-function parseArguments(versions, boost_version, toolset, platform_version) {
+function parseArguments(versions, boost_version, toolset, platform_version, link = null) {
     let platform = process.platform;
     if (platform === "darwin") {
         platform = "macos";
@@ -88,6 +88,17 @@ function parseArguments(versions, boost_version, toolset, platform_version) {
                 core.debug(`file platform version: ${file["platform_version"]}`);
                 if (platform_version.length > 0 && (!file.hasOwnProperty("platform_version") || file["platform_version"] != platform_version)) {
                     core.debug("File does not match param 'platform_version");
+                    continue;
+                }
+                if (link && !file["link"]) {
+                    core.warning("The parameter 'link' was specified, which doesn't have any effect on this boost version");
+                }
+                else if (link && file.hasOwnProperty("link") && link !== file["link"] && file["link"] !== "static+shared") {
+                    core.debug("File does not match param 'link'");
+                    continue;
+                }
+                else if (!link && file.hasOwnProperty("link") && file["link"] === "shared") {
+                    core.debug("The file's 'link' was set to 'shared', but 'link' was specified, ignoring this file");
                     continue;
                 }
                 return { url: file["download_url"], filename: file["filename"] };
