@@ -34,6 +34,14 @@ Selecting this is only supported for boost versions ``1.78.0`` and higher with t
 this action or any version with the legacy versions. Please refer to the provided version manifests
 for further information.
 
+### `link`
+**Optional** Whether the boost libraries will be supplied through static or shared libraries.
+May be one of ``static``, ``shared`` or ``static+shared`` for both static and shared
+libraries to be supplied. Is only effective on windows, as unix builds contain by
+default both static and shared libraries. On windows, only ``static`` or ``shared``
+may be specified, as these binares can only contain either static or shared libraries.
+If nothing is specified, static libraries will be preferred.
+
 ## Outputs
 ### `BOOST_ROOT`
 The boost root directory path, to be passed to another tool, e.g. CMake to find Boost:

@@ -13,6 +13,10 @@ inputs:
     description: 'The platform version boost was compiled on, e.g. "18.04"'
     required: false
     default: ''
+  link:
+    description: 'Whether the boost libraries are linked statically or dynamically'
+    required: false
+    default: ''
   boost_install_dir:
     description: 'The dirctory to install boost into'
     required: false

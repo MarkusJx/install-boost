@@ -57,7 +57,7 @@ type parsedVersion = {
  * @param platform_version the requested platform version
  * @returns the url and file name or throws an error if the requested version could not be found
  */
-export function parseArguments(versions: object[], boost_version: string, toolset: string | null, platform_version: string): parsedVersion {
+export function parseArguments(versions: object[], boost_version: string, toolset: string | null, platform_version: string, link: string | null = null): parsedVersion {
     let platform: string = process.platform;
     if (platform === "darwin") {
         platform = "macos";
@@ -87,6 +87,16 @@ export function parseArguments(versions: object[], boost_version: string, toolse
                 core.debug(`file platform version: ${file["platform_version"]}`);
                 if (platform_version.length > 0 && (!file.hasOwnProperty("platform_version") || file["platform_version"] != platform_version)) {
                     core.debug("File does not match param 'platform_version");
+                    continue;
+                }
+
+                if (link && !file["link"]) {
+                    core.warning("The parameter 'link' was specified, which doesn't have any effect on this boost version");
+                } else if (link && file.hasOwnProperty("link") && link !== file["link"] && file["link"] !== "static+shared") {
+                    core.debug("File does not match param 'link'");
+                    continue;
+                } else if (!link && file.hasOwnProperty("link") && file["link"] === "shared") {
+                    core.debug("The file's 'link' was set to 'shared', but 'link' was specified, ignoring this file");
                     continue;
                 }
 
