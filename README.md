@@ -16,7 +16,7 @@ Supported values are ``2016`` (windows, until boost v1.78.0), ``2019`` (windows)
 
 ### `boost_install_dir`
 **Optional** The directory to install boost into. If specified, boost will be installed into 
-``$boost_install_dir/boost/boost/``. The default value is ``${{env.GITHUB_WORKSPACE}}``.
+``$boost_install_dir/boost/boost/``. The default value is ``${{github.workspace}}``.
 
 ### `version`
 **Optional** The version of the ``install-boost`` action to use. Must be either ``default`` or ``legacy``. Defaults to ``default``.
@@ -188,7 +188,7 @@ If you want to cache the boost versions to further accelerate your builds, you c
   id: cache-boost
   with:
     # Set the default path as the path to cache
-    path: ${{env.GITHUB_WORKSPACE}}/boost/boost
+    path: ${{github.workspace}}/boost/boost
     # Use the version as the key to only cache the correct version
     key: boost-${{BOOST_VERSION}}
 
@@ -210,7 +210,7 @@ jobs:
       # Set your boost version
       BOOST_VERSION: 1.78.0
       # Set you boost path to the default one (I don't know if you can use variables here)
-      BOOST_PATH: ${{env.GITHUB_WORKSPACE}}/boost/boost
+      BOOST_PATH: ${{github.workspace}}/boost/boost
 
     steps:
     - uses: actions/checkout@v2
