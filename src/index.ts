@@ -13,6 +13,7 @@ async function main(): Promise<void> {
     const platform_version: string = core.getInput("platform_version");
     const boost_install_dir: string = core.getInput("boost_install_dir");
     const link: string = core.getInput("link");
+    const arch: string = core.getInput("arch");
     let script_version: string = core.getInput("version");
 
     if (boost_version.length <= 0) {
@@ -40,6 +41,10 @@ async function main(): Promise<void> {
         throw new Error("'link' must be one of: 'static', 'shared' or 'static+shared'");
     }
 
+    if (arch && arch !== "x86" && arch !== "aarch64") {
+        throw new Error("'arch' must be one of: 'x86' or 'aarch64'");
+    }
+
     if (script_version === "legacy") {
         if (link) {
             core.warning("The script version was set to 'legacy', but the 'link' option was supplied, ignoring this");
@@ -47,7 +52,7 @@ async function main(): Promise<void> {
 
         await installV1(boost_version, toolset, platform_version, BOOST_ROOT_DIR);
     } else if (script_version === "default") {
-        await installV2(boost_version, toolset, platform_version, link, BOOST_ROOT_DIR);
+        await installV2(boost_version, toolset, platform_version, link, arch, BOOST_ROOT_DIR);
     } else {
         throw new Error("Invalid value entered for option 'version'");
     }

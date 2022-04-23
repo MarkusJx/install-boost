@@ -42,6 +42,13 @@ default both static and shared libraries. On windows, only ``static`` or ``share
 may be specified, as these binares can only contain either static or shared libraries.
 If nothing is specified, static libraries will be preferred.
 
+### `arch`
+**Optional** The architecture the binares were built for. Must be either ``x86`` for
+default x86/amd64 or ``aarch64`` for arm64 systems. The ``x86`` can be used for
+the default github runners, the ``aarch64`` images may be used for cross-compiling
+binaries for arm systems. If not set, ``x86`` images will be used. Only works on
+``linux`` images with version ``20.04`` (or just specify no os version).
+
 ## Outputs
 ### `BOOST_ROOT`
 The boost root directory path, to be passed to another tool, e.g. CMake to find Boost:
@@ -93,6 +100,8 @@ The version of boost installed, e.g. ``boost-1.73.0-linux-16.04``.
     boost_install_dir: /home/runner/some_directory
     # OPTIONAL: Specify a toolset
     toolset: gcc
+    # OPTIONAL: Specify an architecture
+    arch: x86
     
     # NOTE: If a boost version matching all requirements cannot be found,
     # this build step will fail

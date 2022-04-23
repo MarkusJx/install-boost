@@ -57,7 +57,7 @@ type parsedVersion = {
  * @param platform_version the requested platform version
  * @returns the url and file name or throws an error if the requested version could not be found
  */
-export function parseArguments(versions: object[], boost_version: string, toolset: string | null, platform_version: string, link: string | null = null): parsedVersion {
+export function parseArguments(versions: object[], boost_version: string, toolset: string | null, platform_version: string, link: string | null = null, arch: string | null = null): parsedVersion {
     let platform: string = process.platform;
     if (platform === "darwin") {
         platform = "macos";
@@ -96,7 +96,17 @@ export function parseArguments(versions: object[], boost_version: string, toolse
                     core.debug("File does not match param 'link'");
                     continue;
                 } else if (!link && file.hasOwnProperty("link") && file["link"] === "shared") {
-                    core.debug("The file's 'link' was set to 'shared', but 'link' was specified, ignoring this file");
+                    core.debug("The file's 'link' was set to 'shared', but 'link' was not specified, ignoring this file");
+                    continue;
+                }
+
+                if (arch && !file["arch"]) {
+                    core.warning("The parameter 'arch' was specified, which doesn't have any effect on this boost version");
+                } else if (arch && file.hasOwnProperty("arch") && arch !== file["arch"]) {
+                    core.debug("File does not match param 'arch'");
+                    continue;
+                } else if (!arch && file.hasOwnProperty("arch") && file["arch"] !== "x86") {
+                    core.debug("The file's 'arch' was not set to 'x86', but 'arch' was not specified, ignoring this file");
                     continue;
                 }
 
@@ -168,7 +178,7 @@ export function deleteFiles(files: string[]): void {
  * @param out_dir the output directory
  * @param working_directory the working directory
  */
- function untarLinux(filename: string, out_dir: string, working_directory: string, rename: boolean): Promise<void> {
+function untarLinux(filename: string, out_dir: string, working_directory: string, rename: boolean): Promise<void> {
     return new Promise((resolve, reject) => {
         const args: string[] = ["xzf", filename];
         if (rename) {
