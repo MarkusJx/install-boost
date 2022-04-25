@@ -59,6 +59,17 @@ The boost root directory path, to be passed to another tool, e.g. CMake to find 
     BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
 ```
 
+**Notes**: Sometimes you'll have to pass the path to the include and library directories to cmake:
+```yml
+- name: Configure CMake
+  run: |
+     cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -B build\
+     -DBoost_INCLUDE_DIR=${{steps.install-boost.outputs.BOOST_ROOT}}/include\
+     -DBoost_LIBRARY_DIRS=${{steps.install-boost.outputs.BOOST_ROOT}}/lib
+  env:
+    BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+```
+
 ### `BOOST_VER`
 The version of boost installed, e.g. ``boost-1.73.0-linux-16.04``.
 
