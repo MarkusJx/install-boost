@@ -3,6 +3,20 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
 
 set(CMAKE_CXX_STANDARD 17)
 
+if (BUILD_ARM_BINARIES)
+    message(STATUS "Compiling for ARM64")
+
+    set(CMAKE_SYSTEM_PROCESSOR arm)
+    set(CROSS aarch64-linux-gnu-)
+    set(CMAKE_C_COMPILER ${CROSS}gcc)
+    set(CMAKE_CXX_COMPILER ${CROSS}g++)
+    set(AS_EXECUTABLE ${CROSS}as)
+    set(CMAKE_C_FLAGS_INIT "-march=armv8-a")
+    set(CMAKE_CXX_FLAGS_INIT "-march=armv8-a")
+    set(AOM_AS_FLAGS "-march=armv8-a")
+    set(CMAKE_SYSTEM_PROCESSOR "arm64")
+endif ()
+
 find_package(Boost 1.70 COMPONENTS thread chrono REQUIRED)
 
 message(STATUS "Boost version: ${Boost_VERSION_STRING}")

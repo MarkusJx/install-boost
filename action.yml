@@ -17,6 +17,10 @@ inputs:
     description: 'Whether the boost libraries are linked statically or dynamically'
     required: false
     default: ''
+  arch:
+    description: 'The architecture the binaries were built for'
+    required: false
+    default: 'x86'
   boost_install_dir:
     description: 'The dirctory to install boost into'
     required: false

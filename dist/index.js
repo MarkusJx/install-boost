@@ -30,6 +30,7 @@ function main() {
         const platform_version = core.getInput("platform_version");
         const boost_install_dir = core.getInput("boost_install_dir");
         const link = core.getInput("link");
+        const arch = core.getInput("arch");
         let script_version = core.getInput("version");
         if (boost_version.length <= 0) {
             throw new Error("the boost_version variable must be defined");
@@ -50,6 +51,9 @@ function main() {
         if (link && link !== "static" && link !== "shared" && link !== "static+shared") {
             throw new Error("'link' must be one of: 'static', 'shared' or 'static+shared'");
         }
+        if (arch && arch !== "x86" && arch !== "aarch64") {
+            throw new Error("'arch' must be one of: 'x86' or 'aarch64'");
+        }
         if (script_version === "legacy") {
             if (link) {
                 core.warning("The script version was set to 'legacy', but the 'link' option was supplied, ignoring this");
@@ -57,7 +61,7 @@ function main() {
             yield installV1_1.default(boost_version, toolset, platform_version, BOOST_ROOT_DIR);
         }
         else if (script_version === "default") {
-            yield installV2_1.default(boost_version, toolset, platform_version, link, BOOST_ROOT_DIR);
+            yield installV2_1.default(boost_version, toolset, platform_version, link, arch, BOOST_ROOT_DIR);
         }
         else {
             throw new Error("Invalid value entered for option 'version'");
@@ -155,12 +159,12 @@ const core = __nccwpck_require__(2186);
 const path = __nccwpck_require__(5622);
 const shared_1 = __nccwpck_require__(6058);
 const VERSION_MANIFEST_ADDR = "https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json";
-function installV2(boost_version, toolset, platform_version, link, BOOST_ROOT_DIR) {
+function installV2(boost_version, toolset, platform_version, link, arch, BOOST_ROOT_DIR) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Downloading versions-manifest.json...");
         const versions = yield shared_1.getVersions(VERSION_MANIFEST_ADDR);
         console.log("Parsing versions-manifest.json...");
-        const ver_data = shared_1.parseArguments(versions, boost_version, toolset, platform_version, link);
+        const ver_data = shared_1.parseArguments(versions, boost_version, toolset, platform_version, link, arch);
         const download_url = ver_data.url;
         const filename = ver_data.filename;
         core.startGroup(`Create ${BOOST_ROOT_DIR}`);
@@ -257,7 +261,7 @@ exports.createDirectory = createDirectory;
  * @param platform_version the requested platform version
  * @returns the url and file name or throws an error if the requested version could not be found
  */
-function parseArguments(versions, boost_version, toolset, platform_version, link = null) {
+function parseArguments(versions, boost_version, toolset, platform_version, link = null, arch = null) {
     let platform = process.platform;
     if (platform === "darwin") {
         platform = "macos";
@@ -294,7 +298,18 @@ function parseArguments(versions, boost_version, toolset, platform_version, link
                     continue;
                 }
                 else if (!link && file.hasOwnProperty("link") && file["link"] === "shared") {
-                    core.debug("The file's 'link' was set to 'shared', but 'link' was specified, ignoring this file");
+                    core.debug("The file's 'link' was set to 'shared', but 'link' was not specified, ignoring this file");
+                    continue;
+                }
+                if (arch && !file["arch"]) {
+                    core.warning("The parameter 'arch' was specified, which doesn't have any effect on this boost version");
+                }
+                else if (arch && file.hasOwnProperty("arch") && arch !== file["arch"]) {
+                    core.debug("File does not match param 'arch'");
+                    continue;
+                }
+                else if (!arch && file.hasOwnProperty("arch") && file["arch"] !== "x86") {
+                    core.debug("The file's 'arch' was not set to 'x86', but 'arch' was not specified, ignoring this file");
                     continue;
                 }
                 return { url: file["download_url"], filename: file["filename"] };

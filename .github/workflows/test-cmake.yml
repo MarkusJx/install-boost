@@ -21,12 +21,19 @@ jobs:
           - os: ubuntu-20.04
             COMPILER: gcc
             PLATFORM: 20.04
+            ARCH: x86
+          - os: ubuntu-20.04
+            COMPILER: gcc
+            PLATFORM: 20.04
+            ARCH: aarch64
           - os: windows-2019
             COMPILER: msvc
             PLATFORM: 2019
+            ARCH: x86
           - os: windows-2019
             COMPILER: mingw
             PLATFORM: 2019
+            ARCH: x86
 
     steps:
     - uses: actions/checkout@v2
@@ -34,13 +41,18 @@ jobs:
       uses: ./
       id: install-boost
       with:
-        boost_version: 1.78.0
+        boost_version: 1.79.0
         platform_version: ${{matrix.PLATFORM}}
         toolset: ${{matrix.COMPILER}}
+        arch: ${{matrix.ARCH}}
 
     - name: Setup MinGW
       uses: egor-tensin/setup-mingw@v2
       if: ${{runner.os == 'Windows' && matrix.COMPILER == 'mingw'}}
+
+    - name: Install arm64 compiler
+      run: sudo apt-get update && sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y
+      if: matrix.ARCH == 'aarch64'
 
     - name: Configure CMake mingw
       shell: bash
@@ -50,11 +62,19 @@ jobs:
       env:
         BOOST_ROOT: ${{steps.install-boost.outputs.BOOST_ROOT}}
 
+    - name: Configure CMake arm64
+      shell: bash
+      working-directory: test
+      run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_ARM_BINARIES=1 -DBoost_LIBRARY_DIRS="${{steps.install-boost.outputs.BOOST_ROOT}}/lib" -B build
+      if: matrix.ARCH == 'aarch64'
+      env:
+        BOOST_ROOT: ${{steps.install-boost.outputs.BOOST_ROOT}}
+
     - name: Configure CMake
       shell: bash
       working-directory: test
       run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBoost_LIBRARY_DIRS="${{steps.install-boost.outputs.BOOST_ROOT}}/lib" -B build
-      if: ${{matrix.COMPILER != 'mingw'}}
+      if: ${{matrix.COMPILER != 'mingw' && matrix.ARCH != 'aarch64'}}
       env:
         BOOST_ROOT: ${{steps.install-boost.outputs.BOOST_ROOT}}
     - name: Build
