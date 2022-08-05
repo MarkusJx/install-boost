@@ -46,7 +46,7 @@ function main() {
         if (!platform_version) {
             core.warning("The 'platform_version' input is unset. This may lead to inconsistent build results.");
         }
-        if (!toolset && process.platform === "win32" && (semver.gte("1.78.0", boost_version) || script_version === "legacy")) {
+        if (!toolset && process.platform === "win32" && (semver.gte(boost_version, "1.78.0") || script_version === "legacy")) {
             core.warning("The 'toolset' input is unset. This may lead to inconsistent build results.");
         }
         else if (toolset && semver.lt(boost_version, "1.78.0") && script_version !== "legacy") {
