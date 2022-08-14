@@ -36,7 +36,7 @@ export function getVersions(manifestAddress: string): Promise<object[]> {
 export function createDirectory(dir: string): void {
     if (!fs.existsSync(dir)) {
         console.log(`${dir} does not exist, creating it`);
-        fs.mkdirSync(dir);
+        fs.mkdirSync(dir, { recursive: true });
         console.log("Done.");
     } else {
         console.log(`${dir} already exists, doing nothing`);
