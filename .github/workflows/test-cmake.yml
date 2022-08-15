@@ -7,6 +7,12 @@ on:
       - "dist/**"
       - "action.yml"
       - "test/**"
+  pull_request:
+    paths:
+      - ".github/workflows/test-cmake.yml"
+      - "dist/**"
+      - "action.yml"
+      - "test/**"
 
 env:
   BUILD_TYPE: Debug

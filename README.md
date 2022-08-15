@@ -28,7 +28,7 @@ The list of supported toolsets and versions can be found [here](https://github.c
 ### `toolset`
 **Optional** A toolset used to compile boost, e.g. ``msvc``.
 May be one of ``msvc`` (windows), ``mingw`` (windows), ``gcc`` (linux) or ``clang`` (macOs).
-**You maybe want to set this on windows as either ``mingw`` or ``msvc`` will be selected at random**
+**You maybe want to set this on windows (when boost version is >= ``1.78.0``) as either ``mingw`` or ``msvc`` will be selected at random**
 **which may cause your build to fail.**
 Selecting this is only supported for boost versions ``1.78.0`` and higher with the new version of 
 this action or any version with the legacy versions. Please refer to the provided version manifests

@@ -7,6 +7,12 @@ on:
       - ".github/workflows/test.yml"
       - "dist/**"
       - "action.yml"
+  pull_request:
+    paths:
+      - ".github/workflows/test-cmake.yml"
+      - "dist/**"
+      - "action.yml"
+      - "test/**"
 
 jobs:
   build:
