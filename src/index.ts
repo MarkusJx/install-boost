@@ -3,6 +3,7 @@ import installV2 from "./installV2";
 
 import * as core from "@actions/core";
 import * as path from "path";
+import * as semver from "semver";
 
 var BOOST_ROOT_DIR: string = path.join(process.env.GITHUB_WORKSPACE, 'boost');
 const VERSION: string = "2.1.0";
@@ -33,8 +34,10 @@ async function main(): Promise<void> {
         core.warning("The 'platform_version' input is unset. This may lead to inconsistent build results.");
     }
 
-    if (!toolset && process.platform === "win32") {
+    if (!toolset && process.platform === "win32" && (semver.gte(boost_version, "1.78.0") || script_version === "legacy")) {
         core.warning("The 'toolset' input is unset. This may lead to inconsistent build results.");
+    } else if (toolset && semver.lt(boost_version, "1.78.0") && script_version !== "legacy") {
+        core.warning("Setting the toolset with boost version < 1.78.0 may cause issues");
     }
 
     if (link && link !== "static" && link !== "shared" && link !== "static+shared") {
