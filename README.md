@@ -77,7 +77,7 @@ The version of boost installed, e.g. ``boost-1.73.0-linux-16.04``.
 ### Windows
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v2.3.0
+  uses: MarkusJx/install-boost@v2.3.1
   id: install-boost
   with:
     # REQUIRED: Specify the required boost version
@@ -98,7 +98,7 @@ The version of boost installed, e.g. ``boost-1.73.0-linux-16.04``.
 ### Ubuntu
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v2.3.0
+  uses: MarkusJx/install-boost@v2.3.1
   id: install-boost
   with:
     # REQUIRED: Specify the required boost version
@@ -121,7 +121,7 @@ The version of boost installed, e.g. ``boost-1.73.0-linux-16.04``.
 ### MacOs
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v2.3.0
+  uses: MarkusJx/install-boost@v2.3.1
   id: install-boost
   with:
     # REQUIRED: Specify the required boost version
@@ -162,7 +162,7 @@ The version of boost installed, e.g. ``boost-1.73.0-linux-16.04``.
 or
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v2.3.0
+  uses: MarkusJx/install-boost@v2.3.1
   id: install-boost
   with:
     # REQUIRED: Specify the required boost version
@@ -215,7 +215,7 @@ If you want to cache the boost versions to further accelerate your builds, you c
 # Actual install step (only runs if the cache is empty)
 - name: Install boost
   if: steps.cache-boost.outputs.cache-hit != 'true'
-  uses: MarkusJx/install-boost@v2.3.0
+  uses: MarkusJx/install-boost@v2.3.1
   with:
     # Set the boost version (required)
     boost_version: ${{BOOST_VERSION}}
@@ -250,7 +250,7 @@ jobs:
     # Actual install step (only runs if the cache is empty)
     - name: Install boost
       if: steps.cache-boost.outputs.cache-hit != 'true'
-      uses: MarkusJx/install-boost@v2.3.0
+      uses: MarkusJx/install-boost@v2.3.1
       with:
         # Set the boost version (required)
         boost_version: ${{env.BOOST_VERSION}}
