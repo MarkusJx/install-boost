@@ -248,7 +248,7 @@ exports.getVersions = getVersions;
 function createDirectory(dir) {
     if (!fs.existsSync(dir)) {
         console.log(`${dir} does not exist, creating it`);
-        fs.mkdirSync(dir);
+        fs.mkdirSync(dir, { recursive: true });
         console.log("Done.");
     }
     else {
