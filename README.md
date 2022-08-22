@@ -10,7 +10,7 @@ A list of supported versions can be found [here](https://github.com/MarkusJx/pre
 
 ### `platform_version`
 **Optional** The platform version of the system boost was compiled on, e.g. ``18.04`` for ``ubuntu-18.04``, ``2016`` for ``windows-2016`` or ``10.15`` for ``macos-10.15``.
-Supported values are ``2016`` (windows, until boost v1.78.0), ``2019`` (windows), ``18.04`` (ubuntu),
+Supported values are ``2016`` (windows, until boost v1.78.0), ``2019`` (windows), ``2022`` (windows), ``18.04`` (ubuntu),
 ``20.04`` (ubuntu), ``10.15`` (macOs), ``11`` (macOs). **You maybe want to set this as a version will**
 **be selected at random if unset and [may cause issues](https://github.com/MarkusJx/install-boost/issues/7).**
 
