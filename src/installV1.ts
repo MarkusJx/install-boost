@@ -8,7 +8,9 @@ import {
     getVersions,
     Options,
     parseArguments,
+    setOutputVariables,
     untarBoost,
+    VersionsRecord,
 } from './shared';
 
 const VERSION_MANIFEST_ADDR: string =
@@ -20,6 +22,7 @@ export default async function installV1(opts: Options): Promise<void> {
         console.log('Trying to retrieve cache...');
         if (await restoreCache(opts)) {
             console.log('Cache successfully restored');
+            setOutputVariables(opts.BOOST_ROOT_DIR, opts.boost_version);
             return;
         } else {
             console.log('Cache miss');
@@ -27,7 +30,7 @@ export default async function installV1(opts: Options): Promise<void> {
     }
 
     console.log('Downloading versions-manifest.json...');
-    const versions: Object[] = await getVersions(VERSION_MANIFEST_ADDR);
+    const versions: VersionsRecord = await getVersions(VERSION_MANIFEST_ADDR);
 
     const { boost_version, toolset, platform_version, BOOST_ROOT_DIR } = opts;
 
@@ -51,7 +54,7 @@ export default async function installV1(opts: Options): Promise<void> {
 
     let base_dir: string = filename.substring(0, filename.lastIndexOf('.'));
     base_dir = base_dir.substring(0, base_dir.lastIndexOf('.'));
-    const BOOST_ROOT: String = path.join(BOOST_ROOT_DIR, base_dir);
+    const BOOST_ROOT: string = path.join(BOOST_ROOT_DIR, base_dir);
 
     core.debug(`Boost base directory: ${base_dir}`);
 
@@ -63,13 +66,7 @@ export default async function installV1(opts: Options): Promise<void> {
     cleanup(BOOST_ROOT_DIR, base_dir);
     core.endGroup();
 
-    core.startGroup('Set output variables');
-    console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
-    console.log(`Setting BOOST_VER to '${base_dir}'`);
-    core.endGroup();
-
-    core.setOutput('BOOST_ROOT', BOOST_ROOT);
-    core.setOutput('BOOST_VER', base_dir);
+    setOutputVariables(BOOST_ROOT, base_dir);
 
     if (opts.cache) {
         console.log('Saving cache');

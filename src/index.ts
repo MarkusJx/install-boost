@@ -5,7 +5,7 @@ import * as core from '@actions/core';
 import * as path from 'path';
 import * as semver from 'semver';
 
-var BOOST_ROOT_DIR: string = path.join(process.env.GITHUB_WORKSPACE, 'boost');
+let BOOST_ROOT_DIR: string = path.join(process.env.GITHUB_WORKSPACE!, 'boost');
 const VERSION: string = '2.1.0';
 
 async function main(): Promise<void> {
@@ -115,6 +115,6 @@ try {
             core.setFailed(reject);
         }
     );
-} catch (error) {
+} catch (error: any) {
     core.setFailed(error.message);
 }

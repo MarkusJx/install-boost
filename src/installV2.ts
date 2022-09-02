@@ -8,7 +8,9 @@ import {
     getVersions,
     OptionsV2,
     parseArguments,
+    setOutputVariables,
     untarBoost,
+    VersionsRecord,
 } from './shared';
 
 const VERSION_MANIFEST_ADDR: string =
@@ -19,6 +21,7 @@ export default async function installV2(opts: OptionsV2): Promise<void> {
         console.log('Trying to retrieve cache...');
         if (await restoreCache(opts)) {
             console.log('Cache successfully restored');
+            setOutputVariables(opts.BOOST_ROOT_DIR, opts.boost_version);
             return;
         } else {
             console.log('Cache miss');
@@ -26,7 +29,7 @@ export default async function installV2(opts: OptionsV2): Promise<void> {
     }
 
     console.log('Downloading versions-manifest.json...');
-    const versions: object[] = await getVersions(VERSION_MANIFEST_ADDR);
+    const versions: VersionsRecord = await getVersions(VERSION_MANIFEST_ADDR);
 
     const {
         boost_version,
@@ -68,13 +71,7 @@ export default async function installV2(opts: OptionsV2): Promise<void> {
     cleanup(BOOST_ROOT_DIR, base_dir);
     core.endGroup();
 
-    core.startGroup('Set output variables');
-    console.log(`Setting BOOST_ROOT to '${BOOST_ROOT_DIR}/boost'`);
-    console.log(`Setting BOOST_VER to '${base_dir}'`);
-    core.endGroup();
-
-    core.setOutput('BOOST_ROOT', path.join(BOOST_ROOT_DIR, 'boost'));
-    core.setOutput('BOOST_VER', base_dir);
+    setOutputVariables(BOOST_ROOT_DIR, base_dir);
 
     if (opts.cache) {
         console.log('Saving cache');

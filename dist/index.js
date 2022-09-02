@@ -97271,44 +97271,53 @@ try {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.restoreCache = exports.saveCache = void 0;
-const cache = __nccwpck_require__(7799);
-const core = __nccwpck_require__(2186);
+const cache = __importStar(__nccwpck_require__(7799));
+const core = __importStar(__nccwpck_require__(2186));
 function getKey(opts) {
-    var _a, _b;
     const key = [
         'boost',
         `v${opts.boost_version}`,
         process.platform,
-        (_a = opts.arch) !== null && _a !== void 0 ? _a : 'unknown',
+        opts.arch ?? 'unknown',
         opts.platform_version,
         opts.toolset,
-        (_b = opts.link) !== null && _b !== void 0 ? _b : 'unknown',
+        opts.link ?? 'unknown',
     ].join('-');
     core.debug(`Using cache key '${key}'`);
     return key;
 }
-function saveCache(opts) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield cache.saveCache([opts.BOOST_ROOT_DIR], getKey(opts));
-    });
+async function saveCache(opts) {
+    await cache.saveCache([opts.BOOST_ROOT_DIR], getKey(opts));
 }
 exports.saveCache = saveCache;
-function restoreCache(opts) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const key = yield cache.restoreCache([opts.BOOST_ROOT_DIR], getKey(opts));
-        return key != undefined;
-    });
+async function restoreCache(opts) {
+    const key = await cache.restoreCache([opts.BOOST_ROOT_DIR], getKey(opts));
+    return key != undefined;
 }
 exports.restoreCache = restoreCache;
 
@@ -97320,96 +97329,110 @@ exports.restoreCache = restoreCache;
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const installV1_1 = __nccwpck_require__(3670);
-const installV2_1 = __nccwpck_require__(5119);
-const core = __nccwpck_require__(2186);
-const path = __nccwpck_require__(1017);
-const semver = __nccwpck_require__(1383);
-var BOOST_ROOT_DIR = path.join(process.env.GITHUB_WORKSPACE, 'boost');
+const installV1_1 = __importDefault(__nccwpck_require__(3670));
+const installV2_1 = __importDefault(__nccwpck_require__(5119));
+const core = __importStar(__nccwpck_require__(2186));
+const path = __importStar(__nccwpck_require__(1017));
+const semver = __importStar(__nccwpck_require__(1383));
+let BOOST_ROOT_DIR = path.join(process.env.GITHUB_WORKSPACE, 'boost');
 const VERSION = '2.1.0';
-function main() {
-    var _a;
-    return __awaiter(this, void 0, void 0, function* () {
-        const boost_version = core.getInput('boost_version');
-        const toolset = core.getInput('toolset');
-        const platform_version = core.getInput('platform_version');
-        const boost_install_dir = core.getInput('boost_install_dir');
-        const link = core.getInput('link');
-        const arch = core.getInput('arch');
-        const cache = (_a = core.getBooleanInput('cache')) !== null && _a !== void 0 ? _a : true;
-        let script_version = core.getInput('version');
-        if (boost_version.length <= 0) {
-            throw new Error('the boost_version variable must be defined');
+async function main() {
+    const boost_version = core.getInput('boost_version');
+    const toolset = core.getInput('toolset');
+    const platform_version = core.getInput('platform_version');
+    const boost_install_dir = core.getInput('boost_install_dir');
+    const link = core.getInput('link');
+    const arch = core.getInput('arch');
+    const cache = core.getBooleanInput('cache') ?? true;
+    let script_version = core.getInput('version');
+    if (boost_version.length <= 0) {
+        throw new Error('the boost_version variable must be defined');
+    }
+    if (cache) {
+        console.log('Using @action/cache to improve build times');
+    }
+    if (boost_install_dir.length > 0) {
+        BOOST_ROOT_DIR = path.join(boost_install_dir, 'boost');
+        console.log(`The install directory was manually changed to ${BOOST_ROOT_DIR}`);
+    }
+    if (!script_version) {
+        script_version = 'default';
+    }
+    if (!platform_version) {
+        core.warning("The 'platform_version' input is unset. This may lead to inconsistent build results.");
+    }
+    if (!toolset &&
+        process.platform === 'win32' &&
+        (semver.gte(boost_version, '1.78.0') || script_version === 'legacy')) {
+        core.warning("The 'toolset' input is unset. This may lead to inconsistent build results.");
+    }
+    else if (toolset &&
+        semver.lt(boost_version, '1.78.0') &&
+        script_version !== 'legacy') {
+        core.warning('Setting the toolset with boost version < 1.78.0 may cause issues');
+    }
+    if (link &&
+        link !== 'static' &&
+        link !== 'shared' &&
+        link !== 'static+shared') {
+        throw new Error("'link' must be one of: 'static', 'shared' or 'static+shared'");
+    }
+    if (arch && arch !== 'x86' && arch !== 'aarch64') {
+        throw new Error("'arch' must be one of: 'x86' or 'aarch64'");
+    }
+    if (script_version === 'legacy') {
+        if (link) {
+            core.warning("The script version was set to 'legacy', but the 'link' option was supplied, ignoring this");
         }
-        if (cache) {
-            console.log('Using @action/cache to improve build times');
-        }
-        if (boost_install_dir.length > 0) {
-            BOOST_ROOT_DIR = path.join(boost_install_dir, 'boost');
-            console.log(`The install directory was manually changed to ${BOOST_ROOT_DIR}`);
-        }
-        if (!script_version) {
-            script_version = 'default';
-        }
-        if (!platform_version) {
-            core.warning("The 'platform_version' input is unset. This may lead to inconsistent build results.");
-        }
-        if (!toolset &&
-            process.platform === 'win32' &&
-            (semver.gte(boost_version, '1.78.0') || script_version === 'legacy')) {
-            core.warning("The 'toolset' input is unset. This may lead to inconsistent build results.");
-        }
-        else if (toolset &&
-            semver.lt(boost_version, '1.78.0') &&
-            script_version !== 'legacy') {
-            core.warning('Setting the toolset with boost version < 1.78.0 may cause issues');
-        }
-        if (link &&
-            link !== 'static' &&
-            link !== 'shared' &&
-            link !== 'static+shared') {
-            throw new Error("'link' must be one of: 'static', 'shared' or 'static+shared'");
-        }
-        if (arch && arch !== 'x86' && arch !== 'aarch64') {
-            throw new Error("'arch' must be one of: 'x86' or 'aarch64'");
-        }
-        if (script_version === 'legacy') {
-            if (link) {
-                core.warning("The script version was set to 'legacy', but the 'link' option was supplied, ignoring this");
-            }
-            yield (0, installV1_1.default)({
-                boost_version,
-                toolset,
-                platform_version,
-                BOOST_ROOT_DIR,
-                cache,
-            });
-        }
-        else if (script_version === 'default') {
-            yield (0, installV2_1.default)({
-                boost_version,
-                toolset,
-                platform_version,
-                link,
-                arch,
-                BOOST_ROOT_DIR,
-                cache,
-            });
-        }
-        else {
-            throw new Error("Invalid value entered for option 'version'");
-        }
-    });
+        await (0, installV1_1.default)({
+            boost_version,
+            toolset,
+            platform_version,
+            BOOST_ROOT_DIR,
+            cache,
+        });
+    }
+    else if (script_version === 'default') {
+        await (0, installV2_1.default)({
+            boost_version,
+            toolset,
+            platform_version,
+            link,
+            arch,
+            BOOST_ROOT_DIR,
+            cache,
+        });
+    }
+    else {
+        throw new Error("Invalid value entered for option 'version'");
+    }
 }
 try {
     console.log(`Starting install-boost@${VERSION}`);
@@ -97431,68 +97454,76 @@ catch (error) {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __nccwpck_require__(2186);
-const path = __nccwpck_require__(1017);
+const core = __importStar(__nccwpck_require__(2186));
+const path = __importStar(__nccwpck_require__(1017));
 const cache_1 = __nccwpck_require__(4810);
 const shared_1 = __nccwpck_require__(3826);
 const VERSION_MANIFEST_ADDR = 'https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json';
-function installV1(opts) {
-    return __awaiter(this, void 0, void 0, function* () {
-        console.log('Using legacy install method');
-        if (opts.cache) {
-            console.log('Trying to retrieve cache...');
-            if (yield (0, cache_1.restoreCache)(opts)) {
-                console.log('Cache successfully restored');
-                return;
-            }
-            else {
-                console.log('Cache miss');
-            }
+async function installV1(opts) {
+    console.log('Using legacy install method');
+    if (opts.cache) {
+        console.log('Trying to retrieve cache...');
+        if (await (0, cache_1.restoreCache)(opts)) {
+            console.log('Cache successfully restored');
+            (0, shared_1.setOutputVariables)(opts.BOOST_ROOT_DIR, opts.boost_version);
+            return;
         }
-        console.log('Downloading versions-manifest.json...');
-        const versions = yield (0, shared_1.getVersions)(VERSION_MANIFEST_ADDR);
-        const { boost_version, toolset, platform_version, BOOST_ROOT_DIR } = opts;
-        console.log('Parsing versions-manifest.json...');
-        const ver_data = (0, shared_1.parseArguments)(versions, boost_version, toolset, platform_version);
-        const download_url = ver_data.url;
-        const filename = ver_data.filename;
-        core.startGroup(`Create ${BOOST_ROOT_DIR}`);
-        (0, shared_1.createDirectory)(BOOST_ROOT_DIR);
-        core.endGroup();
-        core.startGroup('Download Boost');
-        yield (0, shared_1.downloadBoost)(download_url, path.join(BOOST_ROOT_DIR, filename));
-        core.endGroup();
-        let base_dir = filename.substring(0, filename.lastIndexOf('.'));
-        base_dir = base_dir.substring(0, base_dir.lastIndexOf('.'));
-        const BOOST_ROOT = path.join(BOOST_ROOT_DIR, base_dir);
-        core.debug(`Boost base directory: ${base_dir}`);
-        core.startGroup(`Extract ${filename}`);
-        yield (0, shared_1.untarBoost)(base_dir, BOOST_ROOT_DIR);
-        core.endGroup();
-        core.startGroup('Clean up');
-        (0, shared_1.cleanup)(BOOST_ROOT_DIR, base_dir);
-        core.endGroup();
-        core.startGroup('Set output variables');
-        console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
-        console.log(`Setting BOOST_VER to '${base_dir}'`);
-        core.endGroup();
-        core.setOutput('BOOST_ROOT', BOOST_ROOT);
-        core.setOutput('BOOST_VER', base_dir);
-        if (opts.cache) {
-            console.log('Saving cache');
-            (0, cache_1.saveCache)(opts);
+        else {
+            console.log('Cache miss');
         }
-    });
+    }
+    console.log('Downloading versions-manifest.json...');
+    const versions = await (0, shared_1.getVersions)(VERSION_MANIFEST_ADDR);
+    const { boost_version, toolset, platform_version, BOOST_ROOT_DIR } = opts;
+    console.log('Parsing versions-manifest.json...');
+    const ver_data = (0, shared_1.parseArguments)(versions, boost_version, toolset, platform_version);
+    const download_url = ver_data.url;
+    const filename = ver_data.filename;
+    core.startGroup(`Create ${BOOST_ROOT_DIR}`);
+    (0, shared_1.createDirectory)(BOOST_ROOT_DIR);
+    core.endGroup();
+    core.startGroup('Download Boost');
+    await (0, shared_1.downloadBoost)(download_url, path.join(BOOST_ROOT_DIR, filename));
+    core.endGroup();
+    let base_dir = filename.substring(0, filename.lastIndexOf('.'));
+    base_dir = base_dir.substring(0, base_dir.lastIndexOf('.'));
+    const BOOST_ROOT = path.join(BOOST_ROOT_DIR, base_dir);
+    core.debug(`Boost base directory: ${base_dir}`);
+    core.startGroup(`Extract ${filename}`);
+    await (0, shared_1.untarBoost)(base_dir, BOOST_ROOT_DIR);
+    core.endGroup();
+    core.startGroup('Clean up');
+    (0, shared_1.cleanup)(BOOST_ROOT_DIR, base_dir);
+    core.endGroup();
+    (0, shared_1.setOutputVariables)(BOOST_ROOT, base_dir);
+    if (opts.cache) {
+        console.log('Saving cache');
+        (0, cache_1.saveCache)(opts);
+    }
 }
 exports["default"] = installV1;
 
@@ -97504,65 +97535,73 @@ exports["default"] = installV1;
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __nccwpck_require__(2186);
-const path = __nccwpck_require__(1017);
+const core = __importStar(__nccwpck_require__(2186));
+const path = __importStar(__nccwpck_require__(1017));
 const cache_1 = __nccwpck_require__(4810);
 const shared_1 = __nccwpck_require__(3826);
 const VERSION_MANIFEST_ADDR = 'https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json';
-function installV2(opts) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (opts.cache) {
-            console.log('Trying to retrieve cache...');
-            if (yield (0, cache_1.restoreCache)(opts)) {
-                console.log('Cache successfully restored');
-                return;
-            }
-            else {
-                console.log('Cache miss');
-            }
+async function installV2(opts) {
+    if (opts.cache) {
+        console.log('Trying to retrieve cache...');
+        if (await (0, cache_1.restoreCache)(opts)) {
+            console.log('Cache successfully restored');
+            (0, shared_1.setOutputVariables)(opts.BOOST_ROOT_DIR, opts.boost_version);
+            return;
         }
-        console.log('Downloading versions-manifest.json...');
-        const versions = yield (0, shared_1.getVersions)(VERSION_MANIFEST_ADDR);
-        const { boost_version, toolset, platform_version, link, arch, BOOST_ROOT_DIR, } = opts;
-        console.log('Parsing versions-manifest.json...');
-        const ver_data = (0, shared_1.parseArguments)(versions, boost_version, toolset, platform_version, link, arch);
-        const download_url = ver_data.url;
-        const filename = ver_data.filename;
-        core.startGroup(`Create ${BOOST_ROOT_DIR}`);
-        (0, shared_1.createDirectory)(BOOST_ROOT_DIR);
-        core.endGroup();
-        core.startGroup('Download Boost');
-        yield (0, shared_1.downloadBoost)(download_url, path.join(BOOST_ROOT_DIR, filename));
-        core.endGroup();
-        let base_dir = filename.substring(0, filename.lastIndexOf('.'));
-        base_dir = base_dir.substring(0, base_dir.lastIndexOf('.'));
-        core.startGroup(`Extract ${filename}`);
-        yield (0, shared_1.untarBoost)(base_dir, BOOST_ROOT_DIR, false);
-        core.endGroup();
-        core.startGroup('Clean up');
-        (0, shared_1.cleanup)(BOOST_ROOT_DIR, base_dir);
-        core.endGroup();
-        core.startGroup('Set output variables');
-        console.log(`Setting BOOST_ROOT to '${BOOST_ROOT_DIR}/boost'`);
-        console.log(`Setting BOOST_VER to '${base_dir}'`);
-        core.endGroup();
-        core.setOutput('BOOST_ROOT', path.join(BOOST_ROOT_DIR, 'boost'));
-        core.setOutput('BOOST_VER', base_dir);
-        if (opts.cache) {
-            console.log('Saving cache');
-            (0, cache_1.saveCache)(opts);
+        else {
+            console.log('Cache miss');
         }
-    });
+    }
+    console.log('Downloading versions-manifest.json...');
+    const versions = await (0, shared_1.getVersions)(VERSION_MANIFEST_ADDR);
+    const { boost_version, toolset, platform_version, link, arch, BOOST_ROOT_DIR, } = opts;
+    console.log('Parsing versions-manifest.json...');
+    const ver_data = (0, shared_1.parseArguments)(versions, boost_version, toolset, platform_version, link, arch);
+    const download_url = ver_data.url;
+    const filename = ver_data.filename;
+    core.startGroup(`Create ${BOOST_ROOT_DIR}`);
+    (0, shared_1.createDirectory)(BOOST_ROOT_DIR);
+    core.endGroup();
+    core.startGroup('Download Boost');
+    await (0, shared_1.downloadBoost)(download_url, path.join(BOOST_ROOT_DIR, filename));
+    core.endGroup();
+    let base_dir = filename.substring(0, filename.lastIndexOf('.'));
+    base_dir = base_dir.substring(0, base_dir.lastIndexOf('.'));
+    core.startGroup(`Extract ${filename}`);
+    await (0, shared_1.untarBoost)(base_dir, BOOST_ROOT_DIR, false);
+    core.endGroup();
+    core.startGroup('Clean up');
+    (0, shared_1.cleanup)(BOOST_ROOT_DIR, base_dir);
+    core.endGroup();
+    (0, shared_1.setOutputVariables)(BOOST_ROOT_DIR, base_dir);
+    if (opts.cache) {
+        console.log('Saving cache');
+        (0, cache_1.saveCache)(opts);
+    }
 }
 exports["default"] = installV2;
 
@@ -97574,23 +97613,47 @@ exports["default"] = installV2;
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.cleanup = exports.untarBoost = exports.deleteFiles = exports.downloadBoost = exports.parseArguments = exports.createDirectory = exports.getVersions = void 0;
-const core = __nccwpck_require__(2186);
-const request = __nccwpck_require__(8699);
-const fs = __nccwpck_require__(7147);
-const progress = __nccwpck_require__(6139);
-const path = __nccwpck_require__(1017);
+exports.cleanup = exports.untarBoost = exports.deleteFiles = exports.downloadBoost = exports.parseArguments = exports.createDirectory = exports.getVersions = exports.setOutputVariables = void 0;
+const core = __importStar(__nccwpck_require__(2186));
+const request = __importStar(__nccwpck_require__(8699));
+const fs = __importStar(__nccwpck_require__(7147));
+// @ts-ignore
+const progress = __importStar(__nccwpck_require__(6139));
+const path = __importStar(__nccwpck_require__(1017));
 const child_process_1 = __nccwpck_require__(2081);
+function setOutputVariables(BOOST_ROOT, version) {
+    core.startGroup('Set output variables');
+    console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
+    console.log(`Setting BOOST_VER to '${version}'`);
+    core.endGroup();
+    core.setOutput('BOOST_ROOT', BOOST_ROOT);
+    core.setOutput('BOOST_VER', version);
+}
+exports.setOutputVariables = setOutputVariables;
 function getVersions(manifestAddress) {
     return new Promise((resolve, reject) => {
         const req = request.get(manifestAddress);
@@ -97721,6 +97784,7 @@ exports.parseArguments = parseArguments;
 function downloadBoost(url, outFile) {
     return new Promise((resolve, reject) => {
         // Get the request with progress
+        // @ts-ignore
         const req = progress(request(url));
         req.on('progress', (state) => {
             // Log the progress
@@ -97830,24 +97894,22 @@ function run7z(command, working_directory) {
  * @param base the output base
  * @param working_directory the working directory
  */
-function untarBoost(base, working_directory, rename = true) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (process.platform == 'win32') {
-            core.debug('Unpacking boost using 7zip');
-            yield run7z(['x', `${base}.tar.gz`], working_directory);
-            if (rename) {
-                yield run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);
-            }
-            else {
-                yield run7z(['x', `${base}.tar`, '-aoa'], working_directory);
-            }
+async function untarBoost(base, working_directory, rename = true) {
+    if (process.platform == 'win32') {
+        core.debug('Unpacking boost using 7zip');
+        await run7z(['x', `${base}.tar.gz`], working_directory);
+        if (rename) {
+            await run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);
         }
         else {
-            core.debug('Unpacking boost using tar');
-            createDirectory(path.join(working_directory, base));
-            yield untarLinux(`${base}.tar.gz`, base, working_directory, rename);
+            await run7z(['x', `${base}.tar`, '-aoa'], working_directory);
         }
-    });
+    }
+    else {
+        core.debug('Unpacking boost using tar');
+        createDirectory(path.join(working_directory, base));
+        await untarLinux(`${base}.tar.gz`, base, working_directory, rename);
+    }
 }
 exports.untarBoost = untarBoost;
 /**

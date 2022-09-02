@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import * as request from 'request';
 import * as fs from 'fs';
+// @ts-ignore
 import * as progress from 'request-progress';
 import * as path from 'path';
 import { spawn } from 'child_process';
@@ -18,7 +19,19 @@ export interface OptionsV2 extends Options {
     arch: string;
 }
 
-export function getVersions(manifestAddress: string): Promise<object[]> {
+export type VersionsRecord = Record<string, Record<string, string>[] | string>[];
+
+export function setOutputVariables(BOOST_ROOT: string, version: string): void {
+    core.startGroup('Set output variables');
+    console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
+    console.log(`Setting BOOST_VER to '${version}'`);
+    core.endGroup();
+
+    core.setOutput('BOOST_ROOT', BOOST_ROOT);
+    core.setOutput('BOOST_VER', version);
+}
+
+export function getVersions(manifestAddress: string): Promise<VersionsRecord> {
     return new Promise((resolve, reject) => {
         const req = request.get(manifestAddress);
 
@@ -71,7 +84,7 @@ type parsedVersion = {
  * @returns the url and file name or throws an error if the requested version could not be found
  */
 export function parseArguments(
-    versions: object[],
+    versions: VersionsRecord,
     boost_version: string,
     toolset: string | null,
     platform_version: string,
@@ -86,11 +99,11 @@ export function parseArguments(
     }
 
     for (let i = 0; i < versions.length; i++) {
-        let cur: object = versions[i];
+        let cur = versions[i];
         if (cur.hasOwnProperty('version') && cur['version'] == boost_version) {
-            let files: object[] = cur['files'];
+            let files = cur['files'] as Record<string, any>[];
             for (let j = 0; j < files.length; j++) {
-                let file: object = files[j];
+                let file: Record<string, string> = files[j];
 
                 core.debug(`file platform: ${file['platform']}`);
                 if (
@@ -190,8 +203,9 @@ export function parseArguments(
 export function downloadBoost(url: string, outFile: string): Promise<void> {
     return new Promise((resolve, reject) => {
         // Get the request with progress
+        // @ts-ignore
         const req = progress(request(url));
-        req.on('progress', (state) => {
+        req.on('progress', (state: Record<string, any>) => {
             // Log the progress
             core.debug(`Progress state: ${JSON.stringify(state)}`);
             const percent: number = state.percent * 100;
@@ -208,7 +222,7 @@ export function downloadBoost(url: string, outFile: string): Promise<void> {
         });
 
         // Fail on error
-        req.on('error', (err) => {
+        req.on('error', (err: any) => {
             reject(err);
         });
     });
