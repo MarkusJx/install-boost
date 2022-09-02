@@ -1,10 +1,9 @@
 import * as core from '@actions/core';
-import * as request from 'request';
-import * as fs from 'fs';
-// @ts-ignore
-import * as progress from 'request-progress';
-import * as path from 'path';
+import request from 'request';
+import fs from 'fs';
+import path from 'path';
 import { spawn } from 'child_process';
+import progress = require('request-progress');
 
 export interface Options {
     boost_version: string;
@@ -19,7 +18,10 @@ export interface OptionsV2 extends Options {
     arch: string;
 }
 
-export type VersionsRecord = Record<string, Record<string, string>[] | string>[];
+export type VersionsRecord = Record<
+    string,
+    Record<string, string>[] | string
+>[];
 
 export function setOutputVariables(BOOST_ROOT: string, version: string): void {
     core.startGroup('Set output variables');
@@ -203,7 +205,6 @@ export function parseArguments(
 export function downloadBoost(url: string, outFile: string): Promise<void> {
     return new Promise((resolve, reject) => {
         // Get the request with progress
-        // @ts-ignore
         const req = progress(request(url));
         req.on('progress', (state: Record<string, any>) => {
             // Log the progress

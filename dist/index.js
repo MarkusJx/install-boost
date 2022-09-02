@@ -97636,15 +97636,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.cleanup = exports.untarBoost = exports.deleteFiles = exports.downloadBoost = exports.parseArguments = exports.createDirectory = exports.getVersions = exports.setOutputVariables = void 0;
 const core = __importStar(__nccwpck_require__(2186));
-const request = __importStar(__nccwpck_require__(8699));
-const fs = __importStar(__nccwpck_require__(7147));
-// @ts-ignore
-const progress = __importStar(__nccwpck_require__(6139));
-const path = __importStar(__nccwpck_require__(1017));
+const request_1 = __importDefault(__nccwpck_require__(8699));
+const fs_1 = __importDefault(__nccwpck_require__(7147));
+const path_1 = __importDefault(__nccwpck_require__(1017));
 const child_process_1 = __nccwpck_require__(2081);
+const progress = __nccwpck_require__(6139);
 function setOutputVariables(BOOST_ROOT, version) {
     core.startGroup('Set output variables');
     console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
@@ -97656,7 +97658,7 @@ function setOutputVariables(BOOST_ROOT, version) {
 exports.setOutputVariables = setOutputVariables;
 function getVersions(manifestAddress) {
     return new Promise((resolve, reject) => {
-        const req = request.get(manifestAddress);
+        const req = request_1.default.get(manifestAddress);
         // Append data to the data object
         let dt = '';
         req.on('data', (data) => {
@@ -97680,9 +97682,9 @@ exports.getVersions = getVersions;
  * @param dir the directory to create
  */
 function createDirectory(dir) {
-    if (!fs.existsSync(dir)) {
+    if (!fs_1.default.existsSync(dir)) {
         console.log(`${dir} does not exist, creating it`);
-        fs.mkdirSync(dir, { recursive: true });
+        fs_1.default.mkdirSync(dir, { recursive: true });
         console.log('Done.');
     }
     else {
@@ -97784,8 +97786,7 @@ exports.parseArguments = parseArguments;
 function downloadBoost(url, outFile) {
     return new Promise((resolve, reject) => {
         // Get the request with progress
-        // @ts-ignore
-        const req = progress(request(url));
+        const req = progress((0, request_1.default)(url));
         req.on('progress', (state) => {
             // Log the progress
             core.debug(`Progress state: ${JSON.stringify(state)}`);
@@ -97793,7 +97794,7 @@ function downloadBoost(url, outFile) {
             console.log(`Download progress: ${percent.toFixed(2)}%`);
         });
         // Pipe to outFile
-        req.pipe(fs.createWriteStream(outFile));
+        req.pipe(fs_1.default.createWriteStream(outFile));
         // Resolve on download finished
         req.on('end', () => {
             console.log('Download finished');
@@ -97815,9 +97816,9 @@ function deleteFiles(files) {
     console.log(`Attempting to delete ${files.length} file(s)...`);
     for (let i = 0; i < files.length; i++) {
         let cur_file = files[i];
-        if (fs.existsSync(cur_file)) {
+        if (fs_1.default.existsSync(cur_file)) {
             console.log(`${cur_file} exists, deleting it`);
-            fs.unlinkSync(cur_file);
+            fs_1.default.unlinkSync(cur_file);
         }
         else {
             console.log(`${cur_file} does not exist`);
@@ -97907,7 +97908,7 @@ async function untarBoost(base, working_directory, rename = true) {
     }
     else {
         core.debug('Unpacking boost using tar');
-        createDirectory(path.join(working_directory, base));
+        createDirectory(path_1.default.join(working_directory, base));
         await untarLinux(`${base}.tar.gz`, base, working_directory, rename);
     }
 }
@@ -97921,12 +97922,12 @@ exports.untarBoost = untarBoost;
 function cleanup(base_dir, base) {
     if (process.platform == 'win32') {
         deleteFiles([
-            path.join(base_dir, `${base}.tar.gz`),
-            path.join(base_dir, `${base}.tar`),
+            path_1.default.join(base_dir, `${base}.tar.gz`),
+            path_1.default.join(base_dir, `${base}.tar`),
         ]);
     }
     else {
-        deleteFiles([path.join(base_dir, `${base}.tar.gz`)]);
+        deleteFiles([path_1.default.join(base_dir, `${base}.tar.gz`)]);
     }
 }
 exports.cleanup = cleanup;
