@@ -22,7 +22,10 @@ export default async function installV1(opts: Options): Promise<void> {
         console.log('Trying to retrieve cache...');
         if (await restoreCache(opts)) {
             console.log('Cache successfully restored');
-            setOutputVariables(opts.BOOST_ROOT_DIR, opts.boost_version);
+            setOutputVariables(
+                path.join(opts.BOOST_ROOT_DIR, 'boost'),
+                opts.boost_version
+            );
             return;
         } else {
             console.log('Cache miss');

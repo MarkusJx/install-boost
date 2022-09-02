@@ -97303,10 +97303,10 @@ function getKey(opts) {
         'boost',
         `v${opts.boost_version}`,
         process.platform,
-        opts.arch ?? 'unknown',
+        opts.arch || 'unknown',
         opts.platform_version,
         opts.toolset,
-        opts.link ?? 'unknown',
+        opts.link || 'unknown',
     ].join('-');
     core.debug(`Using cache key '${key}'`);
     return key;
@@ -97489,7 +97489,7 @@ async function installV1(opts) {
         console.log('Trying to retrieve cache...');
         if (await (0, cache_1.restoreCache)(opts)) {
             console.log('Cache successfully restored');
-            (0, shared_1.setOutputVariables)(opts.BOOST_ROOT_DIR, opts.boost_version);
+            (0, shared_1.setOutputVariables)(path.join(opts.BOOST_ROOT_DIR, 'boost'), opts.boost_version);
             return;
         }
         else {
@@ -97569,7 +97569,7 @@ async function installV2(opts) {
         console.log('Trying to retrieve cache...');
         if (await (0, cache_1.restoreCache)(opts)) {
             console.log('Cache successfully restored');
-            (0, shared_1.setOutputVariables)(opts.BOOST_ROOT_DIR, opts.boost_version);
+            (0, shared_1.setOutputVariables)(path.join(opts.BOOST_ROOT_DIR, 'boost'), opts.boost_version);
             return;
         }
         else {

@@ -10,10 +10,10 @@ function getKey(opts: CacheOptions): string {
         'boost',
         `v${opts.boost_version}`,
         process.platform,
-        opts.arch ?? 'unknown',
+        opts.arch || 'unknown',
         opts.platform_version,
         opts.toolset,
-        opts.link ?? 'unknown',
+        opts.link || 'unknown',
     ].join('-');
 
     core.debug(`Using cache key '${key}'`);
