@@ -74,7 +74,7 @@ export default async function installV2(opts: OptionsV2): Promise<void> {
     cleanup(BOOST_ROOT_DIR, base_dir);
     core.endGroup();
 
-    setOutputVariables(BOOST_ROOT_DIR, base_dir);
+    setOutputVariables(path.join(BOOST_ROOT_DIR, 'boost'), base_dir);
 
     if (opts.cache) {
         console.log('Saving cache');

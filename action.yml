@@ -26,7 +26,7 @@ inputs:
         required: false
         default: ''
     cache:
-        description: 'Wheter to use @actions/cache to improve build times'
+        description: 'Wheter to use actions/cache to improve build times'
         required: false
         default: true
 outputs:

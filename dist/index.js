@@ -97597,7 +97597,7 @@ async function installV2(opts) {
     core.startGroup('Clean up');
     (0, shared_1.cleanup)(BOOST_ROOT_DIR, base_dir);
     core.endGroup();
-    (0, shared_1.setOutputVariables)(BOOST_ROOT_DIR, base_dir);
+    (0, shared_1.setOutputVariables)(path.join(BOOST_ROOT_DIR, 'boost'), base_dir);
     if (opts.cache) {
         console.log('Saving cache');
         (0, cache_1.saveCache)(opts);

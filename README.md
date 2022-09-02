@@ -57,6 +57,11 @@ the default github runners, the `aarch64` images may be used for cross-compiling
 binaries for arm systems. If not set, `x86` images will be used. Only works on
 `linux` images with version `20.04` (or just specify no os version).
 
+### `cache`
+
+**Optional** Whether to use `actions/cache` to further decrease build times.
+Defaults to `true`, you'll only ever need to set this if you want to disable the cache.
+
 ## Outputs
 
 ### `BOOST_ROOT`
@@ -222,67 +227,6 @@ or
 
 ## Caching
 
-If you want to cache the boost versions to further accelerate your builds, you could use
-`actions/cache` to do that ([as seen here](https://github.com/MarkusJx/install-boost/issues/6)):
-
-```yml
-# Retrieve the cache, uses cache@v2
-- name: Cache boost
-  uses: actions/cache@v2
-  id: cache-boost
-  with:
-      # Set the default path as the path to cache
-      path: ${{github.workspace}}/boost/boost
-      # Use the version as the key to only cache the correct version
-      key: boost-${{BOOST_VERSION}}
-
-# Actual install step (only runs if the cache is empty)
-- name: Install boost
-  if: steps.cache-boost.outputs.cache-hit != 'true'
-  uses: MarkusJx/install-boost@v2.3.1
-  with:
-      # Set the boost version (required)
-      boost_version: ${{BOOST_VERSION}}
-```
-
-or if you want to use custom paths for boost:
-
-```yml
-jobs:
-    build:
-        runs-on: windows-2019
-        env:
-            # Set your boost version
-            BOOST_VERSION: 1.78.0
-            # Set you boost path to the default one (I don't know if you can use variables here)
-            BOOST_PATH: ${{github.workspace}}/boost/boost
-
-        steps:
-            - uses: actions/checkout@v2
-
-            # Additional steps...
-
-            # Retrieve the cache, uses cache@v2
-            - name: Cache boost
-              uses: actions/cache@v2
-              id: cache-boost
-              with:
-                  # Set the path to cache
-                  path: ${{env.BOOST_PATH}}
-                  # Use the version as the key to only cache the correct version
-                  key: boost-${{env.BOOST_VERSION}}
-
-            # Actual install step (only runs if the cache is empty)
-            - name: Install boost
-              if: steps.cache-boost.outputs.cache-hit != 'true'
-              uses: MarkusJx/install-boost@v2.3.1
-              with:
-                  # Set the boost version (required)
-                  boost_version: ${{env.BOOST_VERSION}}
-                  # Set the install directory
-                  boost_install_dir: ${{env.BOOST_PATH}}
-                  # Set your platform version
-                  platform_version: 2019
-                  # Set the toolset
-                  toolset: msvc
-```
+As of version 3, `install-boost` natively supports caching using `actions/cache`
+to further improve build times. This is enabled by default. You can disable
+this behaviour by setting the `cache` variable to `false`.
