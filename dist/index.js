@@ -97351,6 +97351,9 @@ function main() {
         if (boost_version.length <= 0) {
             throw new Error('the boost_version variable must be defined');
         }
+        if (cache) {
+            console.log('Using @action/cache to improve build times');
+        }
         if (boost_install_dir.length > 0) {
             BOOST_ROOT_DIR = path.join(boost_install_dir, 'boost');
             console.log(`The install directory was manually changed to ${BOOST_ROOT_DIR}`);

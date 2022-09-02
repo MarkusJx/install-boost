@@ -28,18 +28,42 @@ jobs:
                       COMPILER: gcc
                       PLATFORM: 20.04
                       ARCH: x86
+                      cache: false
                     - os: ubuntu-20.04
                       COMPILER: gcc
                       PLATFORM: 20.04
                       ARCH: aarch64
+                      cache: false
                     - os: windows-2019
                       COMPILER: msvc
                       PLATFORM: 2019
                       ARCH: x86
+                      cache: false
                     - os: windows-2019
                       COMPILER: mingw
                       PLATFORM: 2019
                       ARCH: x86
+                      cache: false
+                    - os: ubuntu-20.04
+                      COMPILER: gcc
+                      PLATFORM: 20.04
+                      ARCH: x86
+                      cache: true
+                    - os: ubuntu-20.04
+                      COMPILER: gcc
+                      PLATFORM: 20.04
+                      ARCH: aarch64
+                      cache: true
+                    - os: windows-2019
+                      COMPILER: msvc
+                      PLATFORM: 2019
+                      ARCH: x86
+                      cache: true
+                    - os: windows-2019
+                      COMPILER: mingw
+                      PLATFORM: 2019
+                      ARCH: x86
+                      cache: true
 
         steps:
             - uses: actions/checkout@v2
@@ -51,6 +75,7 @@ jobs:
                   platform_version: ${{matrix.PLATFORM}}
                   toolset: ${{matrix.COMPILER}}
                   arch: ${{matrix.ARCH}}
+                  cache: ${{matrix.cache}}
 
             - name: Setup MinGW
               uses: egor-tensin/setup-mingw@v2
