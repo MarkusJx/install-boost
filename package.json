@@ -1,35 +1,48 @@
 {
-  "name": "install-boost",
-  "version": "2.3.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "pretest": "npm run-script build",
-    "test": "node dist/index.js",
-    "build": "tsc && ncc build dist/index.js --license licenses.txt"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MarkusJx/install-boost.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/MarkusJx/install-boost/issues"
-  },
-  "homepage": "https://github.com/MarkusJx/install-boost#readme",
-  "dependencies": {
-    "@actions/core": "^1.2.6",
-    "@actions/github": "^4.0.0",
-    "request": "^2.88.2",
-    "request-progress": "^3.0.0",
-    "semver": "^7.3.7"
-  },
-  "devDependencies": {
-    "@types/request": "^2.48.7",
-    "@types/semver": "^7.3.10",
-    "@vercel/ncc": "^0.27.0",
-    "typescript": "^4.1.3"
-  }
+    "name": "install-boost",
+    "version": "2.3.1",
+    "description": "",
+    "main": "dist/index.js",
+    "private": true,
+    "scripts": {
+        "pretest": "npm run-script build",
+        "test": "node dist/index.js",
+        "build": "ncc build -o dist --license licenses.txt src/index.ts",
+        "prebuild": "rimraf dist",
+        "prettier:fix": "prettier --write ."
+    },
+    "prettier": {
+        "printWidth": 80,
+        "semi": true,
+        "singleQuote": true,
+        "tabWidth": 4,
+        "trailingComma": "es5"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MarkusJx/install-boost.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/MarkusJx/install-boost/issues"
+    },
+    "homepage": "https://github.com/MarkusJx/install-boost#readme",
+    "dependencies": {
+        "@actions/cache": "^3.0.4",
+        "@actions/core": "^1.9.1",
+        "@actions/github": "^5.0.3",
+        "request": "^2.88.2",
+        "request-progress": "^3.0.0",
+        "semver": "^7.3.7"
+    },
+    "devDependencies": {
+        "@types/request": "^2.48.8",
+        "@types/semver": "^7.3.12",
+        "@vercel/ncc": "^0.34.0",
+        "prettier": "^2.7.1",
+        "rimraf": "^3.0.2",
+        "typescript": "^4.8.2"
+    }
 }
