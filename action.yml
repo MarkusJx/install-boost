@@ -25,6 +25,10 @@ inputs:
         description: 'The dirctory to install boost into'
         required: false
         default: ''
+    cache:
+        description: 'Wheter to use @actions/cache to improve build times'
+        required: false
+        default: true
 outputs:
     BOOST_ROOT:
         description: 'The path to the boost installation, e.g. to be used in CMake'
