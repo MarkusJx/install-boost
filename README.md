@@ -227,6 +227,6 @@ or
 
 ## Caching
 
-As of version 3, `install-boost` natively supports caching using `actions/cache`
+As of version `2.4.0`, `install-boost` natively supports caching using `actions/cache`
 to further improve build times. This is enabled by default. You can disable
 this behaviour by setting the `cache` variable to `false`.
