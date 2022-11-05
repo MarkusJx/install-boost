@@ -1,13 +1,13 @@
 {
     "name": "install-boost",
-    "version": "3.0.0",
+    "version": "2.4.1",
     "description": "",
     "main": "dist/index.js",
     "private": true,
     "scripts": {
         "pretest": "npm run-script build",
         "test": "node dist/index.js",
-        "build": "ncc build -o dist --license licenses.txt src/index.ts",
+        "build": "ncc build -m -o dist --license licenses.txt src/index.ts",
         "prebuild": "rimraf dist",
         "prettier:fix": "prettier --write ."
     },
