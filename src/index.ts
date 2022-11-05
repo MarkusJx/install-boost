@@ -1,12 +1,12 @@
 import installV1 from './installV1';
 import installV2 from './installV2';
+import { version } from '../package.json';
 
 import * as core from '@actions/core';
 import * as path from 'path';
 import * as semver from 'semver';
 
 let BOOST_ROOT_DIR: string = path.join(process.env.GITHUB_WORKSPACE!, 'boost');
-const VERSION: string = '2.1.0';
 
 async function main(): Promise<void> {
     const boost_version: string = core.getInput('boost_version');
@@ -106,10 +106,10 @@ async function main(): Promise<void> {
 }
 
 try {
-    console.log(`Starting install-boost@${VERSION}`);
+    console.log(`Starting install-boost@${version}`);
     main().then(
         () => {
-            console.log(`install-boost@${VERSION} finished successfully`);
+            console.log(`install-boost@${version} finished successfully`);
         },
         (reject) => {
             core.setFailed(reject);

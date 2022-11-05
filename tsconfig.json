@@ -13,6 +13,7 @@
         "strictPropertyInitialization": true,
         "esModuleInterop": true,
         "lib": ["ESNext", "es2020"],
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true
     }
 }
