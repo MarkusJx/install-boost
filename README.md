@@ -97,7 +97,7 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
 
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v2.3.1
+  uses: MarkusJx/install-boost@v2.4.1
   id: install-boost
   with:
       # REQUIRED: Specify the required boost version
@@ -119,7 +119,7 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
 
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v2.3.1
+  uses: MarkusJx/install-boost@v2.4.1
   id: install-boost
   with:
       # REQUIRED: Specify the required boost version
@@ -143,7 +143,7 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
 
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v2.3.1
+  uses: MarkusJx/install-boost@v2.4.1
   id: install-boost
   with:
       # REQUIRED: Specify the required boost version
@@ -187,7 +187,7 @@ or
 
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v2.3.1
+  uses: MarkusJx/install-boost@v2.4.1
   id: install-boost
   with:
       # REQUIRED: Specify the required boost version
@@ -230,3 +230,32 @@ or
 As of version `2.4.0`, `install-boost` natively supports caching using `actions/cache`
 to further improve build times. This is enabled by default. You can disable
 this behaviour by setting the `cache` variable to `false`.
+
+## Boost.Python
+
+Starting from boost version `1.80.0`, the pre-built binaries will be built with
+`boost.python` for the following python versions:
+
+-   `3.7`
+-   `3.8`
+-   `3.9`
+-   `3.10`
+-   `3.11`
+
+Due to memory restrictions on the build runners, there are some binaries which don't support python:
+
+| Platform     | Link          | Compiler | Arch    | Python supported |
+| ------------ | ------------- | -------- | ------- | ---------------- |
+| ubuntu-18.04 | static+shared | gcc      | x86     | ✅               |
+| ubuntu-20.04 | static+shared | gcc      | aarch64 | ❌               |
+| ubuntu-20.04 | static+shared | gcc      | x86     | ✅               |
+| ubuntu-22.04 | static+shared | gcc      | x86     | ✅               |
+| windows-2019 | static        | msvc     | x86     | ✅               |
+| windows-2019 | shared        | msvc     | x86     | ❌               |
+| windows-2019 | static        | mingw    | x86     | ❌               |
+| windows-2022 | static        | msvc     | x86     | ✅               |
+| windows-2022 | shared        | msvc     | x86     | ❌               |
+| windows-2022 | static        | mingw    | x86     | ❌               |
+| windows-2022 | shared        | mingw    | x86     | ❌               |
+| macos-10.15  | static+shared | clang    | x86     | ✅               |
+| macos-11     | static+shared | clang    | x86     | ✅               |

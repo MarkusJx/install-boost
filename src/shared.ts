@@ -18,10 +18,29 @@ export interface OptionsV2 extends Options {
     arch: string;
 }
 
-export type VersionsRecord = Record<
+export type BoostPlatform = 'windows' | 'macos' | 'linux';
+
+export interface BoostVersion {
+    filename: string;
+    platform?: BoostPlatform;
+    platform_version: string;
+    toolset?: string;
+    link?: string;
+    arch?: string;
+    download_url: string;
+}
+
+export interface VersionRecord {
+    version: string;
+    files: BoostVersion[];
+}
+
+export type VersionsRecord = VersionRecord[];
+
+/*export type VersionsRecord = Record<
     string,
     Record<string, string>[] | string
->[];
+>[];*/
 
 export function setOutputVariables(BOOST_ROOT: string, version: string): void {
     core.startGroup('Set output variables');
@@ -100,28 +119,17 @@ export function parseArguments(
         platform = 'windows';
     }
 
-    for (let i = 0; i < versions.length; i++) {
-        let cur = versions[i];
-        if (cur.hasOwnProperty('version') && cur['version'] == boost_version) {
-            let files = cur['files'] as Record<string, any>[];
-            for (let j = 0; j < files.length; j++) {
-                let file: Record<string, string> = files[j];
-
-                core.debug(`file platform: ${file['platform']}`);
-                if (
-                    !file.hasOwnProperty('platform') ||
-                    file['platform'] != platform
-                ) {
+    for (const cur of versions) {
+        if (cur.version && cur.version == boost_version) {
+            for (const file of cur.files) {
+                core.debug(`file platform: ${file.platform}`);
+                if (!file.platform || file.platform != platform) {
                     core.debug("File does not match param 'platform'");
                     continue;
                 }
 
-                core.debug(`file toolset: ${file['toolset']}`);
-                if (
-                    toolset &&
-                    (!file.hasOwnProperty('toolset') ||
-                        file['toolset'] != toolset)
-                ) {
+                core.debug(`file toolset: ${file.toolset}`);
+                if (toolset && (!file.toolset || file.toolset != toolset)) {
                     core.debug("File does not match param 'toolset'");
                     continue;
                 }
@@ -131,61 +139,56 @@ export function parseArguments(
                 );
                 if (
                     platform_version.length > 0 &&
-                    (!file.hasOwnProperty('platform_version') ||
-                        file['platform_version'] != platform_version)
+                    (!file.platform_version ||
+                        file.platform_version != platform_version)
                 ) {
                     core.debug("File does not match param 'platform_version");
                     continue;
                 }
 
-                if (link && !file['link']) {
-                    core.warning(
-                        "The parameter 'link' was specified, which doesn't have any effect on this boost version"
-                    );
-                } else if (
+                if (
                     link &&
-                    file.hasOwnProperty('link') &&
-                    link !== file['link'] &&
-                    file['link'] !== 'static+shared'
+                    file.link &&
+                    link !== file.link &&
+                    file.link !== 'static+shared'
                 ) {
                     core.debug("File does not match param 'link'");
                     continue;
-                } else if (
-                    !link &&
-                    file.hasOwnProperty('link') &&
-                    file['link'] === 'shared'
-                ) {
+                } else if (!link && file.link && file.link === 'shared') {
                     core.debug(
                         "The file's 'link' was set to 'shared', but 'link' was not specified, ignoring this file"
                     );
                     continue;
                 }
 
-                if (arch && !file['arch']) {
-                    core.warning(
-                        "The parameter 'arch' was specified, which doesn't have any effect on this boost version"
-                    );
-                } else if (
-                    arch &&
-                    file.hasOwnProperty('arch') &&
-                    arch !== file['arch']
-                ) {
+                if (arch && file.arch && arch !== file.arch) {
                     core.debug("File does not match param 'arch'");
                     continue;
-                } else if (
-                    !arch &&
-                    file.hasOwnProperty('arch') &&
-                    file['arch'] !== 'x86'
-                ) {
+                } else if (!arch && file.arch && file.arch !== 'x86') {
                     core.debug(
                         "The file's 'arch' was not set to 'x86', but 'arch' was not specified, ignoring this file"
                     );
                     continue;
                 }
 
+                core.debug(`Boost found: '${file.filename}'`);
+
+                // Only emit warnings if this is the boost version that matches the description
+                if (link && !file.link) {
+                    core.warning(
+                        "The parameter 'link' was specified, which doesn't have any effect on this boost version"
+                    );
+                }
+
+                if (arch && !file.arch) {
+                    core.warning(
+                        "The parameter 'arch' was specified, which doesn't have any effect on this boost version"
+                    );
+                }
+
                 return {
-                    url: file['download_url'],
-                    filename: file['filename'],
+                    url: file.download_url,
+                    filename: file.filename,
                 };
             }
 
