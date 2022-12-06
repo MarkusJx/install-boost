@@ -119,6 +119,8 @@ export function parseArguments(
         platform = 'windows';
     }
 
+    let lastMatch: parsedVersion | null = null;
+
     for (const cur of versions) {
         if (cur.version && cur.version == boost_version) {
             for (const file of cur.files) {
@@ -131,6 +133,9 @@ export function parseArguments(
                 core.debug(`file toolset: ${file.toolset}`);
                 if (toolset && (!file.toolset || file.toolset != toolset)) {
                     core.debug("File does not match param 'toolset'");
+                    continue;
+                } else if (!toolset && file.toolset === 'mingw' && lastMatch) {
+                    core.debug("'toolset' is unset but this toolset is 'mingw' and a better match was found");
                     continue;
                 }
 
@@ -186,7 +191,7 @@ export function parseArguments(
                     );
                 }
 
-                return {
+                lastMatch = {
                     url: file.download_url,
                     filename: file.filename,
                 };
@@ -196,7 +201,11 @@ export function parseArguments(
         }
     }
 
-    throw new Error(`Could not find boost version ${boost_version}`);
+    if (lastMatch) {
+        return lastMatch;
+    } else {
+        throw new Error(`Could not find boost version ${boost_version}`);
+    }
 }
 
 /**
