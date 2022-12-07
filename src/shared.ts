@@ -37,11 +37,6 @@ export interface VersionRecord {
 
 export type VersionsRecord = VersionRecord[];
 
-/*export type VersionsRecord = Record<
-    string,
-    Record<string, string>[] | string
->[];*/
-
 export function setOutputVariables(BOOST_ROOT: string, version: string): void {
     core.startGroup('Set output variables');
     console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
@@ -135,7 +130,9 @@ export function parseArguments(
                     core.debug("File does not match param 'toolset'");
                     continue;
                 } else if (!toolset && file.toolset === 'mingw' && lastMatch) {
-                    core.debug("'toolset' is unset but this toolset is 'mingw' and a better match was found");
+                    core.debug(
+                        "'toolset' is unset but this toolset is 'mingw' and a better match was found"
+                    );
                     continue;
                 }
 

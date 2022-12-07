@@ -43,17 +43,21 @@ async function main(): Promise<void> {
         );
     }
 
+    const semverReplace = (version: string) =>
+        version.replace(/([.\d]+)\.(beta|alpha)(\d+)/gi, '$1-$2.$3');
+
     if (
         !toolset &&
         process.platform === 'win32' &&
-        (semver.gte(boost_version, '1.78.0') || script_version === 'legacy')
+        (semver.gte(semverReplace(boost_version), '1.78.0') ||
+            script_version === 'legacy')
     ) {
         core.warning(
             "The 'toolset' input is unset. This may lead to inconsistent build results."
         );
     } else if (
         toolset &&
-        semver.lt(boost_version, '1.78.0') &&
+        semver.lt(semverReplace(boost_version), '1.78.0') &&
         script_version !== 'legacy'
     ) {
         core.warning(
