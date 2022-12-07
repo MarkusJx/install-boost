@@ -21,6 +21,7 @@ jobs:
         strategy:
             matrix:
                 os: [ubuntu-latest, windows-latest]
+                boost_version: ['1.74.0', '1.80.0.beta1']
 
         steps:
             - uses: actions/checkout@v3
@@ -28,7 +29,7 @@ jobs:
               uses: ./
               id: install-boost
               with:
-                  boost_version: 1.73.0
+                  boost_version: ${{ matrix.boost_version }}
             - name: List contents of boost directory
               run: ls
               working-directory: ${{ steps.install-boost.outputs.BOOST_ROOT }}

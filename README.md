@@ -102,7 +102,7 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
   with:
       # REQUIRED: Specify the required boost version
       # A list of supported versions can be found here:
-      # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
+      # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
       boost_version: 1.73.0
       # OPTIONAL: Specify a custon install location
       boost_install_dir: C:\some_directory
@@ -124,7 +124,7 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
   with:
       # REQUIRED: Specify the required boost version
       # A list of supported versions can be found here:
-      # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
+      # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
       boost_version: 1.73.0
       # OPTIONAL: Specify a platform version
       platform_version: 18.04
@@ -148,7 +148,7 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
   with:
       # REQUIRED: Specify the required boost version
       # A list of supported versions can be found here:
-      # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
+      # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
       boost_version: 1.73.0
       # OPTIONAL: Specify a platform version
       platform_version: 10.15
@@ -259,3 +259,4 @@ Due to memory restrictions on the build runners, there are some binaries which d
 | windows-2022 | shared        | mingw    | x86     | ❌               |
 | macos-10.15  | static+shared | clang    | x86     | ✅               |
 | macos-11     | static+shared | clang    | x86     | ✅               |
+| macos-12     | static+shared | clang    | x86     | ✅               |
