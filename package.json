@@ -30,7 +30,7 @@
     },
     "homepage": "https://github.com/MarkusJx/install-boost#readme",
     "dependencies": {
-        "@actions/cache": "^3.1.0-beta.1",
+        "@actions/cache": "^3.1.4",
         "@actions/core": "^1.10.0",
         "@actions/github": "^5.1.1",
         "request": "^2.88.2",
@@ -43,7 +43,7 @@
         "@types/semver": "^7.3.13",
         "@vercel/ncc": "^0.36.0",
         "prettier": "^2.8.1",
-        "rimraf": "^3.0.2",
+        "rimraf": "^4.1.2",
         "typescript": "^4.9.3"
     }
 }
