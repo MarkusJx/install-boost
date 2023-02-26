@@ -177,13 +177,13 @@ export function parseArguments(
 
                 // Only emit warnings if this is the boost version that matches the description
                 if (link && !file.link) {
-                    core.warning(
+                    core.info(
                         "The parameter 'link' was specified, which doesn't have any effect on this boost version"
                     );
                 }
 
                 if (arch && !file.arch) {
-                    core.warning(
+                    core.info(
                         "The parameter 'arch' was specified, which doesn't have any effect on this boost version"
                     );
                 }

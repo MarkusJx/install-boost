@@ -20,8 +20,19 @@ jobs:
 
         strategy:
             matrix:
-                os: [ubuntu-latest, windows-latest]
-                boost_version: ['1.74.0', '1.80.0.beta1']
+              include:
+                - os: ubuntu-22.04
+                  boost_version: '1.74.0'
+                  version: 22.04
+                - os: ubuntu-22.04
+                  boost_version: '1.80.0.beta1'
+                  version: 22.04
+                - os: windows-2022
+                  boost_version: '1.74.0'
+                  version: 2022
+                - os: windows-2022
+                  boost_version: '1.80.0.beta1'
+                  version: 2022
 
         steps:
             - uses: actions/checkout@v3
@@ -30,6 +41,7 @@ jobs:
               id: install-boost
               with:
                   boost_version: ${{ matrix.boost_version }}
+                  platform_version: ${{matrix.version}}
             - name: List contents of boost directory
               run: ls
               working-directory: ${{ steps.install-boost.outputs.BOOST_ROOT }}
@@ -39,8 +51,18 @@ jobs:
             - run: echo "${{ steps.install-boost.outputs.BOOST_VER }}"
               shell: bash
 
-    build-custom-install-dir-ubuntu:
-        runs-on: ubuntu-latest
+    build-custom-install-dir:
+        runs-on: ${{matrix.os}}
+
+        strategy:
+          matrix:
+            include:
+              - os: ubuntu-22.04
+                version: 22.04
+                dir: '/home/runner'
+              - os: windows-2022
+                version: 2022
+                dir: 'C:/'
 
         steps:
             - uses: actions/checkout@v3
@@ -49,29 +71,9 @@ jobs:
               id: install-boost
               with:
                   boost_version: 1.73.0
-                  boost_install_dir: '/home/runner'
+                  boost_install_dir: ${{matrix.dir}}
                   cache: false
-            - name: List contents of boost directory
-              run: ls
-              working-directory: ${{ steps.install-boost.outputs.BOOST_ROOT }}
-              shell: bash
-            - run: echo "${{ steps.install-boost.outputs.BOOST_ROOT }}"
-              shell: bash
-            - run: echo "${{ steps.install-boost.outputs.BOOST_VER }}"
-              shell: bash
-
-    build-custom-install-dir-windows:
-        runs-on: windows-latest
-
-        steps:
-            - uses: actions/checkout@v3
-            - name: Install boost
-              uses: ./
-              id: install-boost
-              with:
-                  boost_version: 1.73.0
-                  boost_install_dir: 'C:/'
-                  cache: false
+                  platform_version: ${{matrix.version}}
             - name: List contents of boost directory
               run: ls
               working-directory: ${{ steps.install-boost.outputs.BOOST_ROOT }}
