@@ -81,7 +81,7 @@ jobs:
               uses: egor-tensin/setup-mingw@v2
               if: ${{runner.os == 'Windows' && matrix.COMPILER == 'mingw'}}
               with:
-                version: 8
+                version: '8.1.0'
 
             - name: Install arm64 compiler
               run: sudo apt-get update && sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y
