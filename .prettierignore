@@ -1,5 +1,6 @@
 dist/
 node_modules/
 .vscode/
-test/
+test/*.txt
+test/*.cpp
 package-lock.json

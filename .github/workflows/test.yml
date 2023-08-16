@@ -15,28 +15,37 @@ on:
             - 'test/**'
 
 jobs:
+    test:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - name: Install dependencies
+          run: npm ci
+        - name: Run tests
+          run: npm test
+
     build:
         runs-on: ${{ matrix.os }}
 
         strategy:
             matrix:
-              include:
-                - os: ubuntu-22.04
-                  boost_version: '1.80.0'
-                  version: 22.04
-                  toolset: 'gcc'
-                - os: ubuntu-22.04
-                  boost_version: '1.80.0.beta1'
-                  version: 22.04
-                  toolset: 'gcc'
-                - os: windows-2022
-                  boost_version: '1.80.0'
-                  version: 2022
-                  toolset: 'msvc'
-                - os: windows-2022
-                  boost_version: '1.80.0.beta1'
-                  version: 2022
-                  toolset: 'msvc'
+                include:
+                    - os: ubuntu-22.04
+                      boost_version: '1.80.0'
+                      version: 22.04
+                      toolset: 'gcc'
+                    - os: ubuntu-22.04
+                      boost_version: '1.80.0.beta1'
+                      version: 22.04
+                      toolset: 'gcc'
+                    - os: windows-2022
+                      boost_version: '1.80.0'
+                      version: 2022
+                      toolset: 'msvc'
+                    - os: windows-2022
+                      boost_version: '1.80.0.beta1'
+                      version: 2022
+                      toolset: 'msvc'
 
         steps:
             - uses: actions/checkout@v3
@@ -60,16 +69,16 @@ jobs:
         runs-on: ${{matrix.os}}
 
         strategy:
-          matrix:
-            include:
-              - os: ubuntu-22.04
-                version: 22.04
-                dir: '/home/runner'
-                toolset: 'gcc'
-              - os: windows-2022
-                version: 2022
-                dir: 'C:/'
-                toolset: 'msvc'
+            matrix:
+                include:
+                    - os: ubuntu-22.04
+                      version: 22.04
+                      dir: '/home/runner'
+                      toolset: 'gcc'
+                    - os: windows-2022
+                      version: 2022
+                      dir: 'C:/'
+                      toolset: 'msvc'
 
         steps:
             - uses: actions/checkout@v3

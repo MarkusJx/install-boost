@@ -1,5 +1,5 @@
 declare module 'request-progress' {
-    import { Request } from 'request';
+    import { Request, Response } from 'request';
     import * as stream from 'stream';
     import * as http from 'http';
     import * as net from 'net';

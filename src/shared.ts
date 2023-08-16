@@ -3,7 +3,7 @@ import request from 'request';
 import fs from 'fs';
 import path from 'path';
 import { spawn } from 'child_process';
-import progress = require('request-progress');
+import progress from 'request-progress';
 
 export interface Options {
     boost_version: string;
@@ -47,7 +47,10 @@ export function setOutputVariables(BOOST_ROOT: string, version: string): void {
     core.setOutput('BOOST_VER', version);
 }
 
-export function getVersions(manifestAddress: string): Promise<VersionsRecord> {
+export function getVersions(
+    manifestAddress: string,
+    debug: boolean = true
+): Promise<VersionsRecord> {
     return new Promise((resolve, reject) => {
         const req = request.get(manifestAddress);
 
@@ -59,7 +62,10 @@ export function getVersions(manifestAddress: string): Promise<VersionsRecord> {
 
         // Resolve on end with the data
         req.on('end', () => {
-            core.debug('Downloaded data: ' + dt);
+            if (debug) {
+                core.debug('Downloaded data: ' + dt);
+            }
+
             resolve(JSON.parse(dt));
         });
 
@@ -90,6 +96,11 @@ type parsedVersion = {
     filename: string;
 };
 
+export type Core = {
+    debug(message: string): void;
+    info(message: string): void;
+};
+
 /**
  * Try to find the specified boost version
  *
@@ -105,7 +116,8 @@ export function parseArguments(
     toolset: string | null,
     platform_version: string,
     link: string | null = null,
-    arch: string | null = null
+    arch: string | null = null,
+    ghCore: Core = core
 ): parsedVersion {
     let platform: string = process.platform;
     if (platform === 'darwin') {
@@ -119,24 +131,24 @@ export function parseArguments(
     for (const cur of versions) {
         if (cur.version && cur.version == boost_version) {
             for (const file of cur.files) {
-                core.debug(`file platform: ${file.platform}`);
+                ghCore.debug(`file platform: ${file.platform}`);
                 if (!file.platform || file.platform != platform) {
-                    core.debug("File does not match param 'platform'");
+                    ghCore.debug("File does not match param 'platform'");
                     continue;
                 }
 
-                core.debug(`file toolset: ${file.toolset}`);
+                ghCore.debug(`file toolset: ${file.toolset}`);
                 if (toolset && (!file.toolset || file.toolset != toolset)) {
-                    core.debug("File does not match param 'toolset'");
+                    ghCore.debug("File does not match param 'toolset'");
                     continue;
                 } else if (!toolset && file.toolset === 'mingw' && lastMatch) {
-                    core.debug(
+                    ghCore.debug(
                         "'toolset' is unset but this toolset is 'mingw' and a better match was found"
                     );
                     continue;
                 }
 
-                core.debug(
+                ghCore.debug(
                     `file platform version: ${file['platform_version']}`
                 );
                 if (
@@ -144,7 +156,7 @@ export function parseArguments(
                     (!file.platform_version ||
                         file.platform_version != platform_version)
                 ) {
-                    core.debug("File does not match param 'platform_version");
+                    ghCore.debug("File does not match param 'platform_version");
                     continue;
                 }
 
@@ -154,36 +166,36 @@ export function parseArguments(
                     link !== file.link &&
                     file.link !== 'static+shared'
                 ) {
-                    core.debug("File does not match param 'link'");
+                    ghCore.debug("File does not match param 'link'");
                     continue;
                 } else if (!link && file.link && file.link === 'shared') {
-                    core.debug(
+                    ghCore.debug(
                         "The file's 'link' was set to 'shared', but 'link' was not specified, ignoring this file"
                     );
                     continue;
                 }
 
                 if (arch && file.arch && arch !== file.arch) {
-                    core.debug("File does not match param 'arch'");
+                    ghCore.debug("File does not match param 'arch'");
                     continue;
                 } else if (!arch && file.arch && file.arch !== 'x86') {
-                    core.debug(
+                    ghCore.debug(
                         "The file's 'arch' was not set to 'x86', but 'arch' was not specified, ignoring this file"
                     );
                     continue;
                 }
 
-                core.debug(`Boost found: '${file.filename}'`);
+                ghCore.debug(`Boost found: '${file.filename}'`);
 
                 // Only emit warnings if this is the boost version that matches the description
                 if (link && !file.link) {
-                    core.info(
+                    ghCore.info(
                         "The parameter 'link' was specified, which doesn't have any effect on this boost version"
                     );
                 }
 
                 if (arch && !file.arch) {
-                    core.info(
+                    ghCore.info(
                         "The parameter 'arch' was specified, which doesn't have any effect on this boost version"
                     );
                 }

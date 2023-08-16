@@ -1,0 +1,1164 @@
+[
+    {
+        "version": "1.71.0",
+        "files": [
+            {
+                "filename": "boost-1.71.0-macos-10.15.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.71.0/boost-1.71.0-macos-10.15.tar.gz"
+            },
+            {
+                "filename": "boost-1.71.0-macos-11.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.71.0/boost-1.71.0-macos-11.tar.gz"
+            },
+            {
+                "filename": "boost-1.71.0-ubuntu-18.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.71.0/boost-1.71.0-ubuntu-18.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.71.0-ubuntu-20.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.71.0/boost-1.71.0-ubuntu-20.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.71.0-windows-2016.tar.gz",
+                "platform": "windows",
+                "platform_version": "2016",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.71.0/boost-1.71.0-windows-2016.tar.gz"
+            },
+            {
+                "filename": "boost-1.71.0-windows-2019.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.71.0/boost-1.71.0-windows-2019.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.72.0",
+        "files": [
+            {
+                "filename": "boost-1.72.0-macos-10.15.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.72.0/boost-1.72.0-macos-10.15.tar.gz"
+            },
+            {
+                "filename": "boost-1.72.0-macos-11.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.72.0/boost-1.72.0-macos-11.tar.gz"
+            },
+            {
+                "filename": "boost-1.72.0-ubuntu-18.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.72.0/boost-1.72.0-ubuntu-18.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.72.0-ubuntu-20.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.72.0/boost-1.72.0-ubuntu-20.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.72.0-windows-2016.tar.gz",
+                "platform": "windows",
+                "platform_version": "2016",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.72.0/boost-1.72.0-windows-2016.tar.gz"
+            },
+            {
+                "filename": "boost-1.72.0-windows-2019.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.72.0/boost-1.72.0-windows-2019.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.73.0",
+        "files": [
+            {
+                "filename": "boost-1.73.0-macos-10.15.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.73.0/boost-1.73.0-macos-10.15.tar.gz"
+            },
+            {
+                "filename": "boost-1.73.0-macos-11.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.73.0/boost-1.73.0-macos-11.tar.gz"
+            },
+            {
+                "filename": "boost-1.73.0-ubuntu-18.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.73.0/boost-1.73.0-ubuntu-18.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.73.0-ubuntu-20.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.73.0/boost-1.73.0-ubuntu-20.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.73.0-windows-2016.tar.gz",
+                "platform": "windows",
+                "platform_version": "2016",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.73.0/boost-1.73.0-windows-2016.tar.gz"
+            },
+            {
+                "filename": "boost-1.73.0-windows-2019.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.73.0/boost-1.73.0-windows-2019.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.74.0",
+        "files": [
+            {
+                "filename": "boost-1.74.0-macos-10.15.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.74.0/boost-1.74.0-macos-10.15.tar.gz"
+            },
+            {
+                "filename": "boost-1.74.0-macos-11.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.74.0/boost-1.74.0-macos-11.tar.gz"
+            },
+            {
+                "filename": "boost-1.74.0-ubuntu-18.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.74.0/boost-1.74.0-ubuntu-18.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.74.0-ubuntu-20.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.74.0/boost-1.74.0-ubuntu-20.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.74.0-windows-2016.tar.gz",
+                "platform": "windows",
+                "platform_version": "2016",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.74.0/boost-1.74.0-windows-2016.tar.gz"
+            },
+            {
+                "filename": "boost-1.74.0-windows-2019-mingw-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.74.0/boost-1.74.0-windows-2019-mingw-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.74.0-windows-2019.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.74.0/boost-1.74.0-windows-2019.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.75.0",
+        "files": [
+            {
+                "filename": "boost-1.75.0-macos-10.15.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.75.0/boost-1.75.0-macos-10.15.tar.gz"
+            },
+            {
+                "filename": "boost-1.75.0-macos-11.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.75.0/boost-1.75.0-macos-11.tar.gz"
+            },
+            {
+                "filename": "boost-1.75.0-ubuntu-18.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.75.0/boost-1.75.0-ubuntu-18.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.75.0-ubuntu-20.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.75.0/boost-1.75.0-ubuntu-20.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.75.0-windows-2016.tar.gz",
+                "platform": "windows",
+                "platform_version": "2016",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.75.0/boost-1.75.0-windows-2016.tar.gz"
+            },
+            {
+                "filename": "boost-1.75.0-windows-2019.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.75.0/boost-1.75.0-windows-2019.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.76.0",
+        "files": [
+            {
+                "filename": "boost-1.76.0-macos-10.15.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.76.0/boost-1.76.0-macos-10.15.tar.gz"
+            },
+            {
+                "filename": "boost-1.76.0-macos-11.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.76.0/boost-1.76.0-macos-11.tar.gz"
+            },
+            {
+                "filename": "boost-1.76.0-ubuntu-18.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.76.0/boost-1.76.0-ubuntu-18.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.76.0-ubuntu-20.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.76.0/boost-1.76.0-ubuntu-20.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.76.0-windows-2016.tar.gz",
+                "platform": "windows",
+                "platform_version": "2016",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.76.0/boost-1.76.0-windows-2016.tar.gz"
+            },
+            {
+                "filename": "boost-1.76.0-windows-2019.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.76.0/boost-1.76.0-windows-2019.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.77.0",
+        "files": [
+            {
+                "filename": "boost-1.77.0-macos-10.15.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.77.0/boost-1.77.0-macos-10.15.tar.gz"
+            },
+            {
+                "filename": "boost-1.77.0-macos-11.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.77.0/boost-1.77.0-macos-11.tar.gz"
+            },
+            {
+                "filename": "boost-1.77.0-ubuntu-18.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.77.0/boost-1.77.0-ubuntu-18.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.77.0-ubuntu-20.04.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.77.0/boost-1.77.0-ubuntu-20.04.tar.gz"
+            },
+            {
+                "filename": "boost-1.77.0-windows-2016.tar.gz",
+                "platform": "windows",
+                "platform_version": "2016",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.77.0/boost-1.77.0-windows-2016.tar.gz"
+            },
+            {
+                "filename": "boost-1.77.0-windows-2019.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.77.0/boost-1.77.0-windows-2019.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.78.0.beta1",
+        "files": [
+            {
+                "filename": "boost-1.78.0.beta1-macos-10.15-clang-static+shared.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "toolset": "clang",
+                "link": "static+shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0.beta1/boost-1.78.0.beta1-macos-10.15-clang-static%2Bshared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0.beta1-macos-11-clang-static+shared.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "toolset": "clang",
+                "link": "static+shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0.beta1/boost-1.78.0.beta1-macos-11-clang-static%2Bshared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0.beta1-ubuntu-18.04-gcc-static+shared.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0.beta1/boost-1.78.0.beta1-ubuntu-18.04-gcc-static%2Bshared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0.beta1-ubuntu-20.04-gcc-static+shared.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0.beta1/boost-1.78.0.beta1-ubuntu-20.04-gcc-static%2Bshared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0.beta1-windows-2019-mingw-shared.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0.beta1/boost-1.78.0.beta1-windows-2019-mingw-shared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0.beta1-windows-2019-mingw-static.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "static",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0.beta1/boost-1.78.0.beta1-windows-2019-mingw-static.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0.beta1-windows-2019-msvc-shared.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0.beta1/boost-1.78.0.beta1-windows-2019-msvc-shared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0.beta1-windows-2019-msvc-static.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "static",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0.beta1/boost-1.78.0.beta1-windows-2019-msvc-static.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0.beta1-windows-2022-mingw-shared.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0.beta1/boost-1.78.0.beta1-windows-2022-mingw-shared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0.beta1-windows-2022-mingw-static.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "static",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0.beta1/boost-1.78.0.beta1-windows-2022-mingw-static.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0.beta1-windows-2022-msvc-shared.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0.beta1/boost-1.78.0.beta1-windows-2022-msvc-shared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0.beta1-windows-2022-msvc-static.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "static",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0.beta1/boost-1.78.0.beta1-windows-2022-msvc-static.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.78.0",
+        "files": [
+            {
+                "filename": "boost-1.78.0-macos-10.15-clang-static+shared.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "toolset": "clang",
+                "link": "static+shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0/boost-1.78.0-macos-10.15-clang-static%2Bshared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0-macos-11-clang-static+shared.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "toolset": "clang",
+                "link": "static+shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0/boost-1.78.0-macos-11-clang-static%2Bshared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0-ubuntu-18.04-gcc-static+shared.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0/boost-1.78.0-ubuntu-18.04-gcc-static%2Bshared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0-ubuntu-20.04-gcc-static+shared.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0/boost-1.78.0-ubuntu-20.04-gcc-static%2Bshared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0-windows-2019-mingw-shared.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0/boost-1.78.0-windows-2019-mingw-shared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0-windows-2019-mingw-static.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "static",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0/boost-1.78.0-windows-2019-mingw-static.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0-windows-2019-msvc-shared.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0/boost-1.78.0-windows-2019-msvc-shared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0-windows-2019-msvc-static.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "static",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0/boost-1.78.0-windows-2019-msvc-static.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0-windows-2022-mingw-shared.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0/boost-1.78.0-windows-2022-mingw-shared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0-windows-2022-mingw-static.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "static",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0/boost-1.78.0-windows-2022-mingw-static.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0-windows-2022-msvc-shared.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "shared",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0/boost-1.78.0-windows-2022-msvc-shared.tar.gz"
+            },
+            {
+                "filename": "boost-1.78.0-windows-2022-msvc-static.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "static",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.78.0/boost-1.78.0-windows-2022-msvc-static.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.79.0.beta1",
+        "files": [
+            {
+                "filename": "boost-1.79.0.beta1-macos-10.15-clang-static+shared-x86.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "toolset": "clang",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-macos-10.15-clang-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0.beta1-macos-11-clang-static+shared-x86.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "toolset": "clang",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-macos-11-clang-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0.beta1-ubuntu-18.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-ubuntu-18.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0.beta1-ubuntu-20.04-gcc-static+shared-aarch64.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "aarch64",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-ubuntu-20.04-gcc-static%2Bshared-aarch64.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0.beta1-ubuntu-20.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-ubuntu-20.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0.beta1-windows-2019-mingw-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-windows-2019-mingw-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0.beta1-windows-2019-mingw-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-windows-2019-mingw-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0.beta1-windows-2019-msvc-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-windows-2019-msvc-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0.beta1-windows-2019-msvc-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-windows-2019-msvc-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0.beta1-windows-2022-mingw-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-windows-2022-mingw-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0.beta1-windows-2022-mingw-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-windows-2022-mingw-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0.beta1-windows-2022-msvc-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-windows-2022-msvc-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0.beta1-windows-2022-msvc-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0.beta1/boost-1.79.0.beta1-windows-2022-msvc-static-x86.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.79.0",
+        "files": [
+            {
+                "filename": "boost-1.79.0-macos-10.15-clang-static+shared-x86.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "toolset": "clang",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-macos-10.15-clang-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-macos-11-clang-static+shared-x86.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "toolset": "clang",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-macos-11-clang-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-ubuntu-18.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-ubuntu-18.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-ubuntu-20.04-gcc-static+shared-aarch64.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "aarch64",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-ubuntu-20.04-gcc-static%2Bshared-aarch64.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-ubuntu-20.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-ubuntu-20.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-ubuntu-22.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "22.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-ubuntu-22.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-windows-2019-mingw-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-windows-2019-mingw-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-windows-2019-mingw-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-windows-2019-mingw-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-windows-2019-msvc-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-windows-2019-msvc-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-windows-2019-msvc-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-windows-2019-msvc-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-windows-2022-mingw-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-windows-2022-mingw-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-windows-2022-mingw-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-windows-2022-mingw-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-windows-2022-msvc-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-windows-2022-msvc-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.79.0-windows-2022-msvc-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.79.0/boost-1.79.0-windows-2022-msvc-static-x86.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.80.0.beta1",
+        "files": [
+            {
+                "filename": "boost-1.80.0.beta1-macos-10.15-clang-static+shared-x86.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "toolset": "clang",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-macos-10.15-clang-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-macos-11-clang-static+shared-x86.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "toolset": "clang",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-macos-11-clang-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-macos-12-clang-static+shared-x86.tar.gz",
+                "platform": "macos",
+                "platform_version": "12",
+                "toolset": "clang",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-macos-12-clang-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-ubuntu-18.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-ubuntu-18.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-ubuntu-20.04-gcc-static+shared-aarch64.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "aarch64",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-ubuntu-20.04-gcc-static%2Bshared-aarch64.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-ubuntu-20.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-ubuntu-20.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-ubuntu-22.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "22.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-ubuntu-22.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-windows-2019-mingw-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-windows-2019-mingw-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-windows-2019-mingw-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-windows-2019-mingw-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-windows-2019-msvc-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-windows-2019-msvc-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-windows-2019-msvc-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-windows-2019-msvc-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-windows-2022-mingw-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-windows-2022-mingw-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-windows-2022-mingw-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-windows-2022-mingw-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-windows-2022-msvc-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-windows-2022-msvc-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0.beta1-windows-2022-msvc-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0.beta1/boost-1.80.0.beta1-windows-2022-msvc-static-x86.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.80.0",
+        "files": [
+            {
+                "filename": "boost-1.80.0-macos-10.15-clang-static+shared-x86.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "toolset": "clang",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-macos-10.15-clang-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-macos-11-clang-static+shared-x86.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "toolset": "clang",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-macos-11-clang-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-ubuntu-18.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-ubuntu-18.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-ubuntu-20.04-gcc-static+shared-aarch64.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "aarch64",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-ubuntu-20.04-gcc-static%2Bshared-aarch64.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-ubuntu-20.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-ubuntu-20.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-ubuntu-22.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "22.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-ubuntu-22.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-windows-2019-mingw-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-windows-2019-mingw-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-windows-2019-mingw-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-windows-2019-mingw-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-windows-2019-msvc-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-windows-2019-msvc-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-windows-2019-msvc-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-windows-2019-msvc-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-windows-2022-mingw-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-windows-2022-mingw-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-windows-2022-mingw-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-windows-2022-mingw-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-windows-2022-msvc-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-windows-2022-msvc-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.80.0-windows-2022-msvc-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.80.0/boost-1.80.0-windows-2022-msvc-static-x86.tar.gz"
+            }
+        ]
+    },
+    {
+        "version": "1.81.0",
+        "files": [
+            {
+                "filename": "boost-1.81.0-macos-10.15-clang-static+shared-x86.tar.gz",
+                "platform": "macos",
+                "platform_version": "10.15",
+                "toolset": "clang",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-macos-10.15-clang-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-macos-11-clang-static+shared-x86.tar.gz",
+                "platform": "macos",
+                "platform_version": "11",
+                "toolset": "clang",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-macos-11-clang-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-macos-12-clang-static+shared-x86.tar.gz",
+                "platform": "macos",
+                "platform_version": "12",
+                "toolset": "clang",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-macos-12-clang-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-ubuntu-18.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "18.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-ubuntu-18.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-ubuntu-20.04-gcc-static+shared-aarch64.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "aarch64",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-ubuntu-20.04-gcc-static%2Bshared-aarch64.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-ubuntu-20.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "20.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-ubuntu-20.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-ubuntu-22.04-gcc-static+shared-x86.tar.gz",
+                "platform": "linux",
+                "platform_version": "22.04",
+                "toolset": "gcc",
+                "link": "static+shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-ubuntu-22.04-gcc-static%2Bshared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-windows-2019-mingw-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-windows-2019-mingw-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-windows-2019-mingw-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "mingw",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-windows-2019-mingw-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-windows-2019-msvc-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-windows-2019-msvc-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-windows-2019-msvc-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2019",
+                "toolset": "msvc",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-windows-2019-msvc-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-windows-2022-mingw-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-windows-2022-mingw-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-windows-2022-mingw-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "mingw",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-windows-2022-mingw-static-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-windows-2022-msvc-shared-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "shared",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-windows-2022-msvc-shared-x86.tar.gz"
+            },
+            {
+                "filename": "boost-1.81.0-windows-2022-msvc-static-x86.tar.gz",
+                "platform": "windows",
+                "platform_version": "2022",
+                "toolset": "msvc",
+                "link": "static",
+                "arch": "x86",
+                "download_url": "https://github.com/MarkusJx/prebuilt-boost/releases/download/1.81.0/boost-1.81.0-windows-2022-msvc-static-x86.tar.gz"
+            }
+        ]
+    }
+]
