@@ -117,9 +117,10 @@ export function parseArguments(
     platform_version: string,
     link: string | null = null,
     arch: string | null = null,
-    ghCore: Core = core
+    ghCore: Core = core,
+    platformOverride?: string
 ): parsedVersion {
-    let platform: string = process.platform;
+    let platform: string = platformOverride || process.platform;
     if (platform === 'darwin') {
         platform = 'macos';
     } else if (platform === 'win32') {

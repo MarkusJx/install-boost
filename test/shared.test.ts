@@ -65,7 +65,8 @@ describe('shared test', () => {
                 '2019',
                 null,
                 null,
-                coreMock
+                coreMock,
+                'windows'
             );
 
             expect(version).to.be.an('object');
@@ -104,7 +105,8 @@ describe('shared test', () => {
                 '2019',
                 null,
                 null,
-                coreMock
+                coreMock,
+                'windows'
             );
 
             expect(v2).to.be.an('object');
@@ -119,7 +121,8 @@ describe('shared test', () => {
                 '2019',
                 null,
                 null,
-                coreMock
+                coreMock,
+                'windows'
             );
 
             expect(version).to.be.an('object');
