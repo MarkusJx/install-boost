@@ -35,7 +35,7 @@ outputs:
     BOOST_VER:
         description: 'The boost version installed'
 runs:
-    using: 'node16'
+    using: 'node20'
     main: 'dist/index.js'
 branding:
     icon: 'activity'
