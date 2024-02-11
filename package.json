@@ -32,18 +32,18 @@
     "dependencies": {
         "@actions/cache": "^3.1.4",
         "@actions/core": "^1.10.0",
-        "@actions/github": "^5.1.1",
+        "@actions/github": "^6.0.0",
         "request": "^2.88.2",
         "request-progress": "^3.0.0",
         "semver": "^7.3.8"
     },
     "devDependencies": {
-        "@types/node": "^18.11.11",
+        "@types/node": "^20.11.17",
         "@types/request": "^2.48.8",
         "@types/semver": "^7.3.13",
-        "@vercel/ncc": "^0.36.0",
-        "prettier": "^2.8.1",
-        "rimraf": "^4.1.2",
-        "typescript": "^4.9.3"
+        "@vercel/ncc": "^0.38.1",
+        "prettier": "^3.2.5",
+        "rimraf": "^5.0.5",
+        "typescript": "^5.3.3"
     }
 }
