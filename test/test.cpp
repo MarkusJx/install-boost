@@ -14,6 +14,7 @@ void thread_work() {
 int main() {
     boost::thread t{thread_work};
     t.join();
+    
     std::cout << boost::stacktrace::stacktrace() << std::endl;
 
     return 0;
