@@ -26,5 +26,5 @@ export async function saveCache(opts: CacheOptions): Promise<void> {
 
 export async function restoreCache(opts: CacheOptions): Promise<boolean> {
     const key = await cache.restoreCache([opts.BOOST_ROOT_DIR], getKey(opts));
-    return key != undefined;
+    return key !== undefined;
 }
