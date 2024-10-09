@@ -13,7 +13,7 @@ import {
     VersionsRecord,
 } from './shared';
 
-const VERSION_MANIFEST_ADDR: string =
+const VERSION_MANIFEST_ADDR: string = 
     'https://raw.githubusercontent.com/MarkusJx/prebuilt-boost/main/versions-manifest.json';
 
 export default async function installV2(opts: OptionsV2): Promise<void> {
@@ -52,6 +52,7 @@ export default async function installV2(opts: OptionsV2): Promise<void> {
         link,
         arch
     );
+
     const download_url: string = ver_data.url;
     const filename: string = ver_data.filename;
 
