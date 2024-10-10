@@ -41,7 +41,7 @@
         "@types/node": "^22.7.5",
         "@types/request": "^2.48.8",
         "@types/semver": "^7.5.8",
-        "@vercel/ncc": "^0.38.1",
+        "@vercel/ncc": "^0.38.2",
         "prettier": "^3.3.3",
         "rimraf": "^6.0.1",
         "typescript": "^5.3.3"
