@@ -11,8 +11,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+      
       - name: Setup Node
         uses: actions/setup-node@v4
-      
-      - name: Run Prettier
-        run: npm run prettier:fix
+
+      - name: Install dependencies
+        run: pnpm install -D
+  
+      - name: Check formatting with Prettier
+        run: pnpm prettier:check
