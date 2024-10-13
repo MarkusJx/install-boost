@@ -26,4 +26,4 @@ jobs:
         run: pnpm prettier . --check
 
       - name: Check formatting
-        run: pnpm prettier . --fix
+        run: pnpm prettier . --write
