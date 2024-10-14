@@ -1,4 +1,4 @@
-name: Run Prettier
+name: Lint
 
 on:
   workflow_dispatch:
