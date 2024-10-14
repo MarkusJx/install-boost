@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: Install dependencies
-        run: pnpm install -D
+        run: npm ci
   
       - name: Fix formatting
         run: pnpm prettier . --write
