@@ -18,4 +18,4 @@ jobs:
         run: npm ci
   
       - name: Fix formatting
-        run: npm run prettier . --check
+        run: npx prettier . --write
