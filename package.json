@@ -8,8 +8,7 @@
         "pretest": "npm run-script build",
         "test": "node dist/index.js",
         "build": "ncc build -m -o dist --license licenses.txt src/index.ts",
-        "prebuild": "rimraf dist",
-        "prettier:fix": "prettier --write ."
+        "prebuild": "rimraf dist"
     },
     "prettier": {
         "printWidth": 80,
