@@ -7,7 +7,7 @@ This action installs Boost using prebuilt binaries from GitHub. You can easily i
 ### `boost_version` (Required)
 The version of Boost to install, e.g. `1.73.0`.  
 A list of supported versions can be found [here](https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json).  
-If the version you need is not listed, open an issue [here](https://github.com/MarkusJx/prebuilt-boost) to request it.
+If the version you need is not listed, open an issue [here](https://github.com/MarkusJx/prebuilt-boost/issues) to request it.
 
 ### `platform_version` (Optional)
 The platform version that Boost was compiled on, e.g. `18.04` for `ubuntu-18.04`, `2016` for `windows-2016`, or `10.15` for `macos-10.15`.  
@@ -87,7 +87,7 @@ The version of Boost installed, e.g., `boost-1.73.0-linux-16.04`.
 
 ```yaml
 - name: Install Boost
-  uses: MarkusJx/install-boost@v2.4.5
+  uses: MarkusJx/install-boost@v2
   id: install-boost
   with:
     # REQUIRED: Specify the required Boost version
@@ -104,7 +104,7 @@ The version of Boost installed, e.g., `boost-1.73.0-linux-16.04`.
 
 ```yaml
 - name: Install Boost
-  uses: MarkusJx/install-boost@v2.4.5
+  uses: MarkusJx/install-boost@v2
   id: install-boost
   with:
     # REQUIRED: Specify the required Boost version
@@ -123,7 +123,7 @@ The version of Boost installed, e.g., `boost-1.73.0-linux-16.04`.
 
 ```yaml
 - name: Install Boost
-  uses: MarkusJx/install-boost@v2.4.5
+  uses: MarkusJx/install-boost@v2
   id: install-boost
   with:
     # REQUIRED: Specify the required Boost version
@@ -142,7 +142,7 @@ The version of Boost installed, e.g., `boost-1.73.0-linux-16.04`.
 
 ```yaml
 - name: Install Boost
-  uses: MarkusJx/install-boost@v1.0.1
+  uses: MarkusJx/install-boost@v2
   id: install-boost
   with:
     # REQUIRED: Specify the required Boost version
@@ -157,7 +157,7 @@ or
 
 ```yaml
 - name: Install Boost
-  uses: MarkusJx/install-boost@v2.4.4
+  uses: MarkusJx/install-boost@v2
   id: install-boost
   with:
     # REQUIRED: Specify the required Boost version
@@ -174,7 +174,7 @@ or
 
 ```yaml
 - name: Install Boost
-  uses: MarkusJx/install-boost@v1.0.1
+  uses: MarkusJx/install-boost@v2
   id: install-boost
   with:
     # REQUIRED: Specify the required Boost version
