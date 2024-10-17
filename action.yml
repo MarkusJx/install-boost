@@ -4,18 +4,18 @@ author: 'MarkusJx'
 
 inputs:
   boost_version:
-    description: 'The boost version to install, e.g. "1.73.0"'
+    description: 'The Boost version to install, e.g. "1.73.0"'
     required: true
   toolset:
-    description: 'The toolset used to compile boost, e.g. "msvc"'
+    description: 'The toolset used to compile Boost, e.g. "msvc"'
     required: false
     default: ''
   platform_version:
-    description: 'The platform version boost was compiled on, e.g. "18.04"'
+    description: 'The platform version Boost was compiled on, e.g. "18.04"'
     required: false
     default: ''
   link:
-    description: 'Whether the boost libraries are linked statically or dynamically'
+    description: 'Whether the Boost libraries are linked statically or dynamically'
     required: false
     default: ''
   arch:
@@ -23,7 +23,7 @@ inputs:
     required: false
     default: 'x86'
   boost_install_dir:
-    description: 'The directory to install boost into'
+    description: 'The directory to install Boost into'
     required: false
     default: ''
   cache:
@@ -33,9 +33,9 @@ inputs:
 
 outputs:
   BOOST_ROOT:
-    description: 'The path to the boost installation, e.g. to be used in CMake'
+    description: 'The path to the Boost installation, e.g. to be used in CMake'
   BOOST_VER:
-    description: 'The boost version installed'
+    description: 'The Boost version installed'
 
 runs:
   using: 'node20'
