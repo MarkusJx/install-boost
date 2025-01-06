@@ -6,68 +6,68 @@ import { spawn } from 'child_process';
 import progress = require('request-progress');
 
 export interface Options {
-    boost_version: string;
-    toolset: string;
-    platform_version: string;
-    BOOST_ROOT_DIR: string;
-    cache: boolean;
+  boost_version: string;
+  toolset: string;
+  platform_version: string;
+  BOOST_ROOT_DIR: string;
+  cache: boolean;
 }
 
 export interface OptionsV2 extends Options {
-    link: string;
-    arch: string;
+  link: string;
+  arch: string;
 }
 
 export type BoostPlatform = 'windows' | 'macos' | 'linux';
 
 export interface BoostVersion {
-    filename: string;
-    platform?: BoostPlatform;
-    platform_version: string;
-    toolset?: string;
-    link?: string;
-    arch?: string;
-    download_url: string;
+  filename: string;
+  platform?: BoostPlatform;
+  platform_version: string;
+  toolset?: string;
+  link?: string;
+  arch?: string;
+  download_url: string;
 }
 
 export interface VersionRecord {
-    version: string;
-    files: BoostVersion[];
+  version: string;
+  files: BoostVersion[];
 }
 
 export type VersionsRecord = VersionRecord[];
 
 export function setOutputVariables(BOOST_ROOT: string, version: string): void {
-    core.startGroup('Set output variables');
-    console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
-    console.log(`Setting BOOST_VER to '${version}'`);
-    core.endGroup();
+  core.startGroup('Set output variables');
+  console.log(`Setting BOOST_ROOT to '${BOOST_ROOT}'`);
+  console.log(`Setting BOOST_VER to '${version}'`);
+  core.endGroup();
 
-    core.setOutput('BOOST_ROOT', BOOST_ROOT);
-    core.setOutput('BOOST_VER', version);
+  core.setOutput('BOOST_ROOT', BOOST_ROOT);
+  core.setOutput('BOOST_VER', version);
 }
 
 export function getVersions(manifestAddress: string): Promise<VersionsRecord> {
-    return new Promise((resolve, reject) => {
-        const req = request.get(manifestAddress);
+  return new Promise((resolve, reject) => {
+    const req = request.get(manifestAddress);
 
-        // Append data to the data object
-        let dt = '';
-        req.on('data', (data) => {
-            dt += data;
-        });
-
-        // Resolve on end with the data
-        req.on('end', () => {
-            core.debug('Downloaded data: ' + dt);
-            resolve(JSON.parse(dt));
-        });
-
-        // Reject on error
-        req.on('error', (err) => {
-            reject(err.message);
-        });
+    // Append data to the data object
+    let dt = '';
+    req.on('data', (data) => {
+      dt += data;
     });
+
+    // Resolve on end with the data
+    req.on('end', () => {
+      core.debug('Downloaded data: ' + dt);
+      resolve(JSON.parse(dt));
+    });
+
+    // Reject on error
+    req.on('error', (err) => {
+      reject(err.message);
+    });
+  });
 }
 
 /**
@@ -76,18 +76,18 @@ export function getVersions(manifestAddress: string): Promise<VersionsRecord> {
  * @param dir the directory to create
  */
 export function createDirectory(dir: string): void {
-    if (!fs.existsSync(dir)) {
-        console.log(`${dir} does not exist, creating it`);
-        fs.mkdirSync(dir, { recursive: true });
-        console.log('Done.');
-    } else {
-        console.log(`${dir} already exists, doing nothing`);
-    }
+  if (!fs.existsSync(dir)) {
+    console.log(`${dir} does not exist, creating it`);
+    fs.mkdirSync(dir, { recursive: true });
+    console.log('Done.');
+  } else {
+    console.log(`${dir} already exists, doing nothing`);
+  }
 }
 
 type parsedVersion = {
-    url: string;
-    filename: string;
+  url: string;
+  filename: string;
 };
 
 /**
@@ -100,109 +100,106 @@ type parsedVersion = {
  * @returns the url and file name or throws an error if the requested version could not be found
  */
 export function parseArguments(
-    versions: VersionsRecord,
-    boost_version: string,
-    toolset: string | null,
-    platform_version: string,
-    link: string | null = null,
-    arch: string | null = null
+  versions: VersionsRecord,
+  boost_version: string,
+  toolset: string | null,
+  platform_version: string,
+  link: string | null = null,
+  arch: string | null = null
 ): parsedVersion {
-    let platform: string = process.platform;
-    if (platform === 'darwin') {
-        platform = 'macos';
-    } else if (platform === 'win32') {
-        platform = 'windows';
-    }
+  let platform: string = process.platform;
+  if (platform === 'darwin') {
+    platform = 'macos';
+  } else if (platform === 'win32') {
+    platform = 'windows';
+  }
 
-    let lastMatch: parsedVersion | null = null;
+  let lastMatch: parsedVersion | null = null;
 
-    for (const cur of versions) {
-        if (cur.version && cur.version == boost_version) {
-            for (const file of cur.files) {
-                core.debug(`file platform: ${file.platform}`);
-                if (!file.platform || file.platform != platform) {
-                    core.debug("File does not match param 'platform'");
-                    continue;
-                }
-
-                core.debug(`file toolset: ${file.toolset}`);
-                if (toolset && (!file.toolset || file.toolset != toolset)) {
-                    core.debug("File does not match param 'toolset'");
-                    continue;
-                } else if (!toolset && file.toolset === 'mingw' && lastMatch) {
-                    core.debug(
-                        "'toolset' is unset but this toolset is 'mingw' and a better match was found"
-                    );
-                    continue;
-                }
-
-                core.debug(
-                    `file platform version: ${file['platform_version']}`
-                );
-                if (
-                    platform_version.length > 0 &&
-                    (!file.platform_version ||
-                        file.platform_version != platform_version)
-                ) {
-                    core.debug("File does not match param 'platform_version");
-                    continue;
-                }
-
-                if (
-                    link &&
-                    file.link &&
-                    link !== file.link &&
-                    file.link !== 'static+shared'
-                ) {
-                    core.debug("File does not match param 'link'");
-                    continue;
-                } else if (!link && file.link && file.link === 'shared') {
-                    core.debug(
-                        "The file's 'link' was set to 'shared', but 'link' was not specified, ignoring this file"
-                    );
-                    continue;
-                }
-
-                if (arch && file.arch && arch !== file.arch) {
-                    core.debug("File does not match param 'arch'");
-                    continue;
-                } else if (!arch && file.arch && file.arch !== 'x86') {
-                    core.debug(
-                        "The file's 'arch' was not set to 'x86', but 'arch' was not specified, ignoring this file"
-                    );
-                    continue;
-                }
-
-                core.debug(`Boost found: '${file.filename}'`);
-
-                // Only emit warnings if this is the boost version that matches the description
-                if (link && !file.link) {
-                    core.info(
-                        "The parameter 'link' was specified, which doesn't have any effect on this boost version"
-                    );
-                }
-
-                if (arch && !file.arch) {
-                    core.info(
-                        "The parameter 'arch' was specified, which doesn't have any effect on this boost version"
-                    );
-                }
-
-                lastMatch = {
-                    url: file.download_url,
-                    filename: file.filename,
-                };
-            }
-
-            break;
+  for (const cur of versions) {
+    if (cur.version && cur.version == boost_version) {
+      for (const file of cur.files) {
+        core.debug(`file platform: ${file.platform}`);
+        if (!file.platform || file.platform != platform) {
+          core.debug("File does not match param 'platform'");
+          continue;
         }
-    }
 
-    if (lastMatch) {
-        return lastMatch;
-    } else {
-        throw new Error(`Could not find boost version ${boost_version}`);
+        core.debug(`file toolset: ${file.toolset}`);
+        if (toolset && (!file.toolset || file.toolset != toolset)) {
+          core.debug("File does not match param 'toolset'");
+          continue;
+        } else if (!toolset && file.toolset === 'mingw' && lastMatch) {
+          core.debug(
+            "'toolset' is unset but this toolset is 'mingw' and a better match was found"
+          );
+          continue;
+        }
+
+        core.debug(`file platform version: ${file['platform_version']}`);
+        if (
+          platform_version.length > 0 &&
+          (!file.platform_version || file.platform_version != platform_version)
+        ) {
+          core.debug("File does not match param 'platform_version");
+          continue;
+        }
+
+        if (
+          link &&
+          file.link &&
+          link !== file.link &&
+          file.link !== 'static+shared'
+        ) {
+          core.debug("File does not match param 'link'");
+          continue;
+        } else if (!link && file.link && file.link === 'shared') {
+          core.debug(
+            "The file's 'link' was set to 'shared', but 'link' was not specified, ignoring this file"
+          );
+          continue;
+        }
+
+        if (arch && file.arch && arch !== file.arch) {
+          core.debug("File does not match param 'arch'");
+          continue;
+        } else if (!arch && file.arch && file.arch !== 'x86') {
+          core.debug(
+            "The file's 'arch' was not set to 'x86', but 'arch' was not specified, ignoring this file"
+          );
+          continue;
+        }
+
+        core.debug(`Boost found: '${file.filename}'`);
+
+        // Only emit warnings if this is the boost version that matches the description
+        if (link && !file.link) {
+          core.info(
+            "The parameter 'link' was specified, which doesn't have any effect on this boost version"
+          );
+        }
+
+        if (arch && !file.arch) {
+          core.info(
+            "The parameter 'arch' was specified, which doesn't have any effect on this boost version"
+          );
+        }
+
+        lastMatch = {
+          url: file.download_url,
+          filename: file.filename,
+        };
+      }
+
+      break;
     }
+  }
+
+  if (lastMatch) {
+    return lastMatch;
+  } else {
+    throw new Error(`Could not find boost version ${boost_version}`);
+  }
 }
 
 /**
@@ -212,30 +209,30 @@ export function parseArguments(
  * @param outFile the file to download to
  */
 export function downloadBoost(url: string, outFile: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-        // Get the request with progress
-        const req = progress(request(url));
-        req.on('progress', (state: Record<string, any>) => {
-            // Log the progress
-            core.debug(`Progress state: ${JSON.stringify(state)}`);
-            const percent: number = state.percent * 100;
-            console.log(`Download progress: ${percent.toFixed(2)}%`);
-        });
-
-        // Pipe to outFile
-        req.pipe(fs.createWriteStream(outFile));
-
-        // Resolve on download finished
-        req.on('end', () => {
-            console.log('Download finished');
-            resolve();
-        });
-
-        // Fail on error
-        req.on('error', (err: any) => {
-            reject(err);
-        });
+  return new Promise((resolve, reject) => {
+    // Get the request with progress
+    const req = progress(request(url));
+    req.on('progress', (state: Record<string, any>) => {
+      // Log the progress
+      core.debug(`Progress state: ${JSON.stringify(state)}`);
+      const percent: number = state.percent * 100;
+      console.log(`Download progress: ${percent.toFixed(2)}%`);
     });
+
+    // Pipe to outFile
+    req.pipe(fs.createWriteStream(outFile));
+
+    // Resolve on download finished
+    req.on('end', () => {
+      console.log('Download finished');
+      resolve();
+    });
+
+    // Fail on error
+    req.on('error', (err: any) => {
+      reject(err);
+    });
+  });
 }
 
 /**
@@ -244,16 +241,16 @@ export function downloadBoost(url: string, outFile: string): Promise<void> {
  * @param files the files to delete
  */
 export function deleteFiles(files: string[]): void {
-    console.log(`Attempting to delete ${files.length} file(s)...`);
-    for (let i = 0; i < files.length; i++) {
-        let cur_file = files[i];
-        if (fs.existsSync(cur_file)) {
-            console.log(`${cur_file} exists, deleting it`);
-            fs.unlinkSync(cur_file);
-        } else {
-            console.log(`${cur_file} does not exist`);
-        }
+  console.log(`Attempting to delete ${files.length} file(s)...`);
+  for (let i = 0; i < files.length; i++) {
+    let cur_file = files[i];
+    if (fs.existsSync(cur_file)) {
+      console.log(`${cur_file} exists, deleting it`);
+      fs.unlinkSync(cur_file);
+    } else {
+      console.log(`${cur_file} does not exist`);
     }
+  }
 }
 
 /**
@@ -264,38 +261,38 @@ export function deleteFiles(files: string[]): void {
  * @param working_directory the working directory
  */
 function untarLinux(
-    filename: string,
-    out_dir: string,
-    working_directory: string,
-    rename: boolean
+  filename: string,
+  out_dir: string,
+  working_directory: string,
+  rename: boolean
 ): Promise<void> {
-    return new Promise((resolve, reject) => {
-        const args: string[] = ['xzf', filename];
-        if (rename) {
-            args.push('-C', out_dir);
-        }
+  return new Promise((resolve, reject) => {
+    const args: string[] = ['xzf', filename];
+    if (rename) {
+      args.push('-C', out_dir);
+    }
 
-        // Use tar to unpack boost
-        const tar = spawn('tar', args, {
-            stdio: [process.stdin, process.stdout, process.stderr],
-            cwd: working_directory,
-        });
-
-        // Reject/Resolve on close
-        tar.on('close', (code) => {
-            if (code != 0) {
-                reject(`Tar exited with code ${code}`);
-            } else {
-                console.log('Tar exited with code 0');
-                resolve();
-            }
-        });
-
-        // Reject on error
-        tar.on('error', (err) => {
-            reject(`Tar failed: ${err}`);
-        });
+    // Use tar to unpack boost
+    const tar = spawn('tar', args, {
+      stdio: [process.stdin, process.stdout, process.stderr],
+      cwd: working_directory,
     });
+
+    // Reject/Resolve on close
+    tar.on('close', (code) => {
+      if (code != 0) {
+        reject(`Tar exited with code ${code}`);
+      } else {
+        console.log('Tar exited with code 0');
+        resolve();
+      }
+    });
+
+    // Reject on error
+    tar.on('error', (err) => {
+      reject(`Tar failed: ${err}`);
+    });
+  });
 }
 
 /**
@@ -305,31 +302,31 @@ function untarLinux(
  * @param working_directory the working directory to work in
  */
 function run7z(
-    command: Array<string>,
-    working_directory: string
+  command: Array<string>,
+  working_directory: string
 ): Promise<void> {
-    return new Promise((resolve, reject) => {
-        // Spawn a 7z process
-        const tar = spawn('7z', command, {
-            stdio: [process.stdin, process.stdout, process.stderr],
-            cwd: working_directory,
-        });
-
-        // Reject/Resolve on close
-        tar.on('close', (code) => {
-            if (code != 0) {
-                reject(`7z exited with code ${code}`);
-            } else {
-                console.log('7z exited with code 0');
-                resolve();
-            }
-        });
-
-        // Reject on error
-        tar.on('error', (err) => {
-            reject(`7z failed: ${err}`);
-        });
+  return new Promise((resolve, reject) => {
+    // Spawn a 7z process
+    const tar = spawn('7z', command, {
+      stdio: [process.stdin, process.stdout, process.stderr],
+      cwd: working_directory,
     });
+
+    // Reject/Resolve on close
+    tar.on('close', (code) => {
+      if (code != 0) {
+        reject(`7z exited with code ${code}`);
+      } else {
+        console.log('7z exited with code 0');
+        resolve();
+      }
+    });
+
+    // Reject on error
+    tar.on('error', (err) => {
+      reject(`7z failed: ${err}`);
+    });
+  });
 }
 
 /**
@@ -339,27 +336,24 @@ function run7z(
  * @param working_directory the working directory
  */
 export async function untarBoost(
-    base: string,
-    working_directory: string,
-    rename: boolean = true
+  base: string,
+  working_directory: string,
+  rename: boolean = true
 ): Promise<void> {
-    if (process.platform == 'win32') {
-        core.debug('Unpacking boost using 7zip');
-        await run7z(['x', `${base}.tar.gz`], working_directory);
+  if (process.platform == 'win32') {
+    core.debug('Unpacking boost using 7zip');
+    await run7z(['x', `${base}.tar.gz`], working_directory);
 
-        if (rename) {
-            await run7z(
-                ['x', `${base}.tar`, '-aoa', `-o${base}`],
-                working_directory
-            );
-        } else {
-            await run7z(['x', `${base}.tar`, '-aoa'], working_directory);
-        }
+    if (rename) {
+      await run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);
     } else {
-        core.debug('Unpacking boost using tar');
-        createDirectory(path.join(working_directory, base));
-        await untarLinux(`${base}.tar.gz`, base, working_directory, rename);
+      await run7z(['x', `${base}.tar`, '-aoa'], working_directory);
     }
+  } else {
+    core.debug('Unpacking boost using tar');
+    createDirectory(path.join(working_directory, base));
+    await untarLinux(`${base}.tar.gz`, base, working_directory, rename);
+  }
 }
 
 /**
@@ -369,12 +363,12 @@ export async function untarBoost(
  * @param base the boost base name (without .tar.gz)
  */
 export function cleanup(base_dir: string, base: string) {
-    if (process.platform == 'win32') {
-        deleteFiles([
-            path.join(base_dir, `${base}.tar.gz`),
-            path.join(base_dir, `${base}.tar`),
-        ]);
-    } else {
-        deleteFiles([path.join(base_dir, `${base}.tar.gz`)]);
-    }
+  if (process.platform == 'win32') {
+    deleteFiles([
+      path.join(base_dir, `${base}.tar.gz`),
+      path.join(base_dir, `${base}.tar`),
+    ]);
+  } else {
+    deleteFiles([path.join(base_dir, `${base}.tar.gz`)]);
+  }
 }

@@ -1,116 +1,116 @@
 name: CMake
 
 on:
-    push:
-        paths:
-            - '.github/workflows/test-cmake.yml'
-            - 'dist/**'
-            - 'action.yml'
-            - 'test/**'
-    pull_request:
-        paths:
-            - '.github/workflows/test-cmake.yml'
-            - 'dist/**'
-            - 'action.yml'
-            - 'test/**'
+  push:
+    paths:
+      - '.github/workflows/test-cmake.yml'
+      - 'dist/**'
+      - 'action.yml'
+      - 'test/**'
+  pull_request:
+    paths:
+      - '.github/workflows/test-cmake.yml'
+      - 'dist/**'
+      - 'action.yml'
+      - 'test/**'
 
 env:
-    BUILD_TYPE: Debug
+  BUILD_TYPE: Debug
 
 jobs:
-    build:
-        runs-on: ${{ matrix.os }}
+  build:
+    runs-on: ${{ matrix.os }}
 
-        strategy:
-            matrix:
-                include:
-                    - os: ubuntu-20.04
-                      COMPILER: gcc
-                      PLATFORM: 20.04
-                      ARCH: x86
-                      cache: false
-                    - os: ubuntu-20.04
-                      COMPILER: gcc
-                      PLATFORM: 20.04
-                      ARCH: aarch64
-                      cache: false
-                    - os: windows-2019
-                      COMPILER: msvc
-                      PLATFORM: 2019
-                      ARCH: x86
-                      cache: false
-                    - os: windows-2019
-                      COMPILER: mingw
-                      PLATFORM: 2019
-                      ARCH: x86
-                      cache: false
-                    - os: ubuntu-20.04
-                      COMPILER: gcc
-                      PLATFORM: 20.04
-                      ARCH: x86
-                      cache: true
-                    - os: ubuntu-20.04
-                      COMPILER: gcc
-                      PLATFORM: 20.04
-                      ARCH: aarch64
-                      cache: true
-                    - os: windows-2019
-                      COMPILER: msvc
-                      PLATFORM: 2019
-                      ARCH: x86
-                      cache: true
-                    - os: windows-2019
-                      COMPILER: mingw
-                      PLATFORM: 2019
-                      ARCH: x86
-                      cache: true
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            COMPILER: gcc
+            PLATFORM: 20.04
+            ARCH: x86
+            cache: false
+          - os: ubuntu-20.04
+            COMPILER: gcc
+            PLATFORM: 20.04
+            ARCH: aarch64
+            cache: false
+          - os: windows-2019
+            COMPILER: msvc
+            PLATFORM: 2019
+            ARCH: x86
+            cache: false
+          - os: windows-2019
+            COMPILER: mingw
+            PLATFORM: 2019
+            ARCH: x86
+            cache: false
+          - os: ubuntu-20.04
+            COMPILER: gcc
+            PLATFORM: 20.04
+            ARCH: x86
+            cache: true
+          - os: ubuntu-20.04
+            COMPILER: gcc
+            PLATFORM: 20.04
+            ARCH: aarch64
+            cache: true
+          - os: windows-2019
+            COMPILER: msvc
+            PLATFORM: 2019
+            ARCH: x86
+            cache: true
+          - os: windows-2019
+            COMPILER: mingw
+            PLATFORM: 2019
+            ARCH: x86
+            cache: true
 
-        steps:
-            - uses: actions/checkout@v3
-            - name: Install boost
-              uses: ./
-              id: install-boost
-              with:
-                  boost_version: 1.79.0
-                  platform_version: ${{matrix.PLATFORM}}
-                  toolset: ${{matrix.COMPILER}}
-                  arch: ${{matrix.ARCH}}
-                  cache: ${{matrix.cache}}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install boost
+        uses: ./
+        id: install-boost
+        with:
+          boost_version: 1.79.0
+          platform_version: ${{matrix.PLATFORM}}
+          toolset: ${{matrix.COMPILER}}
+          arch: ${{matrix.ARCH}}
+          cache: ${{matrix.cache}}
 
-            - name: Setup MinGW
-              uses: egor-tensin/setup-mingw@v2
-              if: ${{runner.os == 'Windows' && matrix.COMPILER == 'mingw'}}
-              with:
-                version: '8.1.0'
+      - name: Setup MinGW
+        uses: egor-tensin/setup-mingw@v2
+        if: ${{runner.os == 'Windows' && matrix.COMPILER == 'mingw'}}
+        with:
+          version: '8.1.0'
 
-            - name: Install arm64 compiler
-              run: sudo apt-get update && sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y
-              if: matrix.ARCH == 'aarch64'
+      - name: Install arm64 compiler
+        run: sudo apt-get update && sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y
+        if: matrix.ARCH == 'aarch64'
 
-            - name: Configure CMake mingw
-              shell: bash
-              working-directory: test
-              run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBoost_LIBRARY_DIRS="${{steps.install-boost.outputs.BOOST_ROOT}}/lib" -G "MinGW Makefiles" -B build
-              if: ${{matrix.COMPILER == 'mingw'}}
-              env:
-                  BOOST_ROOT: ${{steps.install-boost.outputs.BOOST_ROOT}}
+      - name: Configure CMake mingw
+        shell: bash
+        working-directory: test
+        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBoost_LIBRARY_DIRS="${{steps.install-boost.outputs.BOOST_ROOT}}/lib" -G "MinGW Makefiles" -B build
+        if: ${{matrix.COMPILER == 'mingw'}}
+        env:
+          BOOST_ROOT: ${{steps.install-boost.outputs.BOOST_ROOT}}
 
-            - name: Configure CMake arm64
-              shell: bash
-              working-directory: test
-              run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_ARM_BINARIES=1 -DBoost_LIBRARY_DIRS="${{steps.install-boost.outputs.BOOST_ROOT}}/lib" -B build
-              if: matrix.ARCH == 'aarch64'
-              env:
-                  BOOST_ROOT: ${{steps.install-boost.outputs.BOOST_ROOT}}
+      - name: Configure CMake arm64
+        shell: bash
+        working-directory: test
+        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_ARM_BINARIES=1 -DBoost_LIBRARY_DIRS="${{steps.install-boost.outputs.BOOST_ROOT}}/lib" -B build
+        if: matrix.ARCH == 'aarch64'
+        env:
+          BOOST_ROOT: ${{steps.install-boost.outputs.BOOST_ROOT}}
 
-            - name: Configure CMake
-              shell: bash
-              working-directory: test
-              run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBoost_LIBRARY_DIRS="${{steps.install-boost.outputs.BOOST_ROOT}}/lib" -B build
-              if: ${{matrix.COMPILER != 'mingw' && matrix.ARCH != 'aarch64'}}
-              env:
-                  BOOST_ROOT: ${{steps.install-boost.outputs.BOOST_ROOT}}
-            - name: Build
-              working-directory: test/build
-              shell: bash
-              run: cmake --build . --config $BUILD_TYPE
+      - name: Configure CMake
+        shell: bash
+        working-directory: test
+        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBoost_LIBRARY_DIRS="${{steps.install-boost.outputs.BOOST_ROOT}}/lib" -B build
+        if: ${{matrix.COMPILER != 'mingw' && matrix.ARCH != 'aarch64'}}
+        env:
+          BOOST_ROOT: ${{steps.install-boost.outputs.BOOST_ROOT}}
+      - name: Build
+        working-directory: test/build
+        shell: bash
+        run: cmake --build . --config $BUILD_TYPE

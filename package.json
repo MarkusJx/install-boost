@@ -1,49 +1,50 @@
 {
-    "name": "install-boost",
-    "version": "2.4.4",
-    "description": "",
-    "main": "dist/index.js",
-    "private": true,
-    "scripts": {
-        "pretest": "npm run-script build",
-        "test": "node dist/index.js",
-        "build": "ncc build -m -o dist --license licenses.txt src/index.ts",
-        "prebuild": "rimraf dist",
-        "prettier:fix": "prettier --write ."
-    },
-    "prettier": {
-        "printWidth": 80,
-        "semi": true,
-        "singleQuote": true,
-        "tabWidth": 4,
-        "trailingComma": "es5"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/MarkusJx/install-boost.git"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/MarkusJx/install-boost/issues"
-    },
-    "homepage": "https://github.com/MarkusJx/install-boost#readme",
-    "dependencies": {
-        "@actions/cache": "^3.1.4",
-        "@actions/core": "^1.10.0",
-        "@actions/github": "^6.0.0",
-        "request": "^2.88.2",
-        "request-progress": "^3.0.0",
-        "semver": "^7.3.8"
-    },
-    "devDependencies": {
-        "@types/node": "^20.11.17",
-        "@types/request": "^2.48.8",
-        "@types/semver": "^7.3.13",
-        "@vercel/ncc": "^0.38.1",
-        "prettier": "^3.2.5",
-        "rimraf": "^5.0.5",
-        "typescript": "^5.3.3"
-    }
+  "name": "install-boost",
+  "version": "2.4.4",
+  "description": "",
+  "main": "dist/index.js",
+  "private": true,
+  "scripts": {
+    "pretest": "npm run-script build",
+    "test": "node dist/index.js",
+    "build": "ncc build -m -o dist --license licenses.txt src/index.ts",
+    "prebuild": "rimraf dist",
+    "prettier:fix": "prettier --write .",
+    "prettier:check": "prettier --check ."
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkusJx/install-boost.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MarkusJx/install-boost/issues"
+  },
+  "homepage": "https://github.com/MarkusJx/install-boost#readme",
+  "dependencies": {
+    "@actions/cache": "^4.0.0",
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^6.0.0",
+    "request": "^2.88.2",
+    "request-progress": "^3.0.0",
+    "semver": "^7.3.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/request": "^2.48.8",
+    "@types/semver": "^7.3.13",
+    "@vercel/ncc": "^0.38.1",
+    "prettier": "^3.2.5",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.3.3"
+  }
 }

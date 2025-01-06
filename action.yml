@@ -2,41 +2,41 @@ name: 'Download and install Boost'
 description: 'Download and install Boost'
 author: 'MarkusJx'
 inputs:
-    boost_version:
-        description: 'The boost version to install, e.g. "1.73.0"'
-        required: true
-    toolset:
-        description: 'The toolset used to compile boost, e.g. "msvc"'
-        required: false
-        default: ''
-    platform_version:
-        description: 'The platform version boost was compiled on, e.g. "18.04"'
-        required: false
-        default: ''
-    link:
-        description: 'Whether the boost libraries are linked statically or dynamically'
-        required: false
-        default: ''
-    arch:
-        description: 'The architecture the binaries were built for'
-        required: false
-        default: 'x86'
-    boost_install_dir:
-        description: 'The dirctory to install boost into'
-        required: false
-        default: ''
-    cache:
-        description: 'Wheter to use actions/cache to improve build times'
-        required: false
-        default: true
+  boost_version:
+    description: 'The boost version to install, e.g. "1.73.0"'
+    required: true
+  toolset:
+    description: 'The toolset used to compile boost, e.g. "msvc"'
+    required: false
+    default: ''
+  platform_version:
+    description: 'The platform version boost was compiled on, e.g. "18.04"'
+    required: false
+    default: ''
+  link:
+    description: 'Whether the boost libraries are linked statically or dynamically'
+    required: false
+    default: ''
+  arch:
+    description: 'The architecture the binaries were built for'
+    required: false
+    default: 'x86'
+  boost_install_dir:
+    description: 'The dirctory to install boost into'
+    required: false
+    default: ''
+  cache:
+    description: 'Wheter to use actions/cache to improve build times'
+    required: false
+    default: true
 outputs:
-    BOOST_ROOT:
-        description: 'The path to the boost installation, e.g. to be used in CMake'
-    BOOST_VER:
-        description: 'The boost version installed'
+  BOOST_ROOT:
+    description: 'The path to the boost installation, e.g. to be used in CMake'
+  BOOST_VER:
+    description: 'The boost version installed'
 runs:
-    using: 'node20'
-    main: 'dist/index.js'
+  using: 'node20'
+  main: 'dist/index.js'
 branding:
-    icon: 'activity'
-    color: 'gray-dark'
+  icon: 'activity'
+  color: 'gray-dark'

@@ -72,7 +72,7 @@ The boost root directory path, to be passed to another tool, e.g. CMake to find 
 - name: Configure CMake
   run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -B build
   env:
-      BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+    BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
 ```
 
 **Notes**: Sometimes you'll have to pass the path to the include and library directories to cmake:
@@ -80,11 +80,11 @@ The boost root directory path, to be passed to another tool, e.g. CMake to find 
 ```yml
 - name: Configure CMake
   run: |
-      cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -B build\
-      -DBoost_INCLUDE_DIR=${{steps.install-boost.outputs.BOOST_ROOT}}/include\
-      -DBoost_LIBRARY_DIRS=${{steps.install-boost.outputs.BOOST_ROOT}}/lib
+    cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -B build\
+    -DBoost_INCLUDE_DIR=${{steps.install-boost.outputs.BOOST_ROOT}}/include\
+    -DBoost_LIBRARY_DIRS=${{steps.install-boost.outputs.BOOST_ROOT}}/lib
   env:
-      BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+    BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
 ```
 
 ### `BOOST_VER`
@@ -100,19 +100,19 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
   uses: MarkusJx/install-boost@v2.4.5
   id: install-boost
   with:
-      # REQUIRED: Specify the required boost version
-      # A list of supported versions can be found here:
-      # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
-      boost_version: 1.73.0
-      # OPTIONAL: Specify a custon install location
-      boost_install_dir: C:\some_directory
-      # OPTIONAL: Specify a platform version
-      platform_version: 2019
-      # OPTIONAL: Specify a toolset
-      toolset: msvc
+    # REQUIRED: Specify the required boost version
+    # A list of supported versions can be found here:
+    # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
+    boost_version: 1.73.0
+    # OPTIONAL: Specify a custon install location
+    boost_install_dir: C:\some_directory
+    # OPTIONAL: Specify a platform version
+    platform_version: 2019
+    # OPTIONAL: Specify a toolset
+    toolset: msvc
 
-      # NOTE: If a boost version matching all requirements cannot be found,
-      # this build step will fail
+    # NOTE: If a boost version matching all requirements cannot be found,
+    # this build step will fail
 ```
 
 ### Ubuntu
@@ -122,21 +122,21 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
   uses: MarkusJx/install-boost@v2.4.5
   id: install-boost
   with:
-      # REQUIRED: Specify the required boost version
-      # A list of supported versions can be found here:
-      # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
-      boost_version: 1.73.0
-      # OPTIONAL: Specify a platform version
-      platform_version: 18.04
-      # OPTIONAL: Specify a custom install location
-      boost_install_dir: /home/runner/some_directory
-      # OPTIONAL: Specify a toolset
-      toolset: gcc
-      # OPTIONAL: Specify an architecture
-      arch: x86
+    # REQUIRED: Specify the required boost version
+    # A list of supported versions can be found here:
+    # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
+    boost_version: 1.73.0
+    # OPTIONAL: Specify a platform version
+    platform_version: 18.04
+    # OPTIONAL: Specify a custom install location
+    boost_install_dir: /home/runner/some_directory
+    # OPTIONAL: Specify a toolset
+    toolset: gcc
+    # OPTIONAL: Specify an architecture
+    arch: x86
 
-      # NOTE: If a boost version matching all requirements cannot be found,
-      # this build step will fail
+    # NOTE: If a boost version matching all requirements cannot be found,
+    # this build step will fail
 ```
 
 ### MacOs
@@ -146,19 +146,19 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
   uses: MarkusJx/install-boost@v2.4.5
   id: install-boost
   with:
-      # REQUIRED: Specify the required boost version
-      # A list of supported versions can be found here:
-      # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
-      boost_version: 1.73.0
-      # OPTIONAL: Specify a platform version
-      platform_version: 10.15
-      # OPTIONAL: Specify a custom install location
-      boost_install_dir: /home/runner/some_directory
-      # OPTIONAL: Specify a toolset
-      toolset: clang
+    # REQUIRED: Specify the required boost version
+    # A list of supported versions can be found here:
+    # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
+    boost_version: 1.73.0
+    # OPTIONAL: Specify a platform version
+    platform_version: 10.15
+    # OPTIONAL: Specify a custom install location
+    boost_install_dir: /home/runner/some_directory
+    # OPTIONAL: Specify a toolset
+    toolset: clang
 
-      # NOTE: If a boost version matching all requirements cannot be found,
-      # this build step will fail
+    # NOTE: If a boost version matching all requirements cannot be found,
+    # this build step will fail
 ```
 
 ### Legacy use
@@ -170,17 +170,17 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
   uses: MarkusJx/install-boost@v1.0.1
   id: install-boost
   with:
-      # REQUIRED: Specify the required boost version
-      # A list of supported versions can be found here:
-      # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
-      boost_version: 1.73.0
-      # OPTIONAL: Specify a toolset on windows
-      toolset: msvc14.2
-      # OPTIONAL: Specify a custon install location
-      boost_install_dir: C:\some_directory
+    # REQUIRED: Specify the required boost version
+    # A list of supported versions can be found here:
+    # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
+    boost_version: 1.73.0
+    # OPTIONAL: Specify a toolset on windows
+    toolset: msvc14.2
+    # OPTIONAL: Specify a custon install location
+    boost_install_dir: C:\some_directory
 
-      # NOTE: If a boost version matching all requirements cannot be found,
-      # this build step will fail
+    # NOTE: If a boost version matching all requirements cannot be found,
+    # this build step will fail
 ```
 
 or
@@ -190,19 +190,19 @@ or
   uses: MarkusJx/install-boost@v2.4.4
   id: install-boost
   with:
-      # REQUIRED: Specify the required boost version
-      # A list of supported versions can be found here:
-      # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
-      boost_version: 1.73.0
-      # Use the legacy version of this action
-      version: legacy
-      # OPTIONAL: Specify a toolset on windows
-      toolset: msvc14.2
-      # OPTIONAL: Specify a custon install location
-      boost_install_dir: C:\some_directory
+    # REQUIRED: Specify the required boost version
+    # A list of supported versions can be found here:
+    # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
+    boost_version: 1.73.0
+    # Use the legacy version of this action
+    version: legacy
+    # OPTIONAL: Specify a toolset on windows
+    toolset: msvc14.2
+    # OPTIONAL: Specify a custon install location
+    boost_install_dir: C:\some_directory
 
-      # NOTE: If a boost version matching all requirements cannot be found,
-      # this build step will fail
+    # NOTE: If a boost version matching all requirements cannot be found,
+    # this build step will fail
 ```
 
 #### Ubuntu
@@ -212,17 +212,17 @@ or
   uses: MarkusJx/install-boost@v1.0.1
   id: install-boost
   with:
-      # REQUIRED: Specify the required boost version
-      # A list of supported versions can be found here:
-      # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
-      boost_version: 1.73.0
-      # OPTIONAL: Specify a platform version on ubuntu
-      platform_version: 18.04
-      # OPTIONAL: Specify a custom install location
-      boost_install_dir: /home/runner/some_directory
+    # REQUIRED: Specify the required boost version
+    # A list of supported versions can be found here:
+    # https://github.com/actions/boost-versions/blob/main/versions-manifest.json
+    boost_version: 1.73.0
+    # OPTIONAL: Specify a platform version on ubuntu
+    platform_version: 18.04
+    # OPTIONAL: Specify a custom install location
+    boost_install_dir: /home/runner/some_directory
 
-      # NOTE: If a boost version matching all requirements cannot be found,
-      # this build step will fail
+    # NOTE: If a boost version matching all requirements cannot be found,
+    # this build step will fail
 ```
 
 ## Caching
@@ -236,11 +236,11 @@ this behaviour by setting the `cache` variable to `false`.
 Starting from boost version `1.80.0`, the pre-built binaries will be built with
 `boost.python` for the following python versions:
 
--   `3.7`
--   `3.8`
--   `3.9`
--   `3.10`
--   `3.11`
+- `3.7`
+- `3.8`
+- `3.9`
+- `3.10`
+- `3.11`
 
 Due to memory restrictions on the build runners, there are some binaries which don't support python:
 
