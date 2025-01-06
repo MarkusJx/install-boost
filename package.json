@@ -1,6 +1,6 @@
 {
   "name": "install-boost",
-  "version": "2.4.4",
+  "version": "2.5.0",
   "description": "",
   "main": "dist/index.js",
   "private": true,
@@ -34,8 +34,7 @@
     "@actions/cache": "^4.0.0",
     "@actions/core": "^1.10.0",
     "@actions/github": "^6.0.0",
-    "request": "^2.88.2",
-    "request-progress": "^3.0.0",
+    "axios": "^1.7.9",
     "semver": "^7.3.8"
   },
   "devDependencies": {
