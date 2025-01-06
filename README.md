@@ -97,7 +97,7 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
 
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v2.4.5
+  uses: MarkusJx/install-boost@v2
   id: install-boost
   with:
     # REQUIRED: Specify the required boost version
@@ -119,7 +119,7 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
 
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v2.4.5
+  uses: MarkusJx/install-boost@v2
   id: install-boost
   with:
     # REQUIRED: Specify the required boost version
@@ -143,7 +143,7 @@ The version of boost installed, e.g. `boost-1.73.0-linux-16.04`.
 
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v2.4.5
+  uses: MarkusJx/install-boost@v2
   id: install-boost
   with:
     # REQUIRED: Specify the required boost version
@@ -187,7 +187,7 @@ or
 
 ```yml
 - name: Install boost
-  uses: MarkusJx/install-boost@v2.4.4
+  uses: MarkusJx/install-boost@v2
   id: install-boost
   with:
     # REQUIRED: Specify the required boost version

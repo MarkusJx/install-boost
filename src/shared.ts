@@ -1,9 +1,10 @@
 import * as core from '@actions/core';
-import request from 'request';
 import fs from 'fs';
 import path from 'path';
 import { spawn } from 'child_process';
-import progress = require('request-progress');
+import axios from 'axios';
+import { promisify } from 'util';
+import * as stream from 'stream';
 
 export interface Options {
   boost_version: string;
@@ -48,26 +49,21 @@ export function setOutputVariables(BOOST_ROOT: string, version: string): void {
 }
 
 export function getVersions(manifestAddress: string): Promise<VersionsRecord> {
-  return new Promise((resolve, reject) => {
-    const req = request.get(manifestAddress);
-
-    // Append data to the data object
-    let dt = '';
-    req.on('data', (data) => {
-      dt += data;
+  return axios
+    .get(manifestAddress, {
+      responseType: 'json',
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.data as VersionsRecord;
+      } else {
+        core.debug('Response headers: ' + response.headers);
+        core.debug('Response content: ' + response.data);
+        throw new Error(
+          `Versions manifest request returned http status code ${response.status} with status text '${response.statusText}'`
+        );
+      }
     });
-
-    // Resolve on end with the data
-    req.on('end', () => {
-      core.debug('Downloaded data: ' + dt);
-      resolve(JSON.parse(dt));
-    });
-
-    // Reject on error
-    req.on('error', (err) => {
-      reject(err.message);
-    });
-  });
 }
 
 /**
@@ -202,6 +198,8 @@ export function parseArguments(
   }
 }
 
+const finished = promisify(stream.finished);
+
 /**
  * Download boost
  *
@@ -209,30 +207,24 @@ export function parseArguments(
  * @param outFile the file to download to
  */
 export function downloadBoost(url: string, outFile: string): Promise<void> {
-  return new Promise((resolve, reject) => {
-    // Get the request with progress
-    const req = progress(request(url));
-    req.on('progress', (state: Record<string, any>) => {
-      // Log the progress
-      core.debug(`Progress state: ${JSON.stringify(state)}`);
-      const percent: number = state.percent * 100;
-      console.log(`Download progress: ${percent.toFixed(2)}%`);
-    });
+  const writer = fs.createWriteStream(outFile);
 
-    // Pipe to outFile
-    req.pipe(fs.createWriteStream(outFile));
+  return axios
+    .get(url, {
+      responseType: 'stream',
+      onDownloadProgress(progressEvent) {
+        core.debug(`Progress state: ${JSON.stringify(progressEvent)}`);
 
-    // Resolve on download finished
-    req.on('end', () => {
-      console.log('Download finished');
-      resolve();
+        if (progressEvent?.progress) {
+          const percent: number = progressEvent.progress * 100;
+          console.log(`Download progress: ${percent.toFixed(2)}%`);
+        }
+      },
+    })
+    .then((response) => {
+      response.data.pipe(writer);
+      return finished(writer);
     });
-
-    // Fail on error
-    req.on('error', (err: any) => {
-      reject(err);
-    });
-  });
 }
 
 /**
