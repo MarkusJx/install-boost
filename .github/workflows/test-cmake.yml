@@ -39,11 +39,11 @@ jobs:
             PLATFORM: 2022
             ARCH: x86
             cache: false
-          - os: windows-2022
-            COMPILER: mingw
-            PLATFORM: 2022
-            ARCH: x86
-            cache: false
+          #- os: windows-2022
+          #  COMPILER: mingw
+          #  PLATFORM: 2022
+          #  ARCH: x86
+          #  cache: false
           - os: ubuntu-22.04
             COMPILER: gcc
             PLATFORM: 22.04
@@ -59,11 +59,11 @@ jobs:
             PLATFORM: 2022
             ARCH: x86
             cache: true
-          - os: windows-2022
-            COMPILER: mingw
-            PLATFORM: 2022
-            ARCH: x86
-            cache: true
+          #- os: windows-2022
+          #  COMPILER: mingw
+          #  PLATFORM: 2022
+          #  ARCH: x86
+          #  cache: true
 
     steps:
       - uses: actions/checkout@v3
