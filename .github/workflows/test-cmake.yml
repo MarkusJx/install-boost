@@ -24,44 +24,44 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             COMPILER: gcc
-            PLATFORM: 20.04
+            PLATFORM: 22.04
             ARCH: x86
             cache: false
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             COMPILER: gcc
-            PLATFORM: 20.04
+            PLATFORM: 22.04
             ARCH: aarch64
             cache: false
-          - os: windows-2019
+          - os: windows-2022
             COMPILER: msvc
-            PLATFORM: 2019
+            PLATFORM: 2022
             ARCH: x86
             cache: false
-          - os: windows-2019
+          - os: windows-2022
             COMPILER: mingw
-            PLATFORM: 2019
+            PLATFORM: 2022
             ARCH: x86
             cache: false
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             COMPILER: gcc
-            PLATFORM: 20.04
+            PLATFORM: 22.04
             ARCH: x86
             cache: true
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             COMPILER: gcc
-            PLATFORM: 20.04
+            PLATFORM: 22.04
             ARCH: aarch64
             cache: true
-          - os: windows-2019
+          - os: windows-2022
             COMPILER: msvc
-            PLATFORM: 2019
+            PLATFORM: 2022
             ARCH: x86
             cache: true
-          - os: windows-2019
+          - os: windows-2022
             COMPILER: mingw
-            PLATFORM: 2019
+            PLATFORM: 2022
             ARCH: x86
             cache: true
 
