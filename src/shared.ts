@@ -337,9 +337,12 @@ export async function untarBoost(
     await run7z(['x', `${base}.tar.gz`], working_directory);
 
     if (rename) {
-      await run7z(['x', `${base}.tar`, '-aoa', `-o${base}`], working_directory);
+      await run7z(
+        ['x', `${base}.tar`, '-aoa', '-snld20', `-o${base}`],
+        working_directory
+      );
     } else {
-      await run7z(['x', `${base}.tar`, '-aoa'], working_directory);
+      await run7z(['x', `${base}.tar`, '-aoa', '-snld20'], working_directory);
     }
   } else {
     core.debug('Unpacking boost using tar');
