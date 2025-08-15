@@ -24,44 +24,44 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             COMPILER: gcc
-            PLATFORM: 20.04
+            PLATFORM: 22.04
             ARCH: x86
             cache: false
-          - os: ubuntu-20.04
+          - os: ubuntu-24.04
             COMPILER: gcc
-            PLATFORM: 20.04
+            PLATFORM: 24.04
+            ARCH: x86
+            cache: false
+          - os: ubuntu-22.04
+            COMPILER: gcc
+            PLATFORM: 22.04
             ARCH: aarch64
             cache: false
-          - os: windows-2019
+          - os: windows-2022
             COMPILER: msvc
-            PLATFORM: 2019
+            PLATFORM: 2022
             ARCH: x86
             cache: false
-          - os: windows-2019
-            COMPILER: mingw
-            PLATFORM: 2019
+          - os: windows-2025
+            COMPILER: msvc
+            PLATFORM: 2025
             ARCH: x86
             cache: false
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             COMPILER: gcc
-            PLATFORM: 20.04
+            PLATFORM: 22.04
             ARCH: x86
             cache: true
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             COMPILER: gcc
-            PLATFORM: 20.04
+            PLATFORM: 22.04
             ARCH: aarch64
             cache: true
-          - os: windows-2019
+          - os: windows-2022
             COMPILER: msvc
-            PLATFORM: 2019
-            ARCH: x86
-            cache: true
-          - os: windows-2019
-            COMPILER: mingw
-            PLATFORM: 2019
+            PLATFORM: 2022
             ARCH: x86
             cache: true
 
@@ -71,7 +71,7 @@ jobs:
         uses: ./
         id: install-boost
         with:
-          boost_version: 1.79.0
+          boost_version: 1.88.0
           platform_version: ${{matrix.PLATFORM}}
           toolset: ${{matrix.COMPILER}}
           arch: ${{matrix.ARCH}}
