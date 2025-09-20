@@ -57,6 +57,7 @@ jobs:
           boost_version: ${{ matrix.boost_version }}
           platform_version: ${{matrix.version}}
           toolset: ${{matrix.toolset}}
+          arch: ${{matrix.arch}}
       - name: List contents of boost directory
         run: ls
         working-directory: ${{ steps.install-boost.outputs.BOOST_ROOT }}
