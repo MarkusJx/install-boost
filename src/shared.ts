@@ -337,7 +337,7 @@ export async function untarBoost(
     await run7z(['x', `${base}.tar.gz`], working_directory);
 
     const args = ['x', `${base}.tar`, '-aoa'];
-    if (process.arch !== 'arm64') {
+    if (process.arch === 'x64') {
       args.push('-snld20');
     }
 
