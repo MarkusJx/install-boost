@@ -37,6 +37,10 @@ jobs:
             boost_version: '1.80.0.beta1'
             version: 2022
             toolset: 'msvc'
+          - os: windows-11-arm
+            boost_version: '1.89.0'
+            version: 11
+            toolset: 'aarch64'
 
     steps:
       - uses: actions/checkout@v3
