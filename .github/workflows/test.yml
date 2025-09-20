@@ -40,7 +40,13 @@ jobs:
           - os: windows-11-arm
             boost_version: '1.89.0'
             version: 11
-            toolset: 'aarch64'
+            toolset: 'msvc'
+            arch: 'aarch64'
+          - os: macos-14
+            boost_version: '1.89.0'
+            version: 14
+            toolset: 'clang'
+            arch: 'aarch64'
 
     steps:
       - uses: actions/checkout@v3
