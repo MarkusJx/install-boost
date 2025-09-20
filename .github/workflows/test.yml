@@ -37,6 +37,16 @@ jobs:
             boost_version: '1.80.0.beta1'
             version: 2022
             toolset: 'msvc'
+          - os: windows-11-arm
+            boost_version: '1.89.0'
+            version: 11
+            toolset: 'msvc'
+            arch: 'aarch64'
+          - os: macos-14
+            boost_version: '1.89.0'
+            version: 14
+            toolset: 'clang'
+            arch: 'aarch64'
 
     steps:
       - uses: actions/checkout@v3
@@ -47,6 +57,7 @@ jobs:
           boost_version: ${{ matrix.boost_version }}
           platform_version: ${{matrix.version}}
           toolset: ${{matrix.toolset}}
+          arch: ${{matrix.arch}}
       - name: List contents of boost directory
         run: ls
         working-directory: ${{ steps.install-boost.outputs.BOOST_ROOT }}

@@ -336,14 +336,16 @@ export async function untarBoost(
     core.debug('Unpacking boost using 7zip');
     await run7z(['x', `${base}.tar.gz`], working_directory);
 
-    if (rename) {
-      await run7z(
-        ['x', `${base}.tar`, '-aoa', '-snld20', `-o${base}`],
-        working_directory
-      );
-    } else {
-      await run7z(['x', `${base}.tar`, '-aoa', '-snld20'], working_directory);
+    const args = ['x', `${base}.tar`, '-aoa'];
+    if (process.arch !== 'arm64') {
+      args.push('-snld20');
     }
+
+    if (rename) {
+      args.push(`-o${base}`);
+    }
+
+    await run7z(args, working_directory);
   } else {
     core.debug('Unpacking boost using tar');
     createDirectory(path.join(working_directory, base));
