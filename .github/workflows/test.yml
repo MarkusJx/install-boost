@@ -49,7 +49,7 @@ jobs:
             arch: 'aarch64'
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - name: Install boost
         uses: ./
         id: install-boost
@@ -83,7 +83,7 @@ jobs:
             toolset: 'msvc'
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - name: Install boost
         uses: ./
         id: install-boost

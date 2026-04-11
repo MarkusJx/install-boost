@@ -1,6 +1,6 @@
 import * as cache from '@actions/cache';
 import * as core from '@actions/core';
-import { OptionsV2 } from './shared';
+import { OptionsV2 } from './shared.js';
 
 type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 type CacheOptions = PartialBy<PartialBy<OptionsV2, 'link'>, 'arch'>;

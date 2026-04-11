@@ -20,5 +20,5 @@ declare module 'request-progress' {
   }
 
   function progress(request: Request): Progress;
-  export = progress;
+  export default progress;
 }

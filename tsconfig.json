@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "es2023",
+    "module": "node20",
+    "moduleResolution": "node16",
     "sourceMap": true,
     "outDir": "dist",
     "strict": true,
@@ -12,7 +12,7 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "esModuleInterop": true,
-    "lib": ["ESNext", "es2020"],
+    "lib": ["ES2023", "ES2020"],
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
   }
