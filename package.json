@@ -1,13 +1,13 @@
 {
   "name": "install-boost",
   "version": "2.6.0",
-  "description": "",
+  "description": "Install boost via github actions",
   "main": "dist/index.js",
   "private": true,
   "scripts": {
     "pretest": "npm run-script build",
     "test": "node dist/index.js",
-    "build": "ncc build -m -o dist --license licenses.txt src/index.ts",
+    "build": "ncc build -s -m -o dist --license licenses.txt src/index.ts",
     "prebuild": "rimraf dist",
     "prettier:fix": "prettier --write .",
     "prettier:check": "prettier --check ."
@@ -24,7 +24,7 @@
     "url": "git+https://github.com/MarkusJx/install-boost.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "MarkusJx",
   "license": "MIT",
   "type": "module",
   "bugs": {
