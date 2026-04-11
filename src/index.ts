@@ -1,6 +1,6 @@
-import installV1 from './installV1';
-import installV2 from './installV2';
-import { version } from '../package.json';
+import installV1 from './installV1.js';
+import installV2 from './installV2.js';
+import packageJson from '../package.json' with { type: 'json' };
 
 import * as core from '@actions/core';
 import * as path from 'path';
@@ -110,10 +110,10 @@ async function main(): Promise<void> {
 }
 
 try {
-  console.log(`Starting install-boost@${version}`);
+  console.log(`Starting install-boost@${packageJson.version}`);
   main().then(
     () => {
-      console.log(`install-boost@${version} finished successfully`);
+      console.log(`install-boost@${packageJson.version} finished successfully`);
     },
     (reject) => {
       core.setFailed(reject);

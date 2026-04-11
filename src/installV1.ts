@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import * as path from 'path';
-import { restoreCache, saveCache } from './cache';
+import { restoreCache, saveCache } from './cache.js';
 import {
   cleanup,
   createDirectory,
@@ -11,7 +11,7 @@ import {
   setOutputVariables,
   untarBoost,
   VersionsRecord,
-} from './shared';
+} from './shared.js';
 
 const VERSION_MANIFEST_ADDR: string =
   'https://raw.githubusercontent.com/actions/boost-versions/main/versions-manifest.json';
