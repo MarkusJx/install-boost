@@ -34,7 +34,7 @@
   "dependencies": {
     "@actions/cache": "^6.0.0",
     "@actions/core": "^3.0.0",
-    "@actions/github": "^9.1.0",
+    "@actions/github": "^9.1.1",
     "axios": "^1.7.9",
     "semver": "^7.3.8"
   },
